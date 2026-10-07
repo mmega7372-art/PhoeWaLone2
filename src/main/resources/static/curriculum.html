@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/shared-navbar.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* 1. Forcefully remove ALL purple decorative background circles */
+        .circle, 
+        .circle-left, 
+        .circle-right, 
+        [class*="circle"],
+        body::before, 
+        body::after,
+        main::before, 
+        main::after,
+        .main-container::before, 
+        .main-container::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        /* 2. Reset Background Color to match white/light theme without purple tints */
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: #111111;
+        }
+
+        /* 3. Curriculum Body Content */
+        .curriculum-hero {
+            text-align: center;
+            padding: 40px 10% 20px 10%;
+        }
+
+        .curriculum-badge {
+            display: inline-block;
+            background-color: #eae6fa;
+            color: #6e48c4;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 15px;
+        }
+
+        .curriculum-section {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Accordion Container */
+        .accordion-group {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 22px 30px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            background: none;
+            border: none;
+            width: 100%;
+            padding: 0;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        .trigger-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-grow: 1;
+        }
+
+        .level-badge {
+            width: 44px;
+            height: 44px;
+            background: #eae6fa;
+            color: #6e48c4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .accordion-item.active .level-badge {
+            background: #6e48c4;
+            color: #ffffff;
+        }
+
+        .level-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: #111111;
+            min-width: 120px;
+        }
+
+        .arrow-indicator {
+            font-size: 12px;
+            color: #111111;
+            transition: transform 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .accordion-item.active .arrow-indicator {
+            transform: rotate(180deg);
+        }
+
+        .accordion-pane {
+            display: grid;
+            grid-template-rows: 0fr;
+            padding-left: 69px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-pane {
+            grid-template-rows: 1fr;
+            padding-top: 20px;
+            padding-bottom: 10px;
+        }
+
+        .pane-overflow-wrapper {
+            overflow: hidden;
+        }
+
+        .lesson-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 380px;
+        }
+
+        .course-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 140px);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .lesson-btn {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            border-radius: 12px;
+            background: #b09ff2;
+            color: #111111;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .lesson-btn:hover, .lesson-btn:focus-visible {
+            background: #6e48c4;
+            color: #ffffff;
+            outline: none;
+        }
+
+        @media (max-width: 820px) {
+            .course-grid-layout {
+                grid-template-columns: repeat(2, 140px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .accordion-pane {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar (Uses identical structure & class as index1.html) -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="index1.html" aria-label="Phoe Wa Lone home">
+            <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+            <span>Phoe Wa Lone</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="index1.html">Home</a>
+                <a href="about1.html">About Us</a>
+                <a href="courses1.html">Courses</a>
+                <a href="curriculum.html" class="active">Curriculum</a>
+                <button class="btn-mm-pill" type="button" onclick="window.location.href='curriculummm.html'">MM</button>
+            </nav>
+            <!-- Profile / Auth area controlled by navbar-profile.js -->
+           
+    </header>
+
+    <!-- Main Section Heading -->
+    <section class="curriculum-hero">
+        <div class="curriculum-badge">OUR CURRICULUM</div>
+        <h1 style="font-size: 42px; font-weight: 800; color: #111111; margin-top: 5px; margin-bottom: 15px;">
+            Detailed Learning Paths
+        </h1>
+        <p style="font-size: 16px; color: #444444; max-width: 720px; margin: 0 auto; line-height: 1.6;">
+            Discover the Burmese alphabet, a beautiful and unique writing system that forms the foundation of the Burmese language and reflects Myanmar's rich cultural and linguistic heritage.
+        </p>
+    </section>
+
+    <!-- Curriculum Content Section -->
+    <main class="curriculum-section">
+        <div class="accordion-group" role="tablist">
+            
+            <!-- Level 0: Beginner -->
+            <div class="accordion-item" id="level-0">
+                <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-0" onclick="toggleLevel('level-0')">
+                    <div class="trigger-left">
+                        <div class="level-badge">0</div>
+                        <span class="level-name">Beginner</span>
+                    </div>
+                    <div class="arrow-indicator" aria-hidden="true">▼</div>
+                </button>
+                
+                <div class="accordion-pane" id="pane-0" role="region">
+                    <div class="pane-overflow-wrapper">
+                        <div class="lesson-timeline">
+                            <button class="lesson-btn" onclick="location.href='/sources/memo.html'">Memorizing Alphabet</button>
+                            <button class="lesson-btn" onclick="location.href='/sources/writing_courses.html'">Alphabet Writing</button>
+                            <button class="lesson-btn" onclick="location.href='/sources/count.html'">Counting Numbers</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			        <!-- Level 1 -->
+			        <div class="accordion-item" id="level-1">
+			            <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-1" onclick="toggleLevel('level-1')">
+			                <div class="trigger-left">
+			                    <div class="level-badge">1</div>
+			                    <span class="level-name">Level 1</span>
+			                    
+			                </div>
+			                <div class="arrow-indicator" aria-hidden="true">▼</div>
+			            </button>
+			            <div class="accordion-pane" id="pane-1" role="region">
+			                <div class="pane-overflow-wrapper">
+			                    <div class="course-grid-layout">
+			                        <button class="lesson-btn" onclick="location.href='/Level1/l1c1.html'">Course 1</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level1/l1c2.html'">Course 2</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level1/l1c3.html'">Course 3</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level1/l1c4.html'">Course 4</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level1/l1c5.html'">Course 5</button>
+									<button class="lesson-btn" onclick="location.href='/Level1/quizzmm.html'">Quizz</button>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+
+			        <!-- Level 2 -->
+			        <div class="accordion-item" id="level-2">
+			            <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-2" onclick="toggleLevel('level-2')">
+			                <div class="trigger-left">
+			                    <div class="level-badge">2</div>
+			                    <span class="level-name">Level 2</span>
+			                    
+			                </div>
+			                <div class="arrow-indicator" aria-hidden="true">▼</div>
+			            </button>
+			            <div class="accordion-pane" id="pane-2" role="region">
+			                <div class="pane-overflow-wrapper">
+			                    <div class="course-grid-layout">
+									<button class="lesson-btn" onclick="location.href='/Level2/l2c1.html'">Course 1</button>
+									 <button class="lesson-btn" onclick="location.href='/Level2/l2c2.html'">Course 2</button>
+									 <button class="lesson-btn" onclick="location.href='/Level2/l2c3.html'">Course 3</button>
+									 <button class="lesson-btn" onclick="location.href='/Level2/l2c4.html'">Course 4</button>
+									 <button class="lesson-btn" onclick="location.href='/Level2/l2c5.html'">Course 5</button>
+									 <button class="lesson-btn" onclick="location.href='/Level2/quizz.html'">Quizz</button>
+									 									                      
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+
+			        <!-- Level 3 -->
+			        <div class="accordion-item" id="level-3">
+			            <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-3" onclick="toggleLevel('level-3')">
+			                <div class="trigger-left">
+			                    <div class="level-badge">3</div>
+			                    <span class="level-name">Level 3</span>
+			                    
+			                </div>
+			                <div class="arrow-indicator" aria-hidden="true">▼</div>
+			            </button>
+			            <div class="accordion-pane" id="pane-3" role="region">
+			                <div class="pane-overflow-wrapper">
+			                    <div class="pane-overflow-wrapper">
+			                    <div class="course-grid-layout">
+			                        <button class="lesson-btn" onclick="location.href='/Level3/l3c1.html'">Course 1</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level3/l3c2.html'">Course 2</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level3/l3c3.html'">Course 3</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level3/l3c4.html'">Course 4</button>
+			                        <button class="lesson-btn" onclick="location.href='/Level3/l3c5.html'">Course 5</button>
+			                    
+			                    </div>
+			                </div>
+			                </div>
+			            </div>
+			        </div>
+
+			    </div>
+				<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+			</main>
+    <script>
+        function toggleLevel(levelId) {
+            const currentItem = document.getElementById(levelId);
+            const trigger = currentItem.querySelector('.accordion-trigger');
+            const isActive = currentItem.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+            });
+
+            if (!isActive) {
+                currentItem.classList.add('active');
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+        }
+    </script>
+    <!-- Scripts -->
+    <script src="/js/logo.js"></script>
+    <script src="/js/navbar-profile.js"></script>
+</body>
+</html>

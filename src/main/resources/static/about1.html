@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Base App CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* 1. Remove background circles and reset backdrop */
+        .circle, 
+        .circle-left, 
+        .circle-right, 
+        [class*="circle"],
+        body::before, 
+        body::after,
+        main::before, 
+        main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: #111111;
+        }
+
+        /* 2. Header Navbar Alignment */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: #ffffff;
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Dynamic Logo Header & Brand Group Styling */
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111111;
+            text-decoration: none;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .nav-right-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #111111;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #6e48c4;
+        }
+
+        .btn-mm-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-mm-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* 3. Main Container Layout */
+        .about-container {
+            max-width: 1100px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero / Header Card */
+        .about-hero-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+        }
+
+        .about-hero-card h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #111111;
+            line-height: 1.2;
+            margin: 0 0 15px 0;
+        }
+
+        .about-hero-card h1 span {
+            color: #6e48c4;
+        }
+
+        .about-hero-card p {
+            font-size: 16px;
+            color: #555555;
+            line-height: 1.65;
+            max-width: 750px;
+            margin: 0 auto 30px auto;
+        }
+
+        .btn-cta-large {
+            display: inline-block;
+            background-color: #6e48c4;
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(110, 72, 196, 0.2);
+        }
+
+        .btn-cta-large:hover {
+            background-color: #5935a8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(110, 72, 196, 0.3);
+        }
+
+        /* Mission Section Card */
+        .mission-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .mission-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 420px;
+        }
+
+        .mission-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 18px;
+            object-fit: cover;
+        }
+
+        .mission-content {
+            flex: 1.2;
+        }
+
+        .mission-content h2 {
+            font-size: 34px;
+            font-weight: 800;
+            color: #111111;
+            margin: 0 0 18px 0;
+        }
+
+        .mission-content p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0 0 15px 0;
+        }
+
+        .mission-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 900px) {
+            .mission-card {
+                flex-direction: column;
+                padding: 30px 24px;
+            }
+            .mission-image-container {
+                max-width: 100%;
+            }
+            .about-hero-card {
+                padding: 35px 20px;
+            }
+        }
+		
+    </style>
+    <link rel="stylesheet" href="css/shared-navbar.css">
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="course-navbar">
+  <a class="nav-brand" href="index1.html" aria-label="Phoe Wa Lone home">
+    <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+    <span>Phoe Wa Lone</span>
+  </a>
+  <div class="nav-right-wrapper">
+    <nav class="course-nav course-nav-links" aria-label="Main navigation">
+      <a href="index1.html">Home</a>
+      <a href="about1.html" class="active">About Us</a>
+      <a href="courses1.html">Courses</a>
+      <a href="curriculum.html">Curriculum</a>
+     
+      <button class="btn-mm-pill" type="button" onclick="window.location.href='aboutmm1.html'">MM</button>
+	  
+    </nav>
+  </div>
+</header>
+
+    <main class="about-container">
+        
+        <!-- Header Hero Section Card -->
+        <section class="about-hero-card">
+            <h1>Connecting Cultures through <br><span>Burmese</span></h1>
+            <p>
+                Born from a desire to preserve heritage and bridge the gap between global communities and the rich linguistic landscape of Myanmar. We provide the tools for everyone to speak, read, and understand Burmese with confidence.
+            </p>
+            <a href="courses1.html" class="btn-cta-large">
+                Explore Our Courses &nbsp; &rarr;
+            </a>
+        </section>
+
+        <!-- Mission Detail Card Section -->
+        <section class="mission-card">
+            <div class="mission-image-container">
+                <img src="images/image3.jpg" alt="Our Mission Graphic">
+            </div>
+
+            <div class="mission-content">
+                <h2>Our Mission</h2>
+                <p>
+                    Our mission is to make Burmese language education accessible to learners around the world by providing high-quality, easy-to-follow lessons and practical learning experiences.
+                </p>
+                <p>
+                    We aim to help every learner communicate confidently in everyday situations while discovering the rich culture and traditions of Myanmar.
+                </p>
+            </div>
+        </section>
+		
+    </main>
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+    <script src="js/navbar-profile.js"></script>
+    <!-- Dynamic Logo Generator Script -->
+    <script src="js/logo.js"></script>
+</body>
+</html>

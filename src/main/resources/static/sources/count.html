@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Numbers - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Base App CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Shared Navbar CSS -->
+    <link rel="stylesheet" href="/css/shared-navbar.css">
+    <!-- Dedicated Page CSS -->
+    <link rel="stylesheet" href="/css/count.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* 1. Forcefully remove background circles and reset backdrop */
+        .circle, 
+        .circle-left, 
+        .circle-right, 
+        [class*="circle"],
+        body::before, 
+        body::after,
+        main::before, 
+        main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Padauk', sans-serif;
+            color: #111111;
+        }
+
+        /* Responsive Navbar Tweaks matching Courses page */
+        @media (max-width: 760px) { 
+            .course-navbar { 
+                min-height: 76px; 
+                padding: 10px 20px; 
+                flex-direction: row !important; 
+                align-items: center !important; 
+                gap: 12px; 
+            } 
+            .nav-brand { 
+                font-size: 21px; 
+            } 
+            .nav-brand img { 
+                width: 48px; 
+                height: 48px; 
+                flex-basis: 48px; 
+            } 
+            .course-nav { 
+                gap: 0 !important; 
+                flex-wrap: nowrap !important; 
+            } 
+            .course-nav a { 
+                display: none; 
+            } 
+            .course-nav button, .course-nav .btn-mm-pill { 
+                min-width: 60px; 
+                height: 40px; 
+            } 
+        }
+
+        /* 2. Counter Page Layout Container */
+        .counter-page-container {
+            max-width: 950px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6e48c4;
+            margin-bottom: 10px;
+        }
+
+        .number-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: #111111;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        /* Number Selector Pills Bar */
+        .number-selector-bar {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        .num-pill {
+            flex: 0 0 auto;
+            min-width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
+            background: #ffffff;
+            color: #111111;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .num-pill:hover {
+            border-color: #eae6fa;
+            color: #6e48c4;
+        }
+
+        .num-pill.active {
+            background: #6e48c4;
+            color: #ffffff;
+            border-color: #6e48c4;
+            box-shadow: 0 4px 12px rgba(110, 72, 196, 0.25);
+        }
+
+        /* Progress Card styling */
+        .progress-wrapper {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 16px;
+            padding: 18px 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            color: #6e48c4;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #6e48c4;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* Showcase Card */
+        .showcase-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .digit-display {
+            font-size: 90px;
+            font-weight: 800;
+            color: #111111;
+            line-height: 1;
+            margin-bottom: 10px;
+            font-family: 'Padauk', sans-serif;
+        }
+
+        .audio-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f7f5ff;
+            padding: 8px 20px;
+            border-radius: 30px;
+        }
+
+        .pronounce-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #6e48c4;
+        }
+
+        .btn-play-audio {
+            background: #6e48c4;
+            color: #ffffff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-play-audio:hover {
+            background: #5935a8;
+            transform: scale(1.05);
+        }
+
+        .items-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            min-height: 50px;
+            align-items: center;
+        }
+
+        .visual-emoji {
+            font-size: 32px;
+        }
+
+        /* Interactive Writing Sheet Canvas */
+        .writing-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .writing-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            border: 2px dashed #eae6fa;
+            border-radius: 20px;
+            background-color: #faf9fe;
+            touch-action: none;
+            transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .canvas-wrapper.success {
+            border: 3px solid #2e7d32;
+            background-color: #f1f8e9;
+            transform: scale(1.02);
+        }
+
+        .canvas-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 140px;
+            font-weight: 800;
+            color: rgba(110, 72, 196, 0.15);
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+            transition: opacity 0.3s ease;
+            font-family: 'Padauk', sans-serif;
+        }
+
+        .canvas-watermark.hidden-watermark {
+            opacity: 0;
+        }
+
+        #drawCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            cursor: crosshair;
+        }
+
+        .writing-feedback {
+            font-size: 14px;
+            font-weight: 700;
+            min-height: 20px;
+            color: #6e48c4;
+            transition: color 0.3s ease;
+        }
+
+        .writing-feedback.correct {
+            color: #2e7d32;
+        }
+
+        .btn-clear-canvas {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            color: #111111;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-clear-canvas:hover {
+            border-color: #6e48c4;
+            color: #6e48c4;
+        }
+
+        /* Navigation Step Controls */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .right-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-step {
+            background: #eae6fa;
+            color: #6e48c4;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-step:hover:not(:disabled) {
+            background: #6e48c4;
+            color: #ffffff;
+        }
+
+        .btn-step:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Done Button Styling */
+        .btn-done {
+            background: #2e7d32;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            display: none; /* Controlled dynamically via JavaScript */
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+        }
+
+        .btn-done:hover {
+            background: #1b5e20;
+            transform: translateY(-1px);
+        }
+
+        .btn-back {
+            background: #eae6fa;
+            border: none;
+            color: #6e48c4;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background: #6e48c4;
+            color: #ffffff;
+            transform: translateX(-4px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar (Matches writing_course.html layout) -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="/../index1.html" aria-label="Phoe Wa Lone home">
+            <img class="brand-logo" src="/images/Logo.jpg" alt="Phoe Wa Lone logo">
+            <span>Phoe Wa Lone</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="/../index1.html">Home</a>
+                <a href="/../about1.html">About Us</a>
+                <a href="/../courses1.html">Courses</a>
+                <a href="/../curriculum.html" class="active">Curriculum</a>
+                <button class="btn-mm-pill" type="button" onclick="window.location.href='countmm.html'">MM</button>
+            </nav>
+            <!-- Dynamic User Profile Container -->
+            <div id="user-profile-container"></div>
+        </div>
+    </header>
+
+    <main class="counter-page-container">
+        <div class="back-nav">
+            <a href="/curriculum.html" class="btn-back">← Back to Curriculum</a>
+        </div>
+
+        <div class="breadcrumb">Curriculum &gt; Counting Numbers</div>
+        <h1 class="number-title" id="display-title">Number Zero</h1>
+
+        <!-- Top Jump Selector Bar (0 to 10) -->
+        <div class="number-selector-bar" id="pill-container"></div>
+
+        <!-- Progress Bar -->
+        <div class="progress-wrapper">
+            <div class="progress-header">
+                <span>PROGRESS</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Main Showcase Card -->
+        <div class="showcase-card">
+            
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <!-- Burmese Digit Display -->
+                <div class="digit-display" id="burmese-digit">၀</div>
+                
+                <!-- Audio and Pronunciation Section -->
+                <div class="audio-section">
+                    <span class="pronounce-text" id="pronounce-label">Thone Nya (zero)</span>
+                    <button class="btn-play-audio" onclick="playCurrentAudio()" title="Listen Pronunciation">
+                        ▶
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Fruit Count Visualizer -->
+            <div class="items-grid" id="visual-items-container"></div>
+
+            <!-- Writing Sheet Section -->
+            <div class="writing-section">
+                <div class="writing-title">Trace the Number</div>
+                <div class="canvas-wrapper" id="canvas-wrapper">
+                    <div class="canvas-watermark" id="watermark-digit">၀</div>
+                    <canvas id="drawCanvas" width="280" height="280"></canvas>
+                </div>
+                <div class="writing-feedback" id="writing-feedback">Trace over the shaded number!</div>
+                <button class="btn-clear-canvas" onclick="clearCanvas()">Clear Writing</button>
+            </div>
+
+        </div>
+
+        <!-- Carousel Step Controls -->
+        <div class="nav-controls">
+            <button class="btn-step" id="btn-prev" onclick="changeNumber(-1)">← Previous</button>
+            <div class="right-btn-group">
+                <button class="btn-step" id="btn-next" onclick="changeNumber(1)">Next →</button>
+                <button class="btn-done" id="btn-done" onclick="finishLesson()">Done ✓</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Hidden Target Canvas for Auto Correction -->
+    <canvas id="targetCanvas" width="280" height="280" style="display: none;"></canvas>
+
+    <!-- Hidden Audio Player -->
+    <audio id="number-audio-player" style="display: none;"></audio>
+
+    <script>
+        // Session and API Tracking Parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const transactionId = urlParams.get('transaction_id') || localStorage.getItem('transaction_id') || 1;
+
+        // Numbers Dataset (0 to 10)
+        const numbersData = [
+            { val: 0, title: "Number Zero", burmeseDigit: "၀", label: "Thone Nya (zero)", audio: "/audio/0.mp3", emoji: "🚫" },
+            { val: 1, title: "Number One", burmeseDigit: "၁", label: "Tait (one)", audio: "/audio/1.mp3", emoji: "🍎" },
+            { val: 2, title: "Number Two", burmeseDigit: "၂", label: "Nhait (two)", audio: "/audio/2.mp3", emoji: "🍎" },
+            { val: 3, title: "Number Three", burmeseDigit: "၃", label: "Thone (three)", audio: "/audio/3.mp3", emoji: "🍎" },
+            { val: 4, title: "Number Four", burmeseDigit: "၄", label: "Lay (four)", audio: "/audio/4.mp3", emoji: "🍎" },
+            { val: 5, title: "Number Five", burmeseDigit: "၅", label: "Ngar (five)", audio: "/audio/5.mp3", emoji: "🍎" },
+            { val: 6, title: "Number Six", burmeseDigit: "၆", label: "Chauk (six)", audio: "/audio/6.mp3", emoji: "🍎" },
+            { val: 7, title: "Number Seven", burmeseDigit: "၇", label: "Hkunhait (seven)", audio: "/audio/7.mp3", emoji: "🍎" },
+            { val: 8, title: "Number Eight", burmeseDigit: "၈", label: "Shitte (eight)", audio: "/audio/8.mp3", emoji: "🍎" },
+            { val: 9, title: "Number Nine", burmeseDigit: "၉", label: "Koe (nine)", audio: "/audio/9.mp3", emoji: "🍎" },
+            { val: 10, title: "Number Ten", burmeseDigit: "၁၀", label: "Tasae (ten)", audio: "/audio/10.mp3", emoji: "🍎" }
+        ];
+
+        let currentIndex = 0;
+        let isDrawing = false;
+        let canvas, ctx;
+        let targetCanvas, targetCtx;
+        let isVerified = false;
+        let targetPixelsCount = 0;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initCanvas();
+            renderPills();
+            updateUI();
+        });
+
+        // Initialize Canvas & Auto-Correction Engine
+        function initCanvas() {
+            canvas = document.getElementById('drawCanvas');
+            ctx = canvas.getContext('2d');
+
+            targetCanvas = document.getElementById('targetCanvas');
+            targetCtx = targetCanvas.getContext('2d');
+
+            ctx.strokeStyle = '#6e48c4';
+            ctx.lineWidth = 22; // Thicker brush for responsive tracing
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Event Listeners for Mouse and Touch Drawing
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseleave', stopDrawing);
+
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', stopDrawing);
+        }
+
+        // Generate Offscreen Target Mask
+        function generateTargetMask(digit, fontSize) {
+            targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+            targetCtx.fillStyle = '#000000';
+            targetCtx.font = `800 ${fontSize}px "Padauk", "Inter", sans-serif`;
+            targetCtx.textAlign = 'center';
+            targetCtx.textBaseline = 'middle';
+            targetCtx.fillText(digit, targetCanvas.width / 2, targetCanvas.height / 2);
+
+            // Calculate pixel count
+            const imgData = targetCtx.getImageData(0, 0, targetCanvas.width, targetCanvas.height);
+            targetPixelsCount = 0;
+            for (let i = 3; i < imgData.data.length; i += 4) {
+                if (imgData.data[i] > 100) targetPixelsCount++;
+            }
+        }
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            if (isVerified) return;
+            isDrawing = true;
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing || isVerified) return;
+            const pos = getPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function handleTouchStart(e) { e.preventDefault(); startDrawing(e); }
+        function handleTouchMove(e) { e.preventDefault(); draw(e); }
+
+        function stopDrawing() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            verifyStrokeAccuracy();
+        }
+
+        // Renders clean computer text directly onto canvas upon success
+        function renderFlawlessDigitOnCanvas() {
+            const item = numbersData[currentIndex];
+            const fontSize = (item.val === 10) ? 100 : 140;
+
+            // 1. Wipe the freehand canvas lines
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 2. Hide the faint background watermark
+            document.getElementById('watermark-digit').classList.add('hidden-watermark');
+
+            // 3. Render clean computer text in solid purple
+            ctx.fillStyle = '#6e48c4';
+            ctx.font = `800 ${fontSize}px "Padauk", "Inter", sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(item.burmeseDigit, canvas.width / 2, canvas.height / 2);
+        }
+
+        // Auto-correct / Stroke Verification Engine
+        function verifyStrokeAccuracy() {
+            if (isVerified || targetPixelsCount === 0) return;
+
+            const userImgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const targetImgData = targetCtx.getImageData(0, 0, targetCanvas.width, targetCanvas.height);
+
+            let matchedPixels = 0;
+
+            for (let i = 3; i < userImgData.data.length; i += 4) {
+                const userAlpha = userImgData.data[i];
+                const targetAlpha = targetImgData.data[i];
+
+                if (userAlpha > 50 && targetAlpha > 50) {
+                    matchedPixels++;
+                }
+            }
+
+            const coverageRatio = matchedPixels / targetPixelsCount;
+
+            // If user covered >= 48% of the target path, auto-correct to computer text
+            if (coverageRatio >= 0.48) {
+                isVerified = true;
+                
+                // Replace handwritten stroke with flawless computer font
+                renderFlawlessDigitOnCanvas();
+
+                const wrapper = document.getElementById('canvas-wrapper');
+                const feedback = document.getElementById('writing-feedback');
+                
+                wrapper.classList.add('success');
+                feedback.classList.add('correct');
+                feedback.innerText = 'Perfect! Flawless Writing ✓';
+            }
+        }
+
+        function clearCanvas() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                isVerified = false;
+                
+                const wrapper = document.getElementById('canvas-wrapper');
+                const feedback = document.getElementById('writing-feedback');
+                const watermark = document.getElementById('watermark-digit');
+                
+                watermark.classList.remove('hidden-watermark');
+                wrapper.classList.remove('success');
+                feedback.classList.remove('correct');
+                feedback.innerText = 'Trace over the shaded number!';
+            }
+        }
+
+        // Generates the top pill bar buttons (0-10)
+        function renderPills() {
+            const pillContainer = document.getElementById("pill-container");
+            pillContainer.innerHTML = "";
+            
+            numbersData.forEach((item, idx) => {
+                const btn = document.createElement("button");
+                btn.className = `num-pill ${idx === currentIndex ? 'active' : ''}`;
+                btn.innerText = item.val;
+                btn.onclick = () => {
+                    currentIndex = idx;
+                    updateUI();
+                };
+                pillContainer.appendChild(btn);
+            });
+        }
+
+        // Updates all dynamic content on current step change
+        function updateUI() {
+            const item = numbersData[currentIndex];
+
+            // 1. Update Labels & Display Text
+            document.getElementById("display-title").innerText = item.title;
+            document.getElementById("burmese-digit").innerText = item.burmeseDigit;
+            document.getElementById("pronounce-label").innerText = item.label;
+
+            // Update Watermark & Target Mask Pixel Mapping
+            const watermark = document.getElementById("watermark-digit");
+            watermark.innerText = item.burmeseDigit;
+            
+            let fontSize = 140;
+            if (item.val === 10) {
+                fontSize = 100;
+                watermark.style.fontSize = "100px";
+            } else {
+                watermark.style.fontSize = "140px";
+            }
+
+            generateTargetMask(item.burmeseDigit, fontSize);
+            clearCanvas();
+
+            // 2. Update Progress Bar
+            const totalSteps = numbersData.length - 1; // 10 steps total
+            const percentage = Math.round((currentIndex / totalSteps) * 100);
+            document.getElementById("progress-fill").style.width = percentage + "%";
+            document.getElementById("progress-percent").innerText = percentage + "%";
+
+            // 3. Render Dynamic Fruit Count Visuals
+            const visualContainer = document.getElementById("visual-items-container");
+            visualContainer.innerHTML = "";
+            
+            if (item.val === 0) {
+                visualContainer.innerHTML = `<span style="color:#9ca3af; font-weight:600;">(Nothing to count)</span>`;
+            } else {
+                for (let i = 0; i < item.val; i++) {
+                    const span = document.createElement("span");
+                    span.className = "visual-emoji";
+                    span.innerText = item.emoji;
+                    visualContainer.appendChild(span);
+                }
+            }
+
+            // 4. Highlight Active Pill Button
+            const pills = document.querySelectorAll(".num-pill");
+            pills.forEach((p, idx) => {
+                if (idx === currentIndex) p.classList.add("active");
+                else p.classList.remove("active");
+            });
+
+            // 5. Update Navigation Control States & Show/Hide "Done" Button
+            const btnPrev = document.getElementById("btn-prev");
+            const btnNext = document.getElementById("btn-next");
+            const btnDone = document.getElementById("btn-done");
+
+            btnPrev.disabled = (currentIndex === 0);
+            btnNext.disabled = (currentIndex === numbersData.length - 1);
+
+            // Reveal Done button ONLY when at digit 10 (last item)
+            if (currentIndex === numbersData.length - 1) {
+                btnDone.style.display = "inline-block";
+            } else {
+                btnDone.style.display = "none";
+            }
+        }
+
+        // Carousel Step Handler (Next / Previous)
+        function changeNumber(step) {
+            const newIndex = currentIndex + step;
+            if (newIndex >= 0 && newIndex < numbersData.length) {
+                currentIndex = newIndex;
+                updateUI();
+            }
+        }
+
+        // Action when Done button is clicked (saves to Database)
+        async function finishLesson() {
+            try {
+                const response = await fetch('/api/progress/complete-course', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        transactionId: transactionId,
+                        courseKey: 'COUNTING_NUMBERS'
+                    })
+                });
+
+                if (response.ok) {
+                    alert("Congratulations! You completed the Burmese Number Counting & Writing module 🎉");
+                    window.location.href = `/curriculum.html?transaction_id=${transactionId}`;
+                    return;
+                }
+            } catch (err) {
+                console.error("Error saving progress to backend:", err);
+            }
+
+            alert("Congratulations! You completed the Burmese Number Counting & Writing module 🎉");
+            window.location.href = `/curriculum.html?transaction_id=${transactionId}`;
+        }
+
+        // Audio Playback Handler
+        function playCurrentAudio() {
+            const audioPath = numbersData[currentIndex].audio;
+            const player = document.getElementById("number-audio-player");
+            if (!player) return;
+
+            player.pause();
+            player.src = audioPath;
+            player.load();
+            player.play().catch(err => console.log("Audio playback deferred/blocked:", err));
+        }
+    </script>
+    <script src="/js/navbar-profile.js"></script>
+    <!-- Dynamic Logo Generator Script -->
+    <script src="/js/logo.js"></script>
+</body>
+</html>

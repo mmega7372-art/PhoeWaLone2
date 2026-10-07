@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="my" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ဖိုးဝလုံး - မြန်မာစာ သင်ယူကြမယ်</title>
+    
+    <!-- Google Fonts for crisp Burmese rendering -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/shared-navbar.css">
+
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* Global Font & Line Height Fix for Burmese Text */
+        body, h1, h2, h3, p, a, span, button {
+            font-family: 'Padauk', 'Pyidaungsu', 'Myanmar3', sans-serif !important;
+        }
+
+        /* Fix Title Overlapping */
+        .hero-side h1 {
+            font-size: 2.8rem;
+            line-height: 1.65 !important; /* Increased line-height prevents diacritic overlapping */
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-side h1 span {
+            display: block;
+            margin-top: 6px;
+            color: #6e48c4;
+        }
+
+        .hero-tagline {
+            line-height: 1.8 !important;
+            font-size: 1.05rem;
+            color: #4a5568;
+        }
+
+        .hero-tagline span {
+            display: block;
+            margin-top: 8px;
+        }
+
+        /* Ensures logo and brand sit neatly on the far left */
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        /* Respectful Acknowledgment Badge */
+        .acknowledgment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 10px 16px;
+            background-color: rgba(110, 72, 196, 0.08);
+            border-left: 4px solid #6e48c4;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #333333;
+            line-height: 1.7;
+        }
+
+        .acknowledgment-badge strong {
+            color: #6e48c4;
+        }
+
+        .features-container .feature-card p {
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="indexmm.html" aria-label="Phoe Wa Lone home">
+            <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+            <span>ဖိုးဝလုံး</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="indexmm1.html" class="active">ပင်မစာမျက်နှာ</a>
+                <a href="aboutmm1.html">ကျွန်ုပ်တို့အကြောင်း</a>
+                <a href="coursesmm1.html">သင်ခန်းစာများ</a>
+                <a href="curriculummm.html">သင်ရိုးညွှန်းတမ်း</a>
+                <button class="btn-mm-pill" type="button" onclick="window.location.href='index1.html'">ENG</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Hero Container split layout -->
+    <main class="main-container" style="min-height: calc(100vh - 240px); padding-bottom: 0;">
+        
+        <!-- Hero Descriptions Side -->
+        <div class="hero-side">
+            <h1>ဖိုးဝလုံးနဲ့အတူ<br><span>မြန်မာစာ လေ့လာကြမယ်</span></h1>
+            
+            <p class="hero-tagline">
+                မြန်မာစာကို ပျော်ရွှင်စွာနဲ့ လွယ်ကူရိုးရှင်းစွာ လေ့လာနိုင်ဖို့ ဖန်တီးထားတဲ့ အွန်လိုင်း သင်ကြားရေး ပလက်ဖောင်းဖြစ်ပါတယ်။
+                <span>စတင်လေ့လာသူများနှင့် ကလေးငယ်များအတွက် အထူးသီးသန့် သင်ခန်းစာများ၊ အသံထွက်များ နှင့် လေ့ကျင့်ခန်းများ ပါဝင်ပါတယ်။</span>
+            </p>
+
+            <!-- Respectful Thanks Section in Myanmar -->
+            <div class="acknowledgment-badge">
+                <span>🙏 လက်ရေးလေ့ကျင့်ရန် PDF ဖိုင်များကို ကူညီပံ့ပိုးပေးသော <strong>'မိုင် မြန်မာစာ'</strong> အား အထူးပင် ကျေးဇူးတင်ရှိပါသည်။</span>
+            </div>
+
+            <div style="margin-top: 28px;">
+                <a href="signup.html" class="btn-cta-large">
+                    အခမဲ့ စတင်လေ့လာမည် &nbsp; &rarr;
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Side Image Container -->
+        <div class="hero-image-container">
+            <img src="images/image1.jpg" alt="Child learning Burmese language">
+        </div>
+
+    </main>
+
+    <!-- Lower Tri-Feature Overview Block -->
+    <section class="features-container">
+        <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>စတင်လေ့လာသူများအတွက် လွယ်ကူခြင်း</h3>
+            <p>အခြေခံ မရှိသေးသော စတင်လေ့လာသူများနှင့် ကလေးငယ်များအတွက် အထူးသီးသန့် စနစ်တကျ စီစဉ်ထားခြင်း</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🗣️</div>
+            <h3>လက်တွေ့သုံး စကားပြောများ</h3>
+            <p>နေ့စဉ်ဘဝမှာ တကယ် အသုံးချနိုင်မယ့် ဝါကျပုံစံများနှင့် စကားပြောပုံစံများ</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">❤️</div>
+            <h3>တိုးတက်မှုကို မှတ်တမ်းတင်ခြင်း</h3>
+            <p>ဉာဏ်စမ်းမေးခွန်းများနှင့်အတူ သင်ယူမှု တိုးတက်မှုများကို စနစ်တကျ မှတ်တမ်းတင်ပေးခြင်း</p>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="js/logo.js"></script>
+    <script src="/js/navbar-profile.js"></script>
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+</body>
+</html>

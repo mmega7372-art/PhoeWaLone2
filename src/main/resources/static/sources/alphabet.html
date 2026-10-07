@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet Drawing Practice - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shared-navbar.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* Reset & Base Setup */
+        .circle, .circle-left, .circle-right, [class*="circle"],
+        body::before, body::after, main::before, main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Padauk', sans-serif;
+            color: #111111;
+        }
+
+        /* Explicit Dynamic/Mobile Responsive Tweaks for Navbar */
+        @media (max-width: 760px) { 
+            .course-navbar { min-height: 76px; padding: 10px 20px; flex-direction: row !important; align-items: center !important; gap: 12px; } 
+            .nav-brand { font-size: 21px; } 
+            .nav-brand img { width: 48px; height: 48px; flex-basis: 48px; } 
+            .course-nav { gap: 0 !important; flex-wrap: nowrap !important; } 
+            .course-nav a { display: none; } 
+            .course-nav button, .course-nav .btn-eng-pill { min-width: 60px; height: 40px; } 
+        }
+
+        /* Explicit Language Switcher Button Styling */
+        .btn-eng-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-eng-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* Container */
+        .alphabet-practice-container {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-nav {
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            background: #eae6fa;
+            border: none;
+            color: #6e48c4;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background: #6e48c4;
+            color: #ffffff;
+            transform: translateX(-4px);
+        }
+
+        .page-header-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #111111;
+            margin: 0 0 8px 0;
+        }
+
+        .subtitle {
+            color: #555555;
+            font-size: 15px;
+            margin: 0 0 30px 0;
+        }
+
+        /* Progress Card */
+        .overall-progress-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 25px;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #6e48c4;
+        }
+
+        .btn-restart {
+            background: #fff0f0;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-restart:hover {
+            background: #ffebee;
+        }
+
+        .progress-track-wrapper {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill-display {
+            width: 0%;
+            height: 100%;
+            background: #6e48c4;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Practice Header */
+        .character-practice-header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .character-guide-text {
+            flex: 1;
+        }
+
+        .character-guide-text h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .character-guide-text p {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .gif-container {
+            width: 160px;
+            height: 160px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Grid Workspace */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .char-selection-card, .canvas-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        .char-selection-card h3, .canvas-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .current-display {
+            font-size: 64px;
+            font-weight: 800;
+            color: #6e48c4;
+            text-align: center;
+            margin: 10px 0;
+            font-family: 'Padauk', sans-serif;
+        }
+
+        .score-badge {
+            text-align: center;
+            font-weight: 700;
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .char-btn {
+            background: #faf8ff;
+            border: 1px solid #e9dcfd;
+            border-radius: 10px;
+            padding: 10px 0;
+            font-size: 22px;
+            font-family: 'Padauk', sans-serif;
+            font-weight: 700;
+            color: #6e48c4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .char-btn.done::after {
+            content: "✓";
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: 12px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .char-btn:hover, .char-btn.active {
+            background: #6e48c4;
+            color: #ffffff;
+            border-color: #6e48c4;
+        }
+
+        /* Canvas Box */
+        .canvas-wrapper {
+            position: relative;
+            width: 360px;
+            height: 300px;
+            margin: 0 auto 15px auto;
+            border: 2px dashed #d8b4fe;
+            border-radius: 14px;
+            background-color: #faf8ff;
+            overflow: hidden;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .canvas-wrapper.success {
+            border: 2px solid #2e7d32 !important;
+            background-color: #f1f8e9 !important;
+        }
+
+        .canvas-guide-overlay {
+            display: none !important;
+        }
+
+        #paintCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 360px;
+            height: 300px;
+            cursor: crosshair;
+            z-index: 2;
+            touch-action: none;
+        }
+
+        .writing-feedback-message {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6e48c4;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .writing-feedback-message.correct {
+            color: #2e7d32;
+        }
+
+        .canvas-actions, .bottom-actions-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn-clear, .btn-verify, .btn-done, .btn-exit-action {
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-clear { background: #f0f0f0; color: #333333; }
+        .btn-verify { background: #eae6fa; color: #6e48c4; }
+        .btn-done { background: #6e48c4; color: #ffffff; flex: 1; transition: background 0.3s ease, opacity 0.3s ease; }
+        .btn-done:disabled { background: #cccccc; color: #666666; cursor: not-allowed; opacity: 0.7; }
+        .btn-exit-action { background: #f5f5f5; color: #666666; }
+    </style>
+</head>
+<body>
+
+    <!-- Shared Navigation Bar -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="/../index.html" aria-label="Phoe Wa Lone Home">
+            <img class="brand-logo" src="/images/Logo.jpg" alt="Phoe Wa Lone Logo">
+            <span>Phoe Wa Lone</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="/../index1.html">Home</a>
+                <a href="/../about1.html">About Us</a>
+                <a href="/../courses1.html">Courses</a>
+                <a href="/../curriculum.html" class="active">Curriculum</a>
+                <button class="btn-eng-pill" id="lang-switch-btn" type="button" onclick="window.location.href='alphabetmm.html'">MM</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="alphabet-practice-container">
+        <div class="back-nav">
+            <a href="writing_courses.html" class="btn-back">← Back</a>
+        </div>
+
+        <h1 class="page-header-title" id="course-title-display">Lesson 1 Practice</h1>
+        <p class="subtitle">Select one of the consonant letters below and trace over the guide outline.</p>
+
+        <div class="overall-progress-card">
+            <div class="progress-meta">
+                <span class="progress-label">Your Drawing Progress</span>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="btn-restart" onclick="restartCourseProgress()">🔄 Restart</button>
+                    <span id="local-progress-text" class="progress-percentage-text">0% Completed</span>
+                </div>
+            </div>
+            <div class="progress-track-wrapper">
+                <div id="local-progress-bar" class="progress-fill-display"></div>
+            </div>
+        </div>
+
+        <div class="character-practice-header">
+            <div class="character-guide-text">
+                <h2>Letter Drawing Guide</h2>
+                <p>Watch the animated stroke guide video below to learn how to write the Myanmar consonants correctly.</p>
+            </div>
+            <div class="gif-container">
+                <video id="stroke-guide-video" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: contain;">
+                    <source id="video-source" src="/gift/wa.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <div class="workspace-grid">
+            <section class="char-selection-card">
+                <h3>Selected Letter</h3>
+                <div class="current-display" id="active-char-preview">ဝ</div>
+                <div id="score-display-badge" class="score-badge">Score: 0%</div>
+                <p style="font-size:13px; color:#666;">Choose a letter from this lesson:</p>
+                <div class="char-grid" id="consonants-injector-box"></div>
+            </section>
+
+            <section class="canvas-card">
+                <h3>Drawing Canvas</h3>
+                <p style="font-size:13px; color:#666; margin-bottom:15px;">Trace accurately over the letter guide overlay. Drawing outside the guide will penalize your score.</p>
+
+                <div class="canvas-wrapper" id="canvas-wrapper-box">
+                    <canvas id="paintCanvas" width="360" height="300"></canvas>
+                </div>
+                <div id="writing-feedback-text" class="writing-feedback-message">Trace over the background guide!</div>
+                <div class="canvas-actions">
+                    <button class="btn-clear" onclick="clearCanvasDrawings()">Clear</button>
+                </div>
+                
+                <div class="bottom-actions-container">
+                    <button id="btn-mark-done" class="btn-done" onclick="finishCourseAndSaveToDatabase()" disabled>Mark as Complete</button>
+                    <a href="writing_courses.html" class="btn-exit-action" id="exit-link">Exit</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Offscreen Canvas for Pixel Analysis -->
+    <canvas id="targetMaskCanvas" width="360" height="300" style="display: none;"></canvas>
+
+    <script>
+        const COURSE_DATA = {
+            1: { name: "Lesson 1", letters: ["ဝ", "ဂ", "ပ", "င"], videoMap: { "ဝ": "wa.mp4", "ဂ": "ga.mp4", "ပ": "pa.mp4", "င": "nga.mp4" } },
+            2: { name: "Lesson 2", letters: ["ထ", "တ", "က", "ဘ"], videoMap: { "ထ": "hta.mp4", "တ": "ta.mp4", "က": "ka.mp4", "ဘ": "bha.mp4" } },
+            3: { name: "Lesson 3", letters: ["သ", "လ", "ယ", "ဟ"], videoMap: { "သ": "tha.mp4", "လ": "la.mp4", "ယ": "ya.mp4", "ဟ": "ha.mp4" } },
+            4: { name: "Lesson 4", letters: ["စ", "ဓ", "ခ", "ဆ"], videoMap: { "စ": "sa.mp4", "ဓ": "dha.mp4", "ခ": "kha.mp4", "ဆ": "sha.mp4" } },
+            5: { name: "Lesson 5", letters: ["မ", "ဖ", "ဗ", "ရ", "န"], videoMap: { "မ": "ma.mp4", "ဖ": "pha.mp4", "ဗ": "ba.mp4", "ရ": "ra.mp4", "န": "na.mp4" } },
+            6: { name: "Lesson 6", letters: ["ဇ", "ဒ", "အ", "ည"], videoMap: { "ဇ": "za.mp4", "ဒ": "da.mp4", "အ": "ah.mp4", "ည": "nya.mp4" } },
+            7: { name: "Lesson 7", letters: ["ဃ", "ဈ", "ဋ", "ဌ"], videoMap: { "ဃ": "gha.mp4", "ဈ": "zha.mp4", "ဋ": "ta_code.mp4", "ဌ": "ttha.mp4" } },
+            8: { name: "Lesson 8", letters: ["ဍ", "ဎ", "ဏ", "ဠ"], videoMap: { "ဍ": "dda.mp4", "ဎ": "ddha.mp4", "ဏ": "nna.mp4", "ဠ": "lla.mp4" } }
+        };
+
+        function toEnglishDigits(number) {
+            return String(number);
+        }
+
+        let activeCourseId = 1;
+        let activeCharIndex = 0;
+        let completedLetters = new Set();
+
+        let autoCanvas, autoCtx;
+        let targetMaskCanvas, targetMaskCtx;
+        let userStrokesCanvas, userStrokesCtx;
+        let isDrawing = false;
+        let targetPixelsCount = 0;
+        let currentPenWeight = 22;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let transactionId = urlParams.get('transaction_id') || localStorage.getItem('transaction_id') || '';
+        let userId = urlParams.get('user_id') || localStorage.getItem('user_id') || '';
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const courseParam = parseInt(urlParams.get('course'));
+            if (courseParam && COURSE_DATA[courseParam]) {
+                activeCourseId = courseParam;
+            }
+
+            if (!userId || !transactionId) {
+                try {
+                    const sessionRes = await fetch('/api/user/session');
+                    if (sessionRes.ok) {
+                        const sessionData = await sessionRes.json();
+                        if (sessionData.userId) userId = sessionData.userId;
+                        if (sessionData.transactionId) transactionId = sessionData.transactionId;
+                    }
+                } catch (e) {
+                    console.warn("Could not fetch active session profile automatically:", e);
+                }
+            }
+
+            const langBtn = document.getElementById('lang-switch-btn');
+            if (langBtn) {
+                langBtn.onclick = function() {
+                    window.location.href = `alphabetmm.html?course=${activeCourseId}&user_id=${userId}&transaction_id=${transactionId}`;
+                };
+            }
+
+            const exitLink = document.getElementById('exit-link');
+            if (exitLink) {
+                exitLink.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+            }
+
+            const backBtn = document.querySelector('.btn-back');
+            if (backBtn) {
+                backBtn.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+            }
+
+            renderCourseConsonants(activeCourseId);
+            initAutoCorrectEngine();
+            checkIfCourseAlreadyCompleted();
+        });
+
+        function renderCourseConsonants(courseId) {
+            const course = COURSE_DATA[courseId];
+            document.getElementById('course-title-display').innerText = `${course.name} Practice`;
+
+            const injector = document.getElementById('consonants-injector-box');
+            injector.innerHTML = '';
+
+            course.letters.forEach((char, index) => {
+                const btn = document.createElement('button');
+                btn.className = `char-btn ${index === activeCharIndex ? 'active' : ''}`;
+                btn.id = `btn-char-${index}`;
+                btn.innerText = char;
+                btn.onclick = () => {
+                    activeCharIndex = index;
+                    selectCharacter(char, btn, course);
+                };
+                injector.appendChild(btn);
+            });
+
+            if (course.letters.length > 0) {
+                selectCharacter(course.letters[activeCharIndex], injector.children[activeCharIndex], course);
+            }
+        }
+
+        function selectCharacter(char, btnElement, course) {
+            document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            document.getElementById('active-char-preview').innerText = char;
+
+            const videoFileName = course.videoMap[char] || "wa.mp4";
+            const videoElement = document.getElementById('stroke-guide-video');
+            const videoSource = document.getElementById('video-source');
+            videoSource.src = `/gift/${videoFileName}`;
+            videoElement.load();
+            videoElement.play().catch(() => {});
+
+            clearCanvasDrawings();
+            updateAutoTargetMask();
+        }
+
+        function getCurrentChar() {
+            const preview = document.getElementById('active-char-preview');
+            return preview ? preview.innerText.trim() : 'ဝ';
+        }
+
+        function initAutoCorrectEngine() {
+            autoCanvas = document.getElementById('paintCanvas');
+            if (!autoCanvas) return;
+            autoCtx = autoCanvas.getContext('2d');
+
+            autoCanvas.width = 360;
+            autoCanvas.height = 300;
+
+            targetMaskCanvas = document.getElementById('targetMaskCanvas');
+            targetMaskCtx = targetMaskCanvas.getContext('2d');
+
+            userStrokesCanvas = document.createElement('canvas');
+            userStrokesCanvas.width = 360;
+            userStrokesCanvas.height = 300;
+            userStrokesCtx = userStrokesCanvas.getContext('2d');
+
+            autoCanvas.addEventListener('mousedown', startDrawing);
+            autoCanvas.addEventListener('mousemove', draw);
+            autoCanvas.addEventListener('mouseup', stopDrawing);
+            autoCanvas.addEventListener('mouseleave', stopDrawing);
+
+            autoCanvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            autoCanvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            autoCanvas.addEventListener('touchend', stopDrawing);
+
+            if (document.fonts) {
+                document.fonts.ready.then(() => updateAutoTargetMask());
+            } else {
+                setTimeout(updateAutoTargetMask, 300);
+            }
+        }
+
+        function drawBackgroundGuideOnCanvas() {
+            if (!autoCtx) return;
+            const currentChar = getCurrentChar();
+
+            autoCtx.clearRect(0, 0, autoCanvas.width, autoCanvas.height);
+
+            autoCtx.save();
+            autoCtx.font = '900 180px "Padauk", "Inter", sans-serif';
+            autoCtx.textAlign = 'center';
+            autoCtx.textBaseline = 'middle';
+            
+            autoCtx.fillStyle = 'rgba(110, 72, 196, 0.25)';
+            autoCtx.fillText(currentChar, autoCanvas.width / 2, autoCanvas.height / 2 + 10);
+            autoCtx.restore();
+
+            autoCtx.drawImage(userStrokesCanvas, 0, 0);
+        }
+
+        function updateAutoTargetMask() {
+            if (!targetMaskCtx) return;
+            const currentChar = getCurrentChar();
+
+            targetMaskCtx.clearRect(0, 0, targetMaskCanvas.width, targetMaskCanvas.height);
+
+            targetMaskCtx.font = '900 180px "Padauk", "Inter", sans-serif';
+            targetMaskCtx.textAlign = 'center';
+            targetMaskCtx.textBaseline = 'middle';
+
+            targetMaskCtx.fillStyle = '#000000';
+            targetMaskCtx.strokeStyle = '#000000';
+            targetMaskCtx.lineWidth = currentPenWeight + 12;
+            targetMaskCtx.lineCap = 'round';
+            targetMaskCtx.lineJoin = 'round';
+
+            const centerX = targetMaskCanvas.width / 2;
+            const centerY = targetMaskCanvas.height / 2 + 10;
+
+            targetMaskCtx.fillText(currentChar, centerX, centerY);
+            targetMaskCtx.strokeText(currentChar, centerX, centerY);
+
+            const imgData = targetMaskCtx.getImageData(0, 0, targetMaskCanvas.width, targetMaskCanvas.height);
+            targetPixelsCount = 0;
+
+            for (let i = 3; i < imgData.data.length; i += 4) {
+                if (imgData.data[i] > 50) {
+                    targetPixelsCount++;
+                }
+            }
+
+            drawBackgroundGuideOnCanvas();
+        }
+
+        function getPos(e) {
+            const rect = autoCanvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getPos(e);
+
+            userStrokesCtx.strokeStyle = '#6e48c4';
+            userStrokesCtx.lineWidth = currentPenWeight;
+            userStrokesCtx.lineCap = 'round';
+            userStrokesCtx.lineJoin = 'round';
+
+            userStrokesCtx.beginPath();
+            userStrokesCtx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+
+            userStrokesCtx.lineTo(pos.x, pos.y);
+            userStrokesCtx.stroke();
+
+            drawBackgroundGuideOnCanvas();
+            verifyStrokeAccuracy();
+        }
+
+        function handleTouchStart(e) { e.preventDefault(); startDrawing(e); }
+        function handleTouchMove(e) { e.preventDefault(); draw(e); }
+
+        function stopDrawing() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            verifyStrokeAccuracy();
+        }
+
+        function verifyStrokeAccuracy() {
+            if (targetPixelsCount === 0) {
+                updateAutoTargetMask();
+                if (targetPixelsCount === 0) return;
+            }
+
+            const userImgData = userStrokesCtx.getImageData(0, 0, userStrokesCanvas.width, userStrokesCanvas.height);
+            const targetImgData = targetMaskCtx.getImageData(0, 0, targetMaskCanvas.width, targetMaskCanvas.height);
+
+            let matchedPixels = 0;
+            let outsidePixels = 0;
+            let totalUserPixels = 0;
+
+            for (let i = 3; i < userImgData.data.length; i += 4) {
+                const userAlpha = userImgData.data[i];
+                const targetAlpha = targetImgData.data[i];
+
+                if (userAlpha > 30) {
+                    totalUserPixels++;
+                    if (targetAlpha > 30) {
+                        matchedPixels++;
+                    } else {
+                        outsidePixels++;
+                    }
+                }
+            }
+
+            if (totalUserPixels === 0) {
+                const scoreBadge = document.getElementById('score-display-badge');
+                if (scoreBadge) scoreBadge.innerText = 'Score: 0%';
+                return;
+            }
+
+            const coverageRatio = matchedPixels / targetPixelsCount;
+            const baseScore = coverageRatio * 100;
+
+            const penaltyRatio = outsidePixels / totalUserPixels;
+            const penaltyDeduction = penaltyRatio * 60;
+
+            const rawScore = Math.max(0, baseScore - penaltyDeduction);
+            const currentScore = Math.min(100, Math.round(rawScore));
+
+            const scoreBadge = document.getElementById('score-display-badge');
+            if (scoreBadge) scoreBadge.innerText = `Score: ${toEnglishDigits(currentScore)}%`;
+
+            const markDoneBtn = document.getElementById('btn-mark-done');
+            const wrapper = document.getElementById('canvas-wrapper-box');
+            const feedback = document.getElementById('writing-feedback-text');
+
+            // UPDATED: Passing score set to 60%
+            if (currentScore >= 55) {
+                if (wrapper) wrapper.classList.add('success');
+                if (feedback) {
+                    feedback.classList.add('correct');
+                    feedback.innerText = currentScore >= 90 ? 'Excellent job! High accuracy ✓' : 'Good job! You reached the required score ✓';
+                }
+                if (markDoneBtn) {
+                    markDoneBtn.removeAttribute('disabled');
+                }
+            } else {
+                if (wrapper) wrapper.classList.remove('success');
+                if (feedback) {
+                    feedback.classList.remove('correct');
+                    if (penaltyRatio > 0.25) {
+                        feedback.innerText = 'Stay inside the shaded guide area to avoid penalties!';
+                    } else {
+                        feedback.innerText = 'Keep tracing to fill the character outline!';
+                    }
+                }
+                if (markDoneBtn) {
+                    markDoneBtn.setAttribute('disabled', 'true');
+                }
+            }
+        }
+
+        function clearCanvasDrawings() {
+            if (userStrokesCtx) {
+                userStrokesCtx.clearRect(0, 0, userStrokesCanvas.width, userStrokesCanvas.height);
+            }
+            if (autoCtx && autoCanvas) {
+                drawBackgroundGuideOnCanvas();
+            }
+            isDrawing = false;
+
+            const wrapper = document.getElementById('canvas-wrapper-box');
+            const feedback = document.getElementById('writing-feedback-text');
+            const scoreBadge = document.getElementById('score-display-badge');
+            const markDoneBtn = document.getElementById('btn-mark-done');
+
+            if (wrapper) wrapper.classList.remove('success');
+            if (feedback) {
+                feedback.classList.remove('correct');
+                feedback.innerText = 'Trace over the background guide!';
+            }
+            if (scoreBadge) scoreBadge.innerText = 'Score: 0%';
+            if (markDoneBtn) markDoneBtn.setAttribute('disabled', 'true');
+        }
+
+        async function checkIfCourseAlreadyCompleted() {
+            try {
+                const response = await fetch(`/api/progress/writing?user_id=${userId}&transaction_id=${transactionId}&course_id=${activeCourseId}`);
+                if (!response.ok) return;
+                
+                const data = await response.json();
+                const completedCourses = data.completedCourses || [];
+                const courseKey = `COURSE_${activeCourseId}`;
+
+                if (data.userId && String(data.userId) === String(userId) && (completedCourses.includes(courseKey) || data.is_completed)) {
+                    const course = COURSE_DATA[activeCourseId];
+                    course.letters.forEach((char) => completedLetters.add(char));
+                    
+                    document.querySelectorAll('.char-btn').forEach(btn => btn.classList.add('done'));
+                    document.getElementById('local-progress-bar').style.width = `100%`;
+                    document.getElementById('local-progress-text').innerText = `100% Completed`;
+                }
+            } catch (err) {
+                console.error("Failed to load user-specific course progress state:", err);
+            }
+        }
+
+        async function restartCourseProgress() {
+            if (!confirm("Are you sure you want to reset your progress for this lesson to 0%?")) {
+                return;
+            }
+
+            try {
+                const courseKey = `COURSE_${activeCourseId}`;
+                await fetch('/api/progress/reset-course', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: userId,
+                        transactionId: transactionId,
+                        courseKey: courseKey
+                    })
+                });
+
+                completedLetters.clear();
+                document.querySelectorAll('.char-btn').forEach(btn => btn.classList.remove('done'));
+                document.getElementById('local-progress-bar').style.width = `0%`;
+                document.getElementById('local-progress-text').innerText = `0% Completed`;
+
+                clearCanvasDrawings();
+                alert("Course progress has been reset.");
+            } catch (error) {
+                console.error("Error resetting course progress:", error);
+                completedLetters.clear();
+                document.querySelectorAll('.char-btn').forEach(btn => btn.classList.remove('done'));
+                document.getElementById('local-progress-bar').style.width = `0%`;
+                document.getElementById('local-progress-text').innerText = `0% Completed`;
+                clearCanvasDrawings();
+            }
+        }
+
+        async function finishCourseAndSaveToDatabase() {
+            const markDoneBtn = document.getElementById('btn-mark-done');
+            if (markDoneBtn && markDoneBtn.hasAttribute('disabled')) return;
+
+            const course = COURSE_DATA[activeCourseId];
+            const currentChar = course.letters[activeCharIndex];
+
+            completedLetters.add(currentChar);
+
+            const activeBtn = document.getElementById(`btn-char-${activeCharIndex}`);
+            if (activeBtn) activeBtn.classList.add('done');
+
+            const percent = Math.round((completedLetters.size / course.letters.length) * 100);
+            document.getElementById('local-progress-bar').style.width = `${percent}%`;
+            document.getElementById('local-progress-text').innerText = `${toEnglishDigits(percent)}% Completed`;
+
+            const courseKey = `COURSE_${activeCourseId}`;
+            
+            try {
+                const response = await fetch('/api/progress/complete-course', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: userId,
+                        transactionId: transactionId,
+                        courseKey: courseKey,
+                        completedLetters: Array.from(completedLetters).join(',')
+                    })
+                });
+
+                if (response.ok) {
+                    if (completedLetters.size === course.letters.length) {
+                        alert(`🎉 Congratulations! You have successfully completed ${course.name}.`);
+                        window.location.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+                        return;
+                    }
+                } else {
+                    console.warn("Server responded with error status, updating locally.");
+                }
+            } catch (error) {
+                console.error("Error saving progress to DB:", error);
+            }
+
+            if (completedLetters.size === course.letters.length) {
+                alert(`🎉 Congratulations! You have successfully completed ${course.name}.`);
+                window.location.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+                return;
+            }
+
+            if (activeCharIndex < course.letters.length - 1) {
+                activeCharIndex++;
+                const nextBtn = document.getElementById(`btn-char-${activeCharIndex}`);
+                const nextChar = course.letters[activeCharIndex];
+                selectCharacter(nextChar, nextBtn, course);
+            }
+        }
+    </script>
+    <script src="/js/navbar-profile.js"></script>
+    <script src="/js/logo.js"></script>
+</body>
+</html>

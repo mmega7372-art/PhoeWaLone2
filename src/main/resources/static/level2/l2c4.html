@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Level 2 Course 4 - Learn ံ and ်" />
+    <title>Level 2 · Course 4 | Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Myanmar:wght@400;600;700&family=Padauk:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/lesson.css" />
+
+    <style>
+      /* Fix Myanmar font rendering and stacked diacritics */
+      [lang="my"], h1, h2, h3, p, span {
+        font-family: 'Padauk', 'Noto Sans Myanmar', sans-serif;
+        line-height: 1.8;
+      }
+
+      /* Force override to ensure Logout renders as red text, not a purple button */
+      .course-nav .navbar-always-logout,
+      .course-nav .navbar-profile-logout {
+        background: none !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        color: #ef4444 !important;
+        padding: 6px 4px !important;
+        font: 700 14px 'Baloo 2', sans-serif !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        margin-left: 8px !important;
+      }
+
+      .course-nav .navbar-always-logout:hover,
+      .course-nav .navbar-profile-logout:hover {
+        color: #dc2626 !important;
+        background: transparent !important;
+      }
+    </style>
+  </head>
+  <body
+    data-course-label="Level 2 Course 4"
+    data-complete-label="Complete Course 4"
+    data-page="4"
+    data-next="l2c5.html"
+  >
+    <header class="course-navbar">
+      <a class="nav-brand" href="../index1.html"
+        ><img src="images/Logo.jpg" alt="Phoe Wa Lone logo" /><span
+          >Phoe Wa Lone</span
+        ></a
+      >
+      <nav class="course-nav">
+        <a href="../index1.html">Home</a>
+        <a href="../about1.html">About Us</a>
+        <a href="../courses1.html">Courses</a>
+        <a class="active" href="../curriculum.html">Curriculum</a>
+        
+        <!-- Language Switch Link -->
+        <a href="l2c4mm.html" class="btn-mm-pill">MM</a>
+
+        <!-- Logout Link (as <a> tag to bypass button styling) -->
+        <a
+          href="javascript:void(0)"
+          class="navbar-always-logout"
+          onclick="localStorage.removeItem('loggedInUser'); window.location.href='../index.html';"
+          style="color: #ef4444 !important; background: transparent !important; border: none !important; font: 700 14px 'Baloo 2', sans-serif !important; text-decoration: none !important;"
+        >Logout</a>
+      </nav>
+    </header>
+    
+    <main>
+      <a class="back-link" href="../curriculum.html">← Back to courses</a>
+      <section class="course-hero c4-simple-hero">
+        <div>
+          <span class="level-pill">⭐ Level 2 · Course 4</span>
+          <h1>Let’s Learn Two New Signs!</h1>
+          <p>
+            Look, listen, and repeat these two useful Burmese writing signs.
+          </p>
+        </div>
+        <div class="simple-hero-art" aria-hidden="true">
+          <span>ံ</span><span>်</span><i>✏️</i><b>⭐</b>
+        </div>
+      </section>
+
+      <nav class="lesson-nav"><a href="#learn">1. Learn</a></nav>
+
+      <section class="lesson-section simple-lesson" id="learn">
+        <div class="section-heading">
+          <span class="section-number">1</span>
+          <div>
+            <p>Meet the signs</p>
+            <h2>Look, listen and repeat</h2>
+          </div>
+        </div>
+        <p class="sound-tip">
+          💡 Press each speaker and repeat the sound three times.
+        </p>
+        <div class="simple-sign-grid">
+          <article class="sign-card pink-sign">
+            <span class="card-number">01</span>
+            <div class="sign-symbol">ံ</div>
+            <span class="fun-picture">☁️</span>
+            <h3>သေးသေးတင်</h3>
+            <p>Written above a consonant to add a nasal sound.</p>
+            <button
+              class="audio-button"
+              data-audio="audio/l2c4-thay-thay-tin.mp3"
+            >
+              <span>🔊</span> Listen
+            </button>
+          </article>
+          <article class="sign-card blue-sign">
+            <span class="card-number">02</span>
+            <div class="sign-symbol">်</div>
+            <span class="fun-picture">⚡</span>
+            <h3>ရှေ့ထိုး</h3>
+            <p>Written with a consonant to close or stop its sound.</p>
+            <button class="audio-button" data-audio="audio/l2c4-shay-htoe.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </article>
+        </div>
+        <div class="simple-cheer">
+          <span>👏</span>
+          <div>
+            <h3>You can do it!</h3>
+            <p>Each card turns blue after you press Listen.</p>
+          </div>
+          <span>🌟✨</span>
+        </div>
+      </section>
+
+      <section class="finish-card">
+        <span class="trophy">🏆</span>
+        <div>
+          <h2>Wonderful work!</h2>
+          <p id="finishHint">Listen to both signs to unlock the button.</p>
+          <p id="finishMessage" hidden>🎉 Level 2 Course 4 completed!</p>
+        </div>
+        <button id="finishButton" type="button" disabled>
+          <span>🏆</span><span>Complete Course 4</span><span>✓</span>
+        </button>
+      </section>
+    </main>
+<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+
+    <script src="js/lesson.js"></script>
+    <script src="js/navbar-profile.js?v=3"></script>
+  </body>
+</html>

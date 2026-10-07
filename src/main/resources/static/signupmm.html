@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>အကောင့်ဖွင့်ရန် - ဖိုးဝလုံး</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* --- Dynamic Logo Header & Brand Group Styling --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            text-decoration: none;
+            line-height: 1;
+            margin: 0;
+        }
+    </style>
+      <link rel="stylesheet" href="css/shared-navbar.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <!-- Dynamic JS Logo + Brand Name Group -->
+        <a href="indexmm.html" class="brand-group">
+            <div class="logo-badge"></div>
+            <div class="brand">ဖိုးဝလုံး</div>
+        </a>
+
+        <nav class="nav-links">
+            <a href="indexmm.html">ပင်မစာမျက်နှာ</a>
+            <a href="aboutmm.html">ကျွန်ုပ်တို့အကြောင်း</a>
+            <a href="coursesmm.html">သင်ခန်းစာများ</a>
+            <a href="loginmm.html" class="btn-nav-signup">အကောင့်ဝင်ရန်</a>
+            <a href="signupmm.html" class="btn-nav-signup">အကောင့်ဖွင့်ရန်</a>
+          <button class="btn-mm-pill" type="button" onclick="window.location.href='signup.html'">ENG</button>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        
+        <div class="auth-side">
+            <div class="auth-card">
+                <h2>အကောင့်အသစ် ဖွင့်ပါ</h2>
+                <div class="tagline">သင်ခန်းစာများကို လေ့လာနိုင်ရန် အကောင့်အသစ်ပြုလုပ်ပါ</div>
+
+                <div class="status-msg error" id="errorDiv"></div>
+                <div class="status-msg success" id="successDiv"></div>
+
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label>အသုံးပြုသူအမည်</label>
+                        <input type="text" id="username" required placeholder="အသုံးပြုသူအမည်ကို ရွေးချယ်ပါ">
+                    </div>
+
+                    <div class="form-group">
+                        <label>အီးမေးလ်လိပ်စာ</label>
+                        <input type="email" id="email" required placeholder="Email ရိုက်ထည့်ပါ">
+                    </div>
+
+                    <div class="form-group">
+                        <label>စကားဝှက်</label>
+                        <input type="password" id="password" required placeholder="စကားဝှက်အသစ် ဖန်တီးပါ">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" style="margin-top: 10px;">အကောင့်ဖွင့်ရန်</button>
+                </form>
+
+                <div class="divider">သို့မဟုတ်</div>
+
+                <div class="auth-footer">
+                    အကောင့်ရှိပြီးသားလား? <a href="loginmm.html">အကောင့်ဝင်ရန်</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="showcase-side">
+            <div class="alphabet-image-card">
+                <img src="images/image2.jpg" alt="Myanmar Alphabet Chart">
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const userVal = document.getElementById('username').value.trim();
+        const emailVal = document.getElementById('email').value.trim();
+        const passVal = document.getElementById('password').value;
+        const errorDiv = document.getElementById('errorDiv');
+        const successDiv = document.getElementById('successDiv');
+
+        errorDiv.style.display = "none";
+        successDiv.style.display = "none";
+
+        fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: userVal,
+                email: emailVal,
+                password: passVal
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "SUCCESS") {
+                successDiv.style.display = "block";
+                successDiv.innerText = "အကောင့်ပြုလုပ်ခြင်း အောင်မြင်ပါသည်။ အကောင့်ဝင်ရန် ပြောင်းလဲနေပါသည်...";
+                setTimeout(() => { window.location.href = "loginmm.html"; }, 2000);
+            } else {
+                errorDiv.style.display = "block";
+                errorDiv.innerText = data.message === "Username or Email is already registered." ? "ဤအသုံးပြုသူအမည် သို့မဟုတ် Email ကို အသုံးပြုထားပြီးဖြစ်ပါသည်။" : data.message;
+            }
+        })
+        .catch(err => {
+            errorDiv.style.display = "block";
+            errorDiv.innerText = "ဆာဗာသို့ ချိတ်ဆက်ရာတွင် အမှားအယွင်း ဖြစ်ပေါ်နေပါသည်။";
+        });
+    });
+    </script>
+
+    <!-- Dynamic Logo Generator Script -->
+    <script src="/js/logo.js"></script>
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>အက္ခရာ ရေးဆွဲနည်း - ဖိုးဝလုံး</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shared-navbar.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* 1. Reset & Layout Setup */
+        .circle, .circle-left, .circle-right, [class*="circle"],
+        body::before, body::after, main::before, main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: inherit;
+            color: #111111;
+        }
+
+        /* Explicit Dynamic/Mobile Responsive Tweaks for Navbar */
+        @media (max-width: 760px) { 
+            .course-navbar { min-height: 76px; padding: 10px 20px; flex-direction: row !important; align-items: center !important; gap: 12px; } 
+            .nav-brand { font-size: 21px; } 
+            .nav-brand img { width: 48px; height: 48px; flex-basis: 48px; } 
+            .course-nav { gap: 0 !important; flex-wrap: nowrap !important; } 
+            .course-nav a { display: none; } 
+            .course-nav button, .course-nav .btn-eng-pill { min-width: 60px; height: 40px; } 
+        }
+
+        /* Explicit ENG Switcher Button Styling */
+        .btn-eng-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-eng-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* 2. Main Writing Container */
+        .writing-container {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-nav {
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            background: #eae6fa;
+            border: none;
+            color: #6e48c4;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background: #6e48c4;
+            color: #ffffff;
+            transform: translateX(-4px);
+        }
+
+        .page-header-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #111111;
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        /* Showcase Card */
+        .media-showcase-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 25px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 25px;
+        }
+
+        .media-info h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+
+        .media-info p {
+            color: #555555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Courses Grid Layout */
+        .courses-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 22px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(110, 72, 196, 0.1);
+            border-color: #eae6fa;
+        }
+
+        .course-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: #111111;
+        }
+
+        .letters-preview {
+            font-size: 22px;
+            font-weight: 700;
+            color: #6e48c4;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .btn-course-action {
+            display: inline-block;
+            text-align: center;
+            background: #eae6fa;
+            color: #6e48c4;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-course-action:hover {
+            background: #6e48c4;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="/../indexmm1.html" aria-label="ဖိုးဝလုံး ပင်မစာမျက်နှာ">
+            <img class="brand-logo" src="/images/Logo.jpg" alt="ဖိုးဝလုံး လိုဂို">
+            <span>ဖိုးဝလုံး</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="/../indexmm1.html">ပင်မစာမျက်နှာ</a>
+                <a href="/../aboutmm1.html">ကျွန်ုပ်တို့အကြောင်း</a>
+                <a href="/../coursesmm1.html">သင်ခန်းစာများ</a>
+                <a href="/../curriculummm.html" class="active">သင်ရိုးညွှန်းတမ်း</a>
+				<button class="btn-mm-pill" type="button" onclick="window.location.href='writing_courses.html'">ENG</button>
+				         
+    </header>
+
+    <main class="main-container" style="display: block; min-height: calc(100vh - 100px);">
+        <div class="writing-container">
+            
+            <div class="back-nav">
+                <a href="/../curriculummm.html" class="btn-back">← နောက်သို့</a>
+            </div>
+            
+            <h1 class="page-header-title">သင်ခန်းစာများကို စတင်လေ့လာကြပါစို့။</h1>
+
+            <!-- Writing Guide Media Section -->
+            <section class="media-showcase-card">
+                <div class="media-info">
+                    <h3>အက္ခရာ ရေးဆွဲနည်း လမ်းညွှန်</h3>
+                    <p>မြန်မာဗျည်းအက္ခရာများကို စနစ်တကျ မှန်ကန်စွာ ရေးဆွဲနည်း လှုပ်ရှားပုံများကို အောက်တွင် လေ့လာကြည့်ရှုပါ။</p>
+                </div>
+                <div class="media-viewport">
+                    <!-- Dynamic GIF or video media component -->
+                </div>
+            </section>
+
+            <!-- Courses Grid -->
+            <section class="courses-grid-layout">
+                <div class="course-card" id="course-card-1">
+                    <h3>သင်ခန်းစာ ၁</h3>
+                    <div class="letters-preview">ဝ ဂ ပ င</div>
+                    <a href="alphabetmm.html?course=1" class="btn-course-action" id="course-link-1">စတင်မည် →</a>
+                </div>
+
+                <div class="course-card" id="course-card-2">
+                    <h3>သင်ခန်းစာ ၂</h3>
+                    <div class="letters-preview">ထ တ က ဘ</div>
+                    <a href="alphabetmm.html?course=2" class="btn-course-action" id="course-link-2">စတင်မည် →</a>
+                </div>
+
+                <div class="course-card" id="course-card-3">
+                    <h3>သင်ခန်းစာ ၃</h3>
+                    <div class="letters-preview">သ လ ယ ဟ</div>
+                    <a href="alphabetmm.html?course=3" class="btn-course-action" id="course-link-3">စတင်မည် →</a>
+                </div>
+
+                <div class="course-card" id="course-card-4">
+                    <h3>သင်ခန်းစာ ၄</h3>
+                    <div class="letters-preview">စ ဓ ခ ဆ</div>
+                    <a href="alphabetmm.html?course=4" class="btn-course-action" id="course-link-4">စတင်မည် →</a>
+                </div>
+
+                <div class="course-card" id="course-card-5">
+                    <h3>သင်ခန်းစာ ၅</h3>
+                    <div class="letters-preview">မ ဖ ဗ ရ န</div>
+                    <a href="alphabetmm.html?course=5" class="btn-course-action" id="course-link-5">စတင်မည် →</a>
+                </div>
+
+                <div class="course-card" id="course-card-6">
+                    <h3>သင်ခန်းစာ ၆</h3>
+                    <div class="letters-preview">ဇ ဒ အ ည</div>
+                    <a href="alphabetmm.html?course=6" class="btn-course-action" id="course-link-6">စတင်မည် →</a>
+                </div>
+
+                <div class="course-card" id="course-card-7">
+                    <h3>သင်ခန်းစာ ၇</h3>
+                    <div class="letters-preview">ဃ ဈ ဋ ဌ</div>
+                    <a href="alphabetmm.html?course=7" class="btn-course-action" id="course-link-7">စတင်မည် →</a>
+                </div>
+
+                <div class="course-card" id="course-card-8">
+                    <h3>သင်ခန်းစာ ၈</h3>
+                    <div class="letters-preview">ဍ ဎ ဏ ဠ</div>
+                    <a href="alphabetmm.html?course=8" class="btn-course-action" id="course-link-8">စတင်မည် →</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="writing_coursesmm.js"></script>
+    <script src="/js/navbar-profile.js"></script>
+    <!-- Dynamic Logo Generator Script -->
+    <script src="/js/logo.js"></script>
+</body>
+</html>

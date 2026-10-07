@@ -1,0 +1,2777 @@
+:root {
+  --ink: #29213f;
+  --purple: #7048dc;
+  --purple-dark: #5735bc;
+  --lavender: #eee8ff;
+  --page: #fbfaff;
+  --white: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(
+      circle at 7% 32%,
+      rgba(255, 214, 92, 0.22) 0 90px,
+      transparent 92px
+    ),
+    radial-gradient(
+      circle at 94% 62%,
+      rgba(115, 218, 191, 0.2) 0 120px,
+      transparent 122px
+    ),
+    linear-gradient(180deg, #fbfaff 0%, #fff9fc 52%, #f8fbff 100%);
+  font-family: "Baloo 2", "Noto Sans Myanmar", sans-serif;
+}
+button,
+a {
+  font: inherit;
+}
+button {
+  color: inherit;
+}
+
+.site-header {
+  min-height: 92px;
+  padding: 18px clamp(24px, 6vw, 96px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid #eeeafb;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(12px);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #17131f;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+.brand-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border: 3px solid #ffd75e;
+  border-radius: 50%;
+  box-shadow: 0 5px 12px rgba(92, 61, 154, 0.18);
+}
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(15px, 2.5vw, 38px);
+}
+.main-nav a {
+  color: #26202f;
+  text-decoration: none;
+  font-weight: 700;
+}
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--purple);
+}
+.language-button {
+  border: 0;
+  border-radius: 13px;
+  background: #8152f5;
+  color: #fff;
+  padding: 11px 17px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+main {
+  width: min(1420px, calc(100% - 40px));
+  margin: auto;
+}
+.back-link {
+  display: inline-flex;
+  margin: 34px 0 24px;
+  color: var(--purple);
+  font-weight: 700;
+  text-decoration: none;
+}
+.back-link:hover {
+  transform: translateX(-4px);
+}
+
+.hero {
+  min-height: 460px;
+  padding: clamp(38px, 6vw, 76px);
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 42px;
+  background: linear-gradient(120deg, #e6ddff 0%, #fbe0f2 100%);
+  box-shadow: 0 18px 50px rgba(92, 61, 154, 0.12);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  left: -80px;
+  bottom: -90px;
+  border: 30px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+}
+.hero-copy {
+  position: relative;
+  z-index: 2;
+}
+.lesson-label {
+  width: fit-content;
+  padding: 12px 20px;
+  background: #fff;
+  border-radius: 999px;
+  color: var(--purple-dark);
+  font-weight: 800;
+}
+h1 {
+  margin: 25px 0 15px;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: clamp(2.3rem, 5vw, 4.8rem);
+  line-height: 1.3;
+  letter-spacing: -2px;
+}
+.hero-copy p {
+  max-width: 750px;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.9;
+}
+.primary-button {
+  margin-top: 10px;
+  padding: 15px 25px;
+  border: 0;
+  border-radius: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, #835ce9, #633bd1);
+  box-shadow: 0 9px 0 #4c2aa9;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 0 #4c2aa9;
+}
+.primary-button:active {
+  transform: translateY(6px);
+  box-shadow: 0 3px 0 #4c2aa9;
+}
+
+.hero-art {
+  min-height: 300px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.rainbow {
+  width: min(310px, 90%);
+  aspect-ratio: 1.7;
+  overflow: hidden;
+  position: relative;
+  border: 25px solid #ff84ae;
+  border-bottom: 0;
+  border-radius: 180px 180px 0 0;
+  animation: float 4s ease-in-out infinite;
+}
+.rainbow i {
+  position: absolute;
+  inset: 18px;
+  border: 24px solid #ffd45c;
+  border-bottom: 0;
+  border-radius: inherit;
+}
+.rainbow i:nth-child(2) {
+  inset: 56px;
+  border-color: #6ed6bd;
+  border-width: 22px;
+}
+.rainbow i:nth-child(3) {
+  inset: 91px;
+  border-color: #8ba8ff;
+  border-width: 18px;
+}
+.pencil {
+  position: absolute;
+  z-index: 3;
+  font-size: 5rem;
+  transform: rotate(-18deg);
+  animation: pencil 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 4px rgba(52, 35, 75, 0.12));
+}
+.cloud {
+  position: absolute;
+  width: 100px;
+  height: 32px;
+  bottom: 22px;
+  border-radius: 30px;
+  background: #fff;
+  opacity: 0.9;
+}
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  background: inherit;
+}
+.cloud::before {
+  width: 48px;
+  height: 48px;
+  left: 14px;
+}
+.cloud::after {
+  width: 58px;
+  height: 58px;
+  right: 7px;
+}
+.cloud-left {
+  left: 3%;
+  animation: float 3s ease-in-out infinite;
+}
+.cloud-right {
+  right: -2%;
+  bottom: 55px;
+  transform: scale(0.8);
+  animation: float 3.8s ease-in-out infinite reverse;
+}
+.sparkle {
+  position: absolute;
+  color: #fff;
+  font-size: 2rem;
+  animation: twinkle 1.5s ease-in-out infinite;
+}
+.sparkle-one {
+  top: 8%;
+  left: 5%;
+}
+.sparkle-two {
+  top: 15%;
+  right: 5%;
+  animation-delay: 0.5s;
+}
+
+.lesson-section {
+  margin: 70px 0;
+  padding: 55px 42px 45px;
+  position: relative;
+  border: 2px solid #e8e0ff;
+  border-radius: 38px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 18px 50px rgba(71, 48, 125, 0.09);
+}
+.lesson-section::before,
+.lesson-section::after {
+  position: absolute;
+  z-index: -1;
+  font-size: 3rem;
+}
+.lesson-section::before {
+  content: "🌈";
+  top: -35px;
+  right: 5%;
+  transform: rotate(8deg);
+}
+.lesson-section::after {
+  content: "✨";
+  bottom: 30px;
+  left: -25px;
+}
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 34px;
+}
+.eyebrow {
+  color: var(--purple);
+  text-transform: uppercase;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-weight: 800;
+}
+h2 {
+  margin: 8px 0;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+}
+.section-heading p {
+  margin: 0;
+  color: #716a7f;
+  font-family: "Noto Sans Myanmar", sans-serif;
+}
+.lesson-tip {
+  margin: 0 0 24px;
+  padding: 17px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 18px;
+  background: #fff7d7;
+}
+.lesson-tip p {
+  margin: 0;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-weight: 600;
+  line-height: 1.7;
+}
+.sign-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.sign-card {
+  min-width: 0;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  box-shadow:
+    0 12px 0 rgba(87, 53, 188, 0.1),
+    0 18px 30px rgba(47, 34, 78, 0.08);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+.sign-card:hover,
+.sign-card:focus-within {
+  transform: translateY(-8px) rotate(-1deg);
+  box-shadow: 0 18px 35px rgba(47, 34, 78, 0.13);
+}
+.sign-card.learned {
+  border-color: #6f48dd;
+}
+.sign-card.learned::after {
+  content: "✓";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #6f48dd;
+  border-radius: 50%;
+  font-weight: 800;
+}
+.pink {
+  background: linear-gradient(155deg, #ffd9e8, #fff0f7);
+}
+.yellow {
+  background: linear-gradient(155deg, #ffe99c, #fff8dc);
+}
+.green {
+  background: linear-gradient(155deg, #c9f4e3, #effff9);
+}
+.blue {
+  background: linear-gradient(155deg, #cbe0ff, #eef5ff);
+}
+.purple {
+  background: linear-gradient(155deg, #ddceff, #f4eeff);
+}
+.card-number {
+  position: absolute;
+  top: 17px;
+  left: 17px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--purple);
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-weight: 700;
+}
+.sign-character {
+  min-height: 132px;
+  display: grid;
+  place-items: center;
+  color: #3a285d;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  transition: transform 0.25s;
+}
+.sign-card:hover .sign-character {
+  transform: scale(1.13) rotate(3deg);
+}
+.sign-card h3 {
+  margin: 5px 0 8px;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.05rem;
+}
+.sign-card p {
+  min-height: 66px;
+  margin: 0 0 17px;
+  color: #686174;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+.audio-button {
+  width: 100%;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--purple-dark);
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 5px 13px rgba(75, 52, 123, 0.09);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.audio-button:hover {
+  color: #fff;
+  background: var(--purple);
+  transform: scale(1.03);
+}
+.audio-button.playing {
+  color: #fff;
+  background: #f36fa1;
+  animation: pulse 0.8s infinite alternate;
+}
+
+.encouragement {
+  margin-top: 35px;
+  padding: 22px 30px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 2px dashed #c7b7f4;
+  border-radius: 24px;
+  background: #fff;
+}
+.mascot {
+  font-size: 3.3rem;
+  animation: wave 2s ease-in-out infinite;
+}
+.encouragement strong {
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.25rem;
+}
+.encouragement p {
+  margin: 4px 0 0;
+  color: #716a7f;
+  font-family: "Noto Sans Myanmar", sans-serif;
+}
+.stars {
+  margin-left: auto;
+  font-size: 1.8rem;
+}
+.complete-area {
+  padding-top: 38px;
+  text-align: center;
+}
+.complete-button {
+  min-width: min(100%, 320px);
+  padding: 17px 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  border: 0;
+  border-radius: 20px;
+  color: #fff;
+  background: linear-gradient(120deg, #ff719f, #8c53ef 55%, #4a9cf3);
+  box-shadow:
+    0 9px 0 #4f2ca7,
+    0 15px 28px rgba(112, 72, 220, 0.25);
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.complete-button:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 13px 0 #4f2ca7,
+    0 20px 35px rgba(112, 72, 220, 0.3);
+}
+.complete-button:active {
+  transform: translateY(5px);
+  box-shadow: 0 4px 0 #4f2ca7;
+}
+.complete-button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+  opacity: 0.55;
+  box-shadow: 0 6px 0 #a9a4b4;
+  transform: none;
+}
+.complete-button:disabled:hover {
+  transform: none;
+  box-shadow: 0 6px 0 #a9a4b4;
+}
+.complete-button.completed {
+  background: linear-gradient(120deg, #38bd8a, #52d4a4);
+  box-shadow: 0 8px 0 #208966;
+  animation: celebrate 0.55s ease;
+}
+.complete-hint {
+  margin: 17px 0 0;
+  color: #756b88;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 0.9rem;
+}
+footer {
+  padding: 28px;
+  text-align: center;
+  color: #756b88;
+  background: #f0ebff;
+  font-family: "Noto Sans Myanmar", sans-serif;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes pencil {
+  50% {
+    transform: translate(8px, -14px) rotate(-10deg);
+  }
+}
+@keyframes twinkle {
+  50% {
+    opacity: 0.25;
+    transform: scale(0.65) rotate(30deg);
+  }
+}
+@keyframes pulse {
+  to {
+    transform: scale(1.04);
+  }
+}
+@keyframes wave {
+  50% {
+    transform: rotate(-8deg) translateY(-4px);
+  }
+}
+@keyframes celebrate {
+  50% {
+    transform: scale(1.1) rotate(-2deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .sign-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .hero {
+    grid-template-columns: 1fr 0.65fr;
+  }
+}
+@media (max-width: 760px) {
+  .site-header {
+    min-height: 76px;
+    padding: 12px 20px;
+  }
+  .brand {
+    font-size: 1.35rem;
+  }
+  .brand-face {
+    width: 38px;
+    height: 38px;
+  }
+  .main-nav a {
+    display: none;
+  }
+  .main-nav {
+    margin-left: auto;
+  }
+  main {
+    width: min(100% - 24px, 1420px);
+  }
+  .back-link {
+    margin: 22px 0 16px;
+  }
+  .hero {
+    min-height: auto;
+    padding: 34px 25px 28px;
+    grid-template-columns: 1fr;
+    border-radius: 28px;
+  }
+  h1 {
+    letter-spacing: -1px;
+  }
+  .hero-art {
+    min-height: 220px;
+    margin-top: 10px;
+  }
+  .rainbow {
+    width: 240px;
+  }
+  .lesson-section {
+    margin: 48px 0;
+    padding: 42px 22px 35px;
+  }
+  .section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .sign-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .brand span:last-child {
+    font-size: 1.1rem;
+  }
+  .sign-grid {
+    grid-template-columns: 1fr;
+  }
+  .sign-card p {
+    min-height: auto;
+  }
+  .encouragement {
+    align-items: flex-start;
+    padding: 18px;
+  }
+  .stars {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Course 2 reuses the lesson theme and components above. */
+.course-progress-strip {
+  position: sticky;
+  top: 92px;
+  z-index: 15;
+  padding: 9px clamp(24px, 6vw, 96px);
+  background: rgba(250, 248, 255, 0.94);
+  backdrop-filter: blur(10px);
+}
+.lesson-progress {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: 700;
+}
+.lesson-progress .progress-track {
+  flex: 1;
+  margin: 0;
+}
+.progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7950df, #ff77a8);
+  transition: width 0.4s;
+}
+.course-hero {
+  min-height: 410px;
+  padding: clamp(38px, 6vw, 72px);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 18px 45px rgba(69, 47, 113, 0.12);
+}
+.course-hero h1 {
+  margin: 22px 0 10px;
+}
+.course-hero p {
+  max-width: 700px;
+  font-size: 1.14rem;
+  line-height: 1.7;
+}
+.level-pill {
+  display: inline-block;
+  padding: 11px 18px;
+  color: #6542c1;
+  background: #fff;
+  border-radius: 99px;
+  font-weight: 800;
+}
+.hero-mascot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  animation: float 3s ease-in-out infinite;
+}
+.hero-mascot span {
+  width: 160px;
+  height: 180px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(145deg, #ff9c54, #f1779a);
+  border: 7px solid #fff;
+  border-radius: 45px;
+  font: 800 7rem "Noto Sans Myanmar";
+  box-shadow: 0 15px 30px rgba(127, 67, 125, 0.2);
+}
+.hero-audio {
+  width: auto;
+  margin-top: 12px;
+  padding: 13px 22px;
+  color: #fff;
+  background: #7047dc;
+}
+.lesson-nav {
+  margin: 25px 0;
+  padding: 13px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  position: sticky;
+  top: 137px;
+  z-index: 12;
+  border: 1px solid #e8e2f5;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+}
+.lesson-nav a {
+  padding: 9px 18px;
+  border-radius: 13px;
+  color: #5b3fb0;
+  text-decoration: none;
+  font-weight: 800;
+}
+.lesson-nav a:hover {
+  color: #fff;
+  background: #7047dc;
+}
+body[data-course="2"] .lesson-section {
+  margin: 26px 0;
+  padding: clamp(28px, 4vw, 48px);
+  border: 1px solid #e8e3f1;
+  border-radius: 32px;
+  background: #fff;
+  box-shadow: 0 14px 35px rgba(62, 42, 101, 0.07);
+}
+body[data-course="2"] .section-heading {
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 28px;
+}
+body[data-course="2"] .section-heading p {
+  color: #7758d4;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+body[data-course="2"] .section-heading h2 {
+  margin: 3px 0;
+}
+.section-number {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 60px;
+  color: #fff;
+  background: #7350dc;
+  border-radius: 19px;
+  box-shadow: 0 7px 0 #4f31aa;
+  font-size: 1.4rem;
+  font-weight: 800;
+  transform: rotate(-3deg);
+}
+.tip {
+  margin: 22px 0;
+  padding: 16px 20px;
+  background: #fff4c8;
+  border-radius: 17px;
+}
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+.word-card {
+  padding: 24px 15px;
+  text-align: center;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  background: #f3efff;
+  transition: 0.25s;
+}
+.word-card > span {
+  display: block;
+  font-size: 4rem;
+  animation: float 3s ease-in-out infinite;
+}
+.word-card h3 {
+  margin: 10px 0 0;
+  font: 700 1.4rem "Noto Sans Myanmar";
+}
+.word-card p {
+  margin: 2px 0 14px;
+}
+.mini-audio {
+  width: auto;
+  padding: 9px 16px;
+  color: #fff;
+  background: #7047dc;
+}
+.finish-card {
+  margin: 30px 0 65px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  border-radius: 28px;
+  background: linear-gradient(120deg, #eee5ff, #ffe6f1);
+}
+.finish-card > span {
+  font-size: 4rem;
+}
+.finish-card h2,
+.finish-card p {
+  margin: 2px 0;
+}
+.finish-card .complete-button {
+  margin-left: auto;
+}
+.course-two-hero {
+  background: linear-gradient(120deg, #dff7ff, #f8e2ff);
+}
+.course-two-art {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+.course-two-art span {
+  width: 115px;
+  height: 135px;
+  display: grid;
+  place-items: center;
+  border: 5px solid #fff;
+  border-radius: 30px;
+  color: #422a70;
+  background: #ffe69a;
+  box-shadow: 0 14px 0 rgba(92, 57, 168, 0.12);
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 5rem;
+  font-weight: 800;
+  animation: float 3s ease-in-out infinite;
+}
+.course-two-art span:nth-child(2) {
+  background: #ffcfe0;
+  animation-delay: 0.4s;
+}
+.course-two-art i {
+  position: absolute;
+  right: 5%;
+  bottom: 8%;
+  font-size: 4rem;
+  animation: pencil 3s ease-in-out infinite;
+}
+.course-progress {
+  margin: 28px auto 0;
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(62, 40, 109, 0.08);
+}
+.course-progress > div {
+  flex: 1;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #eeeaf6;
+}
+.course-progress i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #7b50e5, #ff79aa);
+}
+.c2-section {
+  margin: 34px 0;
+  padding: clamp(25px, 4vw, 48px);
+  border: 1px solid #ebe6f5;
+  border-radius: 34px;
+  background: #fff;
+  box-shadow: 0 15px 38px rgba(61, 40, 102, 0.07);
+}
+.c2-heading {
+  margin-bottom: 27px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.c2-heading h2 {
+  margin: 3px 0 0;
+}
+.c2-heading small {
+  color: #8159e8;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.c2-number {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 18px;
+  color: #fff;
+  background: #754cdd;
+  box-shadow: 0 7px 0 #5231ad;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  transform: rotate(-3deg);
+}
+.revision-card {
+  padding: 24px 30px;
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  align-items: center;
+  gap: 25px;
+  border-radius: 25px;
+  background: linear-gradient(100deg, #fff0f6, #f1ebff);
+}
+.revision-sign {
+  width: 100px;
+  height: 100px;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  color: #513287;
+  background: #fff;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 5rem;
+  font-weight: 800;
+}
+.revision-card h3 {
+  margin: 0;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.5rem;
+}
+.revision-card p {
+  margin: 8px 0 0;
+  font-family: "Noto Sans Myanmar", sans-serif;
+}
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.practice-item {
+  text-align: center;
+  border: 2px solid transparent;
+  transition: 0.25s;
+}
+.example-grid .practice-item {
+  padding: 20px 15px;
+  border-radius: 25px;
+}
+.practice-item > b {
+  display: block;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 3.6rem;
+}
+.practice-item > p {
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.practice-item.learned,
+.vocab-card.learned,
+.reading-card.learned {
+  border-color: #7450d8;
+  transform: translateY(-5px);
+}
+.audio-button.compact {
+  width: auto;
+  padding: 10px 18px;
+  color: #fff;
+  background: #744be0;
+}
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+.vocab-card {
+  padding: 24px 12px;
+  text-align: center;
+  border: 2px solid transparent;
+  border-radius: 27px;
+  background: #f8f5ff;
+  transition: 0.25s;
+}
+.vocab-card:nth-child(2n) {
+  background: #fff7dc;
+}
+.vocab-card:nth-child(3n) {
+  background: #e8faf4;
+}
+.vocab-picture {
+  display: block;
+  font-size: 4.5rem;
+  animation: float 3.2s ease-in-out infinite;
+}
+.vocab-card h3 {
+  margin: 12px 0 2px;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.4rem;
+}
+.vocab-card p {
+  margin: 0 0 17px;
+  color: #71677e;
+  font-weight: 700;
+}
+.reading-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.reading-card {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  border: 2px solid transparent;
+  border-radius: 28px;
+  background: #eef6ff;
+  transition: 0.25s;
+}
+.reading-card:nth-child(2) {
+  background: #fff1e5;
+}
+.reading-art {
+  font-size: 4.5rem;
+}
+.reading-card p {
+  margin: 0;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 2;
+}
+.c2-complete {
+  margin: 42px 0 65px;
+}
+.finish-message {
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #4b2fa0;
+}
+body[data-course="2"] .pink {
+  background: #ffe4ee;
+}
+body[data-course="2"] .yellow {
+  background: #fff0b9;
+}
+body[data-course="2"] .green {
+  background: #d9f6e9;
+}
+body[data-course="2"] .blue {
+  background: #deecff;
+}
+body[data-course="2"] .purple {
+  background: #e9e0ff;
+}
+
+@media (max-width: 1000px) {
+  .example-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .vocab-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .reading-card {
+    grid-template-columns: 75px 1fr;
+  }
+  .reading-card .audio-button {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 900px) {
+  .word-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .course-hero {
+    grid-template-columns: 1fr;
+  }
+  .hero-mascot {
+    margin-top: 30px;
+  }
+  .lesson-nav {
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  .finish-card {
+    flex-wrap: wrap;
+  }
+  .finish-card .complete-button {
+    margin-left: 0;
+  }
+}
+@media (max-width: 760px) {
+  .course-two-art {
+    min-height: 220px;
+  }
+  .course-two-art span {
+    width: 90px;
+    height: 110px;
+    font-size: 4rem;
+  }
+  .revision-card {
+    grid-template-columns: 90px 1fr;
+  }
+  .revision-card .audio-button {
+    grid-column: 1/-1;
+  }
+  .example-grid,
+  .vocab-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .reading-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .course-progress-strip {
+    top: 76px;
+  }
+  .word-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .course-hero {
+    padding: 32px 24px;
+    border-radius: 28px;
+  }
+  .hero-mascot span {
+    width: 120px;
+    height: 140px;
+    font-size: 5rem;
+  }
+  .lesson-nav {
+    top: 121px;
+  }
+  .finish-card {
+    text-align: center;
+    justify-content: center;
+  }
+  .finish-card .complete-button {
+    width: 100%;
+  }
+}
+
+/* Exact Course 2 reference layout; deliberately scoped so Course 1 is unchanged. */
+body[data-course="2"] .learn-two {
+  background: linear-gradient(145deg, #fff, #fff4cf);
+}
+body[data-course="2"] .revision-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 22px;
+  padding: 24px;
+  background: linear-gradient(135deg, #e9e1ff, #f7edff);
+  border: 2px solid #d6c8f5;
+  border-radius: 24px;
+}
+body[data-course="2"] .revision-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  background: #fff;
+  border-radius: 18px;
+  font-size: 1.8rem;
+}
+body[data-course="2"] .revision-label {
+  color: #7554d5;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+body[data-course="2"] .revision-banner h3 {
+  margin: 4px 0;
+  font: 700 1.8rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .revision-banner p {
+  margin: 0 0 12px;
+}
+body[data-course="2"] .example-chips {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+body[data-course="2"] .example-chips span {
+  padding: 7px 12px;
+  background: #fff;
+  border-radius: 15px;
+  font: 600 1rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .revision-audio {
+  padding: 8px 14px;
+  font-size: 0.82rem;
+}
+body[data-course="2"] .main-sign {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 28px;
+  background: #fff9df;
+  border: 3px dashed #efc757;
+  border-radius: 25px;
+}
+body[data-course="2"] .big-sign {
+  display: grid;
+  place-items: center;
+  width: 130px;
+  height: 130px;
+  flex: 0 0 130px;
+  color: #fff;
+  background: linear-gradient(145deg, #ff9d53, #f0789b);
+  border-radius: 35px;
+  font: 700 6rem "Noto Sans Myanmar";
+  box-shadow: 0 10px 22px rgba(221, 107, 91, 0.25);
+  transform: rotate(-3deg);
+}
+body[data-course="2"] .sign-name {
+  font: 700 2rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .main-sign p {
+  margin: 5px 0 15px;
+}
+body[data-course="2"] .friend-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+body[data-course="2"] .friend-grid div {
+  display: flex;
+  padding: 18px 8px;
+  flex-direction: column;
+  align-items: center;
+  background: #f1ecff;
+  border-radius: 20px;
+}
+body[data-course="2"] .friend-grid strong {
+  font: 700 2.8rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .friend-grid span {
+  color: #6444c4;
+  font: 600 1.25rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .sign-comparison {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 124px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 15px;
+  margin-top: 24px;
+}
+body[data-course="2"] .sign-comparison article {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+  padding: 22px;
+  background: #fff;
+  border: 2px solid #e8ddc0;
+  border-radius: 22px;
+}
+body[data-course="2"] .sign-comparison article > div {
+  min-width: 0;
+}
+body[data-course="2"] .compare-symbol {
+  display: flex;
+  width: 92px;
+  height: 104px;
+  overflow: hidden;
+  flex: 0 0 92px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 4px 14px;
+  color: #fff;
+  background: #8061dc;
+  border-radius: 18px;
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+body[data-course="2"] .tall-symbol {
+  background: #ed815f;
+}
+body[data-course="2"] .sign-comparison h3,
+body[data-course="2"] .sign-comparison p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+body[data-course="2"] .sign-comparison h3 {
+  font: 700 1.25rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .compare-examples {
+  color: #7254c9;
+  font-family: "Noto Sans Myanmar";
+}
+body[data-course="2"] .same-sound {
+  display: flex;
+  padding: 12px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #9b6410;
+  background: #ffe69c;
+  border-radius: 20px;
+  text-align: center;
+}
+body[data-course="2"] .same-sound span {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+body[data-course="2"] .same-sound strong {
+  font-size: 1.4rem;
+}
+body[data-course="2"] .practice-list {
+  display: grid;
+  gap: 12px;
+}
+body[data-course="2"] .practice-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: #f7f4ff;
+  border: 2px solid #e7def8;
+  border-radius: 18px;
+  text-align: center;
+}
+body[data-course="2"] .practice-row > span {
+  font: 600 1.4rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .highlight-row {
+  background: #fff7d8;
+  border-color: #f1d677;
+}
+body[data-course="2"] .row-audio {
+  padding: 8px 13px;
+  font: 700 0.78rem "Baloo 2";
+}
+body[data-course="2"] .course-two-words .word-card:nth-child(odd) {
+  background: #fff3d1;
+}
+body[data-course="2"] .passage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+body[data-course="2"] .passage-card {
+  position: relative;
+  padding: 28px;
+  text-align: center;
+  border: 3px solid #fff;
+  border-radius: 25px;
+  box-shadow: 0 8px 20px rgba(50, 55, 100, 0.1);
+}
+body[data-course="2"] .night-card {
+  background: linear-gradient(145deg, #e7e2ff, #dcecff);
+}
+body[data-course="2"] .food-card {
+  background: linear-gradient(145deg, #fff2cb, #ffe1d9);
+}
+body[data-course="2"] .passage-icon {
+  display: block;
+  font-size: 3rem;
+}
+body[data-course="2"] .passage-card h3 {
+  margin: 6px 0 16px;
+}
+body[data-course="2"] .passage-card div {
+  margin-bottom: 20px;
+  font: 600 1.3rem/2 "Noto Sans Myanmar";
+}
+body[data-course="2"] {
+  color: #27233b;
+  background: #fbfaff;
+  font-family: "Baloo 2", sans-serif;
+}
+body[data-course="2"] .course-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(48, 34, 88, 0.06);
+}
+body[data-course="2"] .nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #111;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+}
+body[data-course="2"] .nav-right-wrapper,
+body[data-course="2"] .course-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+body[data-course="2"] .course-nav-links a {
+  color: #111;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+body[data-course="2"] .course-nav-links a:hover,
+body[data-course="2"] .course-nav-links a.active {
+  color: #6e48c4;
+}
+body[data-course="2"] .btn-mm-pill {
+  padding: 6px 16px;
+  color: #fff;
+  background: #8c52ff;
+  border: 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+body[data-course="2"] .course-progress-strip {
+  position: static;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 8%;
+  background: #fff;
+}
+body[data-course="2"] .lesson-progress {
+  width: min(320px, 40vw);
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+body[data-course="2"] main {
+  width: auto;
+  max-width: 1180px;
+  margin: auto;
+  padding: 30px 24px 80px;
+}
+body[data-course="2"] .course-hero {
+  min-height: 0;
+  grid-template-columns: 1.5fr 0.7fr;
+  gap: 30px;
+  margin: 25px 0;
+  padding: 45px clamp(25px, 5vw, 60px);
+  background: linear-gradient(135deg, #d9f7ed, #e3e9ff);
+  border-radius: 34px;
+}
+body[data-course="2"] .course-hero h1 {
+  max-width: 700px;
+  margin: 16px 0 8px;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1;
+}
+body[data-course="2"] .course-hero p {
+  font-size: 1.12rem;
+  line-height: normal;
+}
+body[data-course="2"] .level-pill {
+  padding: 8px 14px;
+  border-radius: 20px;
+}
+body[data-course="2"] .hero-mascot {
+  position: relative;
+  display: grid;
+  min-height: 210px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.55);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  font-size: 5rem;
+  animation: none;
+}
+body[data-course="2"] .hero-mascot span {
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  width: 58px;
+  height: 58px;
+  color: #fff;
+  background: #ff8eb7;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
+  font: 700 2rem "Noto Sans Myanmar";
+}
+body[data-course="2"] .hero-audio {
+  padding: 11px 18px;
+}
+body[data-course="2"] .lesson-nav {
+  top: 78px;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 32px;
+  padding: 12px;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(67, 47, 128, 0.13);
+}
+body[data-course="2"] .lesson-nav a {
+  padding: 9px 15px;
+  color: #5d536f;
+  background: #f4f1fc;
+  border-radius: 14px;
+}
+body[data-course="2"] .lesson-section {
+  margin: 28px 0;
+  padding: 34px;
+  border: 1px solid #e7e1f5;
+  border-radius: 28px;
+  box-shadow: 0 8px 24px rgba(67, 47, 128, 0.08);
+  scroll-margin-top: 145px;
+}
+body[data-course="2"] .learn-two {
+  background: linear-gradient(145deg, #fff, #fff4cf);
+}
+body[data-course="2"] .section-heading {
+  gap: 15px;
+  margin-bottom: 24px;
+}
+body[data-course="2"] .section-number {
+  width: 50px;
+  height: 50px;
+  flex-basis: 50px;
+  border-radius: 17px;
+  font-size: 1.5rem;
+  box-shadow: none;
+}
+body[data-course="2"] .revision-banner {
+  margin-bottom: 22px;
+  padding: 24px;
+  border-radius: 24px;
+}
+body[data-course="2"] .main-sign {
+  padding: 28px;
+}
+body[data-course="2"] .friend-grid div {
+  padding: 18px 8px;
+}
+body[data-course="2"] .practice-row {
+  padding: 13px 16px;
+}
+body[data-course="2"] .word-grid {
+  gap: 14px;
+}
+body[data-course="2"] .word-card {
+  padding: 20px 10px;
+  border: 2px solid #e9e1fa;
+  border-radius: 22px;
+}
+body[data-course="2"] .word-card > span {
+  font-size: 2.5rem;
+}
+body[data-course="2"] .reading-box {
+  background: linear-gradient(135deg, #ddf8ed, #edf5ff);
+}
+body[data-course="2"] .passage-card {
+  padding: 28px;
+}
+body[data-course="2"] .finish-card {
+  color: #fff;
+  background: linear-gradient(120deg, #7655dc, #9a75ed);
+  box-shadow: 0 12px 30px rgba(67, 47, 128, 0.13);
+}
+body[data-course="2"] .finish-card #finish-button {
+  margin-left: auto;
+  padding: 12px 20px;
+  color: #27233b;
+  background: #fff;
+  border: 0;
+  border-radius: 22px;
+  box-shadow: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+body[data-course="2"] .finish-card #finish-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+body[data-course="2"]
+  :is(.revision-banner, .main-sign, .practice-row, .word-card, .passage-card) {
+  position: relative;
+}
+body[data-course="2"]
+  :is(
+    .revision-banner,
+    .main-sign,
+    .practice-row,
+    .word-card,
+    .passage-card
+  ).learned {
+  background: #dcecff;
+  border-color: #76aef2;
+  box-shadow: 0 9px 22px rgba(60, 129, 213, 0.17);
+}
+body[data-course="2"]
+  :is(
+    .revision-banner,
+    .main-sign,
+    .practice-row,
+    .word-card,
+    .passage-card
+  ).learned::after {
+  content: "✓";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #4b98ed;
+  border-radius: 50%;
+  font-weight: 800;
+  animation: c2-check 0.35s ease;
+}
+body[data-course="2"] .finish-card #finish-button.complete-button {
+  min-width: min(100%, 320px);
+  margin-left: auto;
+  padding: 17px 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  color: #fff;
+  background: linear-gradient(120deg, #ff719f, #8c53ef 55%, #4a9cf3);
+  border: 0;
+  border-radius: 20px;
+  box-shadow:
+    0 9px 0 #4f2ca7,
+    0 15px 28px rgba(112, 72, 220, 0.25);
+  font-family: "Noto Sans Myanmar", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+body[data-course="2"] .finish-card #finish-button.complete-button:disabled {
+  filter: grayscale(0.7);
+  opacity: 0.55;
+  box-shadow: 0 6px 0 #a9a4b4;
+}
+body[data-course="2"] .finish-card #finish-button.complete-button.completed {
+  background: linear-gradient(120deg, #38bd8a, #52d4a4);
+  box-shadow: 0 8px 0 #208966;
+}
+
+/* Kid-friendly motion for Course 2 only. */
+body[data-course="2"] .hero-mascot {
+  animation: c2-float 3.2s ease-in-out infinite;
+}
+body[data-course="2"] .hero-mascot span {
+  animation: c2-pop 2.4s ease-in-out infinite;
+}
+body[data-course="2"] .friend-grid div {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+body[data-course="2"] .friend-grid div:hover {
+  transform: translateY(-8px) rotate(-2deg);
+  box-shadow: 0 10px 18px rgba(87, 55, 165, 0.14);
+}
+body[data-course="2"] .friend-grid div:nth-child(even):hover {
+  transform: translateY(-8px) rotate(2deg);
+}
+body[data-course="2"] .practice-row {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+body[data-course="2"] .practice-row:hover {
+  transform: translateX(6px);
+  box-shadow: 0 7px 17px rgba(85, 59, 145, 0.1);
+}
+body[data-course="2"] .word-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+body[data-course="2"] .word-card:hover {
+  transform: translateY(-9px) rotate(-1deg);
+  box-shadow: 0 13px 22px rgba(76, 53, 132, 0.14);
+}
+body[data-course="2"] .word-card:nth-child(even):hover {
+  transform: translateY(-9px) rotate(1deg);
+}
+body[data-course="2"] .word-card > span {
+  display: block;
+  animation: c2-bob 3s ease-in-out infinite;
+}
+body[data-course="2"] .word-card:nth-child(2) > span,
+body[data-course="2"] .word-card:nth-child(4) > span {
+  animation-delay: 0.5s;
+}
+body[data-course="2"] .passage-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+body[data-course="2"] .passage-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 15px 27px rgba(50, 55, 100, 0.16);
+}
+body[data-course="2"] .passage-icon {
+  animation: c2-bob 2.8s ease-in-out infinite;
+}
+body[data-course="2"] .finish-card #finish-button:not(:disabled) {
+  animation: c2-ready 1s ease-in-out infinite alternate;
+}
+body[data-course="2"] .finish-card.celebrating {
+  position: relative;
+  animation: c2-celebrate 0.55s ease;
+}
+body[data-course="2"] .finish-card.celebrating .finish-trophy {
+  animation: c2-trophy 0.7s ease-in-out 2;
+}
+body[data-course="2"] .finish-card.celebrating::before,
+body[data-course="2"] .finish-card.celebrating::after {
+  content: "✨";
+  position: absolute;
+  top: 8px;
+  font-size: 2rem;
+  animation: c2-sparkle 1s ease-in-out infinite alternate;
+}
+body[data-course="2"] .finish-card.celebrating::before {
+  left: 18px;
+}
+body[data-course="2"] .finish-card.celebrating::after {
+  right: 18px;
+  animation-delay: 0.3s;
+}
+@keyframes c2-float {
+  50% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes c2-pop {
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+@keyframes c2-bob {
+  50% {
+    transform: translateY(-7px) rotate(3deg);
+  }
+}
+@keyframes c2-ready {
+  to {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 7px 16px rgba(255, 255, 255, 0.22);
+  }
+}
+@keyframes c2-celebrate {
+  50% {
+    transform: scale(1.025);
+  }
+}
+@keyframes c2-trophy {
+  50% {
+    transform: scale(1.25) rotate(-10deg);
+  }
+}
+@keyframes c2-sparkle {
+  to {
+    transform: scale(1.3) rotate(20deg);
+    opacity: 0.55;
+  }
+}
+@keyframes c2-check {
+  from {
+    transform: scale(0) rotate(-35deg);
+  }
+  to {
+    transform: scale(1) rotate(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-course="2"] .hero-mascot,
+  body[data-course="2"] .hero-mascot span,
+  body[data-course="2"] .word-card > span,
+  body[data-course="2"] .passage-icon,
+  body[data-course="2"] .finish-card #finish-button,
+  body[data-course="2"] .finish-card.celebrating,
+  body[data-course="2"] .finish-card.celebrating .finish-trophy {
+    animation: none;
+  }
+}
+
+/* Course 3 — shared lesson components with a playful grammar-card layout. */
+body[data-course="3"] {
+  background: #fbfaff;
+}
+.c3-progress {
+  width: min(320px, calc(100% - 40px));
+  margin: 16px max(20px, 8vw) 0 auto;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.c3-progress .progress-track {
+  height: 10px;
+}
+.c3-progress .progress-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7850dc, #65aaf2);
+  transition: width 0.45s ease;
+}
+.c3-hero {
+  background: linear-gradient(125deg, #e8ddff, #ffe5f0);
+}
+.c3-hero-art {
+  min-height: 310px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.c3-book {
+  font-size: 8rem;
+  filter: drop-shadow(0 14px 10px rgba(66, 43, 107, 0.15));
+  animation: c3-float 3.2s ease-in-out infinite;
+}
+.c3-pencil {
+  position: absolute;
+  right: 9%;
+  bottom: 8%;
+  font-size: 4.5rem;
+  animation: c3-pencil 3s ease-in-out infinite;
+}
+.c3-hero-art i {
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border: 4px solid #fff;
+  border-radius: 18px;
+  background: #7650db;
+  box-shadow: 0 7px 14px rgba(78, 50, 142, 0.18);
+  font: 700 2rem "Noto Sans Myanmar";
+  font-style: normal;
+  animation: c3-bob 2.8s ease-in-out infinite;
+}
+.c3-hero-art i:nth-of-type(1) {
+  top: 5%;
+  left: 9%;
+}
+.c3-hero-art i:nth-of-type(2) {
+  top: 9%;
+  right: 4%;
+  background: #f19b28;
+  animation-delay: 0.4s;
+}
+.c3-hero-art i:nth-of-type(3) {
+  bottom: 8%;
+  left: 4%;
+  background: #2fa879;
+  animation-delay: 0.8s;
+}
+.c3-hero-art i:nth-of-type(4) {
+  right: 13%;
+  bottom: 2%;
+  background: #4d8bd7;
+  animation-delay: 1.2s;
+}
+.c3-lesson {
+  margin: 38px 0 65px;
+  padding: clamp(28px, 4vw, 50px);
+  border: 1px solid #e8e1f4;
+  border-radius: 34px;
+  background: #fff;
+  box-shadow: 0 15px 38px rgba(65, 43, 106, 0.08);
+}
+.grammar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.grammar-card {
+  min-height: 330px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  gap: 22px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 30px;
+  box-shadow: 0 12px 25px rgba(62, 42, 102, 0.1);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.3s ease;
+}
+.grammar-card:hover {
+  transform: translateY(-8px) rotate(-0.5deg);
+  box-shadow: 0 18px 32px rgba(62, 42, 102, 0.16);
+}
+.grammar-card:nth-child(even):hover {
+  transform: translateY(-8px) rotate(0.5deg);
+}
+.grammar-pink {
+  background: linear-gradient(135deg, #ffe7f0, #fff8fb);
+}
+.grammar-yellow {
+  background: linear-gradient(135deg, #fff1bd, #fffaf0);
+}
+.grammar-green {
+  background: linear-gradient(135deg, #daf6e9, #f5fffa);
+}
+.grammar-blue {
+  background: linear-gradient(135deg, #dcecff, #f5f9ff);
+}
+.grammar-symbol {
+  width: 105px;
+  height: 125px;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  color: #fff;
+  border-radius: 27px;
+  font: 700 4.7rem "Noto Sans Myanmar";
+  box-shadow: 0 9px 18px rgba(60, 43, 105, 0.14);
+  transition: transform 0.25s ease;
+}
+.grammar-card:hover .grammar-symbol {
+  transform: rotate(-4deg) scale(1.05);
+}
+.purple-symbol {
+  background: #7953da;
+}
+.orange-symbol {
+  background: #ee991e;
+}
+.green-symbol {
+  background: #2fa879;
+}
+.blue-symbol {
+  background: #4e8bd6;
+}
+.grammar-number {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  color: rgba(74, 55, 114, 0.25);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.grammar-picture {
+  position: absolute;
+  right: 23px;
+  bottom: 18px;
+  font-size: 3.2rem;
+  opacity: 0.2;
+  transform: rotate(-8deg);
+  transition: 0.25s;
+}
+.grammar-card:hover .grammar-picture {
+  opacity: 0.75;
+  transform: rotate(4deg) scale(1.12);
+}
+.grammar-copy {
+  min-width: 0;
+  z-index: 2;
+}
+.grammar-copy h3 {
+  margin: 4px 0 3px;
+  font: 700 2rem "Noto Sans Myanmar";
+}
+.grammar-copy > p {
+  min-height: 48px;
+  margin: 0 0 12px;
+  color: #655d72;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.grammar-example {
+  margin-bottom: 13px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.83);
+}
+.grammar-example small {
+  color: #7554d5;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+.grammar-example strong {
+  font: 700 1rem "Noto Sans Myanmar";
+}
+.grammar-example span {
+  color: #696174;
+  font-size: 0.86rem;
+}
+.grammar-card .audio-button {
+  padding: 9px 16px;
+  font-size: 0.82rem;
+}
+.grammar-card.learned {
+  background: #dcecff;
+  border-color: #70a9ec;
+  box-shadow: 0 12px 28px rgba(65, 137, 220, 0.2);
+}
+.grammar-card.learned::after {
+  content: "✓";
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #4d94e5;
+  border-radius: 50%;
+  font-weight: 800;
+  animation: c3-check 0.35s ease;
+}
+.grammar-card.learned .grammar-number {
+  display: none;
+}
+.c3-cheer {
+  margin-top: 30px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 2px dashed #baa7ef;
+  border-radius: 23px;
+  background: #f6f1ff;
+}
+.c3-cheer > span {
+  font-size: 3rem;
+  animation: c3-bob 3s ease-in-out infinite;
+}
+.c3-cheer > span:last-child {
+  margin-left: auto;
+  font-size: 1.8rem;
+}
+.c3-cheer h3,
+.c3-cheer p {
+  margin: 2px 0;
+}
+.c3-cheer.celebrating {
+  background: linear-gradient(100deg, #fff1ad, #ffddeb, #dff6ff);
+  animation: c3-celebrate 0.6s ease;
+}
+@keyframes c3-float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes c3-pencil {
+  50% {
+    transform: translate(-8px, -12px) rotate(-9deg);
+  }
+}
+@keyframes c3-bob {
+  50% {
+    transform: translateY(-7px) rotate(4deg);
+  }
+}
+@keyframes c3-check {
+  from {
+    transform: scale(0) rotate(-30deg);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes c3-celebrate {
+  50% {
+    transform: scale(1.025);
+  }
+}
+@media (max-width: 900px) {
+  .grammar-grid {
+    grid-template-columns: 1fr;
+  }
+  .c3-hero {
+    grid-template-columns: 1fr;
+  }
+  .c3-hero-art {
+    min-height: 240px;
+  }
+}
+@media (max-width: 560px) {
+  .grammar-card {
+    grid-template-columns: 1fr;
+    padding: 23px;
+  }
+  .grammar-symbol {
+    width: 100%;
+    height: 105px;
+  }
+  .grammar-copy > p {
+    min-height: auto;
+  }
+  .c3-cheer {
+    align-items: flex-start;
+    padding: 18px;
+  }
+  .c3-cheer > span:last-child {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c3-book,
+  .c3-pencil,
+  .c3-hero-art i,
+  .c3-cheer > span,
+  .c3-cheer.celebrating {
+    animation: none;
+  }
+}
+
+/* Course 4 additions; the rest intentionally reuses the Course 2 format. */
+body[data-lesson="4"] .course-four-hero {
+  background: linear-gradient(135deg, #ffe5f0, #e2efff);
+}
+.c4-mascot {
+  min-height: 230px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.48);
+}
+.c4-mascot span {
+  width: 70px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border-radius: 22px;
+  background: #7651dd;
+  font: 700 3.5rem "Noto Sans Myanmar";
+  box-shadow: 0 9px 18px rgba(69, 46, 120, 0.18);
+  animation: c4-float 3s ease-in-out infinite;
+}
+.c4-mascot span:nth-child(2) {
+  background: #ef8aa8;
+  animation-delay: 0.4s;
+}
+.c4-mascot span:nth-child(3) {
+  background: #4a9ad9;
+  animation-delay: 0.8s;
+}
+.c4-mascot i {
+  position: absolute;
+  right: 10%;
+  bottom: 7%;
+  font-size: 4rem;
+  font-style: normal;
+  animation: c4-bee 3.2s ease-in-out infinite;
+}
+body[data-lesson="4"] .c4-review {
+  background: linear-gradient(145deg, #fff, #f8f3ff);
+}
+.c4-review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.review-sign {
+  padding: 25px 18px;
+  position: relative;
+  text-align: center;
+  border: 2px solid #e5dcf8;
+  border-radius: 26px;
+  background: #f5f1ff;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.3s ease;
+}
+.review-sign:nth-child(2) {
+  background: #fff3ce;
+  border-color: #f3dea0;
+}
+.review-sign:nth-child(3) {
+  background: #e5f5ff;
+  border-color: #cce8f8;
+}
+.review-sign:hover {
+  transform: translateY(-8px) rotate(-1deg);
+  box-shadow: 0 14px 24px rgba(66, 44, 112, 0.14);
+}
+.review-sign > span {
+  display: block;
+  color: #50337e;
+  font: 700 5rem "Noto Sans Myanmar";
+  animation: c4-float 3s ease-in-out infinite;
+}
+.review-sign h3 {
+  margin: 4px 0;
+  font: 700 1.1rem "Noto Sans Myanmar";
+}
+.review-sign p {
+  margin: 4px 0 16px;
+  color: #71677f;
+}
+body[data-lesson="4"] .review-sign.learned {
+  background: #dcecff;
+  border-color: #70a9ec;
+  box-shadow: 0 10px 24px rgba(65, 137, 220, 0.19);
+}
+.review-sign.learned::after {
+  content: "✓";
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #4d94e5;
+  border-radius: 50%;
+  font-weight: 800;
+  animation: c3-check 0.35s ease;
+}
+body[data-lesson="4"] .word-card > span,
+body[data-lesson="4"] .passage-icon {
+  animation: c4-float 3s ease-in-out infinite;
+}
+body[data-lesson="4"] .finish-card.celebrating {
+  animation: c3-celebrate 0.6s ease;
+  background: linear-gradient(120deg, #7253d7, #ef77ad);
+}
+@keyframes c4-float {
+  50% {
+    transform: translateY(-7px) rotate(3deg);
+  }
+}
+@keyframes c4-bee {
+  50% {
+    transform: translate(-12px, -12px) rotate(-8deg);
+  }
+}
+@media (max-width: 760px) {
+  .c4-review-grid {
+    grid-template-columns: 1fr;
+  }
+  .c4-mascot {
+    min-height: 190px;
+  }
+  .c4-mascot span {
+    width: 58px;
+    height: 70px;
+    font-size: 2.8rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c4-mascot span,
+  .c4-mascot i,
+  .review-sign > span,
+  body[data-lesson="4"] .word-card > span,
+  body[data-lesson="4"] .passage-icon {
+    animation: none;
+  }
+}
+
+/* Persistent section navigation shared by every course page. */
+.persistent-lesson-nav {
+  position: sticky !important;
+  top: 92px !important;
+  z-index: 19 !important;
+  width: 100%;
+  margin: 26px 0 32px;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #eee9f8;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(67, 47, 128, 0.13);
+  backdrop-filter: blur(12px);
+  scrollbar-width: none;
+}
+.persistent-lesson-nav::-webkit-scrollbar {
+  display: none;
+}
+.persistent-lesson-nav a {
+  min-width: max-content;
+  padding: 10px 17px;
+  color: #5d536f;
+  background: #f4f1fc;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    background 0.2s,
+    transform 0.2s;
+}
+.persistent-lesson-nav a:hover,
+.persistent-lesson-nav a:focus-visible {
+  color: #fff;
+  background: #7354d8;
+  transform: translateY(-2px);
+}
+body[data-course="2"] .persistent-lesson-nav {
+  top: 94px !important;
+}
+@media (max-width: 760px) {
+  .persistent-lesson-nav {
+    top: 76px !important;
+    margin: 20px 0 26px;
+    padding: 10px;
+  }
+  body[data-course="2"] .persistent-lesson-nav {
+    top: 122px !important;
+  }
+  .persistent-lesson-nav a {
+    padding: 9px 14px;
+  }
+}
+
+/* Course 5 — Course 1 format with four playful sign cards. */
+.c5-progress {
+  width: min(320px, calc(100% - 40px));
+  margin: 16px max(20px, 8vw) 0 auto;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.c5-progress .progress-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7951dc, #ff80af);
+  transition: width 0.45s ease;
+}
+.c5-hero {
+  background: linear-gradient(125deg, #dcf7ef, #e8e2ff 55%, #ffe5f0);
+}
+.c5-hero-art {
+  min-height: 300px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.c5-hero-art > span {
+  position: absolute;
+  top: 2%;
+  right: 9%;
+  font-size: 5rem;
+  animation: c5-balloon 4s ease-in-out infinite;
+}
+.c5-hero-art > div {
+  display: grid;
+  grid-template-columns: repeat(2, 82px);
+  gap: 14px;
+}
+.c5-hero-art i {
+  height: 92px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border: 5px solid #fff;
+  border-radius: 25px;
+  background: #7650d9;
+  box-shadow: 0 10px 20px rgba(67, 44, 119, 0.17);
+  font: 700 4rem "Noto Sans Myanmar";
+  font-style: normal;
+  animation: c5-bob 3s ease-in-out infinite;
+}
+.c5-hero-art i:nth-child(2) {
+  background: #f19a28;
+  animation-delay: 0.35s;
+}
+.c5-hero-art i:nth-child(3) {
+  background: #2fa879;
+  animation-delay: 0.7s;
+}
+.c5-hero-art i:nth-child(4) {
+  background: #4d8ed7;
+  animation-delay: 1.05s;
+}
+.c5-hero-art > b {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 5rem;
+  animation: c5-hop 2.8s ease-in-out infinite;
+}
+body[data-course="5"] .c5-lesson {
+  margin: 0 0 65px;
+  padding: clamp(28px, 4vw, 50px);
+  border: 1px solid #e7e1f4;
+  border-radius: 34px;
+  background: #fff;
+  box-shadow: 0 15px 38px rgba(65, 43, 106, 0.08);
+}
+body[data-course="5"] .c5-sign-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+.c5-sign-grid .sign-card {
+  min-height: 390px;
+}
+.c5-sign-grid .sign-character {
+  font-size: 6rem;
+}
+.c5-cheer {
+  margin-top: 32px;
+  padding: 21px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 2px dashed #bba8ef;
+  border-radius: 24px;
+  background: #f6f1ff;
+}
+.c5-cheer > span {
+  font-size: 3.2rem;
+  animation: c5-hop 3s ease-in-out infinite;
+}
+.c5-cheer > span:last-child {
+  margin-left: auto;
+  font-size: 1.8rem;
+}
+.c5-cheer h3,
+.c5-cheer p {
+  margin: 2px 0;
+}
+@keyframes c5-balloon {
+  50% {
+    transform: translate(-7px, -14px) rotate(5deg);
+  }
+}
+@keyframes c5-bob {
+  50% {
+    transform: translateY(-7px) rotate(3deg);
+  }
+}
+@keyframes c5-hop {
+  50% {
+    transform: translateY(-9px) rotate(-5deg);
+  }
+}
+@media (max-width: 1000px) {
+  body[data-course="5"] .c5-sign-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  body[data-course="5"] .c5-sign-grid {
+    grid-template-columns: 1fr;
+  }
+  .c5-hero-art {
+    min-height: 230px;
+  }
+  .c5-hero-art > div {
+    grid-template-columns: repeat(2, 68px);
+  }
+  .c5-hero-art i {
+    height: 75px;
+    font-size: 3.2rem;
+  }
+  .c5-cheer {
+    align-items: flex-start;
+    padding: 18px;
+  }
+  .c5-cheer > span:last-child {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c5-hero-art > span,
+  .c5-hero-art i,
+  .c5-hero-art > b,
+  .c5-cheer > span {
+    animation: none;
+  }
+}
+
+/* Unified navbar proportions and typography for every level/course. */
+:is(.site-header, .course-navbar) {
+  width: 100%;
+  min-height: 92px;
+  padding: 14px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.97);
+  border-bottom: 1px solid #eeeaf7;
+  box-shadow: 0 2px 12px rgba(48, 34, 88, 0.06);
+  font-family: "Baloo 2", sans-serif;
+  backdrop-filter: blur(12px);
+}
+:is(.brand, .nav-brand) {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #111;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+:is(.brand, .nav-brand) .brand-logo {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  object-fit: cover;
+  border: 3px solid #ffd75e;
+  border-radius: 50%;
+  box-shadow: 0 5px 12px rgba(92, 61, 154, 0.18);
+}
+:is(.main-nav, .course-nav-links, .course-nav) {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-left: auto;
+  font-family: "Baloo 2", sans-serif;
+}
+:is(.main-nav, .course-nav-links, .course-nav) a {
+  color: #111;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+}
+:is(.main-nav, .course-nav-links, .course-nav) a:hover,
+:is(.main-nav, .course-nav-links, .course-nav) a.active {
+  color: #6e48c4;
+}
+:is(.language-button, .btn-mm-pill, .course-nav button) {
+  min-width: 67px;
+  height: 44px;
+  padding: 0 16px !important;
+  display: inline-grid;
+  place-items: center;
+  color: #fff !important;
+  background: #8c52ff !important;
+  border: 0;
+  border-radius: 11px !important;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  line-height: 1;
+  cursor: pointer;
+}
+@media (max-width: 760px) {
+  :is(.site-header, .course-navbar) {
+    min-height: 76px;
+    padding: 10px 20px;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px;
+  }
+  :is(.brand, .nav-brand) {
+    font-size: 21px;
+  }
+  :is(.brand, .nav-brand) .brand-logo {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+  :is(.main-nav, .course-nav-links, .course-nav) {
+    gap: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+  :is(.main-nav, .course-nav-links, .course-nav) a {
+    display: none;
+  }
+  :is(.language-button, .btn-mm-pill, .course-nav button) {
+    min-width: 60px;
+    height: 40px;
+  }
+  .persistent-lesson-nav,
+  body[data-course="2"] .persistent-lesson-nav {
+    top: 76px !important;
+  }
+}
+
+@media (max-width: 850px) {
+  body[data-course="2"] .course-hero {
+    grid-template-columns: 1fr;
+  }
+  body[data-course="2"] .hero-mascot {
+    display: none;
+  }
+  body[data-course="2"] .word-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 980px) {
+  body[data-course="2"] .sign-comparison {
+    grid-template-columns: 1fr;
+  }
+  body[data-course="2"] .same-sound {
+    min-height: 72px;
+  }
+  body[data-course="2"] .compare-symbol {
+    width: 84px;
+    height: 94px;
+    flex-basis: 84px;
+    font-size: 2.7rem;
+  }
+}
+@media (max-width: 700px) {
+  body[data-course="2"] .course-navbar {
+    align-items: flex-start;
+    gap: 15px;
+    padding: 17px 20px;
+    flex-direction: column;
+  }
+  body[data-course="2"] .nav-right-wrapper,
+  body[data-course="2"] .course-nav-links {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  body[data-course="2"] .course-progress-strip {
+    padding: 10px 20px;
+  }
+}
+@media (max-width: 700px) {
+  body[data-course="2"] .revision-banner,
+  body[data-course="2"] .main-sign {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  body[data-course="2"] .big-sign {
+    width: 100%;
+    height: 110px;
+  }
+  body[data-course="2"] .friend-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  body[data-course="2"] .practice-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  body[data-course="2"] .practice-row .row-audio {
+    grid-column: 1/-1;
+  }
+  body[data-course="2"] .passage-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  body[data-course="2"] .lesson-progress {
+    width: 100%;
+  }
+  body[data-course="2"] .lesson-nav {
+    top: 112px;
+  }
+  body[data-course="2"] .lesson-section {
+    padding: 23px 16px;
+  }
+  body[data-course="2"] .word-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 430px) {
+  body[data-course="2"] .sign-comparison article {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  body[data-course="2"] .compare-symbol {
+    width: 100%;
+    height: 88px;
+    flex-basis: 88px;
+  }
+}
+@media (max-width: 480px) {
+  .example-grid,
+  .vocab-grid {
+    grid-template-columns: 1fr;
+  }
+  .reading-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .reading-card .audio-button {
+    grid-column: auto;
+  }
+  .c2-heading {
+    align-items: flex-start;
+  }
+  .revision-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .revision-sign {
+    margin: auto;
+  }
+}

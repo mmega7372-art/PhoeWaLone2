@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Sheets | Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Page Resets & Standardized Layout */
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: #111111;
+        }
+
+        /* Header Navbar Alignment */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: #ffffff;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Dynamic Logo Header & Brand Group Styling */
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111111;
+            text-decoration: none;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .nav-right-container, .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #111111;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #6e48c4;
+        }
+
+        .btn-mm-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+        }
+
+        /* Layout Container */
+        .worksheets-page-container {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+        }
+
+        .back-nav {
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            background: #eae6fa;
+            border: none;
+            color: #6e48c4;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .page-header-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: #111111;
+            margin: 0 0 8px 0;
+        }
+
+        .subtitle {
+            color: #555555;
+            font-size: 15px;
+            margin: 0 0 30px 0;
+        }
+
+        /* Summary Banner Card */
+        .summary-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 24px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .summary-info h2 {
+            margin: 0 0 6px 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .summary-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .badge-count {
+            background: #faf8ff;
+            border: 1px solid #e9dcfd;
+            color: #6e48c4;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        /* Download Section Grid */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .download-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(110, 72, 196, 0.06);
+            border-color: #e9dcfd;
+        }
+
+        .card-header-wrapper {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .pdf-icon-badge {
+            width: 48px;
+            height: 48px;
+            background: #ffebee;
+            color: #d32f2f;
+            font-weight: 800;
+            font-size: 13px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid #ffcdd2;
+        }
+
+        .file-info h3 {
+            margin: 0 0 6px 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .file-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.4;
+        }
+
+        .btn-download {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 0;
+            background: #6e48c4;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 10px;
+            transition: background 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .btn-download:hover {
+            background: #5a39a8;
+        }
+
+        .btn-download.is-downloading {
+            background: #888888;
+            cursor: not-allowed;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #888888;
+        }
+    </style>
+      <link rel="stylesheet" href="css/shared-navbar.css">
+</head>
+<body>
+
+    <!-- Standard Header Navbar -->
+    <header class="course-navbar">
+  <a class="nav-brand" href="index1.html" aria-label="Phoe Wa Lone home">
+    <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+    <span>Phoe Wa Lone</span>
+  </a>
+  <div class="nav-right-wrapper">
+    <nav class="course-nav course-nav-links" aria-label="Main navigation">
+      <a href="index1.html">Home</a>
+      <a href="about1.html">About Us</a>
+      <a href="courses1.html" class="active">Courses</a>
+      <a href="curriculum.html">Curriculum</a>
+      <button class="btn-mm-pill" type="button" onclick="window.location.href='writing-sheetmm.html'">MM</button>
+   
+    </nav>
+  </div>
+</header>
+
+    <!-- Main Container -->
+    <main class="worksheets-page-container">
+        <div class="back-nav">
+            <a href="courses1.html" class="btn-back">← Back to courses</a>
+        </div>
+
+        <h1 class="page-header-title">Writing Sheets</h1>
+        <p class="subtitle">Choose a worksheet below to practice offline. Pressing â€œDownload PDFâ€ saves the file through your browser.</p>
+
+        <!-- Practice Library Summary Card -->
+        <div class="summary-card">
+            <div class="summary-info">
+                <h2>Practice Resource Library</h2>
+                <p>Printable PDF exercises for stroke memorization and character mastery.</p>
+            </div>
+            <div class="badge-count">4 PDF Files</div>
+        </div>
+
+        <!-- Download Cards Grid -->
+        <section class="download-grid" aria-label="Downloadable writing sheets">
+            
+            <article class="download-card">
+                <div class="card-header-wrapper">
+                    <div class="pdf-icon-badge" aria-hidden="true">PDF</div>
+                    <div class="file-info">
+                        <h3>Alphabet Tracing</h3>
+                        <p>Build confidence by tracing standard Burmese alphabet forms step-by-step.</p>
+                    </div>
+                </div>
+                <a class="btn-download" href="download/Alphabet-Tracing.pdf" download="Alphabet-Tracing.pdf">
+                    <span>Download PDF</span> <span>↓</span>
+                </a>
+            </article>
+
+            <article class="download-card">
+                <div class="card-header-wrapper">
+                    <div class="pdf-icon-badge" aria-hidden="true">PDF</div>
+                    <div class="file-info">
+                        <h3>Alphabet Colour &amp; Trace</h3>
+                        <p>A fun colouring and letter-tracing activity sheet ideal for beginner learners.</p>
+                    </div>
+                </div>
+                <a class="btn-download" href="download/Myanmar Alphabet colour &amp; trace.pdf" download="Myanmar-Alphabet-Colour-and-Trace.pdf">
+                    <span>Download PDF</span> <span>↓</span>
+                </a>
+            </article>
+
+            <article class="download-card">
+                <div class="card-header-wrapper">
+                    <div class="pdf-icon-badge" aria-hidden="true">PDF</div>
+                    <div class="file-info">
+                        <h3>Trace &amp; Memorize</h3>
+                        <p>Practice letter shapes without guides to test and improve memorization accuracy.</p>
+                    </div>
+                </div>
+                <a class="btn-download" href="download/Myanmar Alphabet Trace and Memorizing Practice.pdf" download="Myanmar-Alphabet-Trace-and-Memorizing-Practice.pdf">
+                    <span>Download PDF</span> <span>↓</span>
+                </a>
+            </article>
+
+            <article class="download-card">
+                <div class="card-header-wrapper">
+                    <div class="pdf-icon-badge" aria-hidden="true">PDF</div>
+                    <div class="file-info">
+                        <h3>Number Tracing</h3>
+                        <p>Learn to write traditional Burmese numbers clearly with guided tracing lines.</p>
+                    </div>
+                </div>
+                <a class="btn-download" href="download/Number Tracing.pdf" download="Number-Tracing.pdf">
+                    <span>Download PDF</span> <span>↓</span>
+                </a>
+            </article>
+
+        </section>
+
+        <footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+    </main>
+	<script src="/js/navbar-profile.js"></script>
+    <script src="js/downloads.js"></script>
+    <!-- Dynamic Logo Generator Script -->
+    <script src="js/logo.js"></script>
+</body>
+</html>

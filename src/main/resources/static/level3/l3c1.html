@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Level 3 Course 1 - Practice ိ ု ့ း" />
+    <title>Level 3 · Course 1 | Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Myanmar:wght@400;600;700&family=Padauk:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/lesson.css" />
+
+    <style>
+      /* Fix Myanmar font rendering and stacked diacritics */
+      [lang="my"], h1, h2, h3, p, span {
+        font-family: 'Padauk', 'Noto Sans Myanmar', sans-serif;
+        line-height: 1.8;
+      }
+
+      /* Force override to ensure Logout renders as red text, not a purple button */
+      .course-nav .navbar-always-logout,
+      .course-nav .navbar-profile-logout {
+        background: none !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        color: #ef4444 !important;
+        padding: 6px 4px !important;
+        font: 700 14px 'Baloo 2', sans-serif !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        margin-left: 8px !important;
+      }
+
+      .course-nav .navbar-always-logout:hover,
+      .course-nav .navbar-profile-logout:hover {
+        color: #dc2626 !important;
+        background: transparent !important;
+      }
+    </style>
+  </head>
+  <body
+    data-course-label="Level 3 Course 1"
+    data-complete-label="Complete Course 1"
+    data-level3-page="1"
+    data-next="l3c2.html"
+  >
+    <header class="course-navbar">
+      <a class="nav-brand" href="../index1.html"
+        ><img src="images/Logo.jpg" alt="Phoe Wa Lone logo" /><span
+          >Phoe Wa Lone</span
+        ></a
+      >
+      <nav class="course-nav">
+        <a href="../index1.html">Home</a>
+        <a href="../about1.html">About Us</a>
+        <a href="../courses1.html">Courses</a>
+        <a class="active" href="../curriculum.html">Curriculum</a>
+        
+        <!-- Language Switch Link -->
+        <a href="l3c1mm.html" class="btn-mm-pill">MM</a>
+
+        <!-- Logout Link (as <a> tag to bypass button styling) -->
+        <a
+          href="javascript:void(0)"
+          class="navbar-always-logout"
+          onclick="localStorage.removeItem('loggedInUser'); window.location.href='../index.html';"
+          style="color: #ef4444 !important; background: transparent !important; border: none !important; font: 700 14px 'Baloo 2', sans-serif !important; text-decoration: none !important;"
+        >Logout</a>
+      </nav>
+    </header>
+    
+    <main>
+      <a class="back-link" href="../curriculum.html">← Back to courses</a>
+      <section class="course-hero l3-hero">
+        <div>
+          <span class="level-pill">☁️ Level 3 · Course 1</span>
+          <h1>Practice ိ · ု · ့ · း!</h1>
+          <p>
+            Review four signs, build new word families, discover vocabulary, and
+            read aloud together.
+          </p>
+        </div>
+        <div class="hero-mascot l3-mascot" aria-hidden="true">
+          <span>ိ</span><span>ု</span><span>့</span><span>း</span><i>🍯</i><b>🌧️</b>
+        </div>
+      </section>
+
+      <nav class="lesson-nav">
+        <a href="#review">1. Review</a><a href="#practice">2. Practice</a
+        ><a href="#vocabulary">3. Vocabulary</a
+        ><a href="#reading">4. Reading</a>
+      </nav>
+
+      <section class="lesson-section review-section" id="review">
+        <div class="section-heading">
+          <span class="section-number">1</span>
+          <div>
+            <p>Remind</p>
+            <h2>Remember ိ · ု · ့ · း</h2>
+          </div>
+        </div>
+        <div class="review-grid four-review">
+          <article class="review-card">
+            <span>ိ</span>
+            <h3>လုံးကြီးတင်</h3>
+            <p>Short “i” sound</p>
+            <button class="audio-button" data-audio="audio/l3c1-i.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </article>
+          <article class="review-card">
+            <span>ု</span>
+            <h3>တစ်ချောင်းငင်</h3>
+            <p>Short “u” sound</p>
+            <button class="audio-button" data-audio="audio/l3c1-u.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </article>
+          <article class="review-card">
+            <span>့</span>
+            <h3>အောက်မြစ်</h3>
+            <p>Changes the tone</p>
+            <button class="audio-button" data-audio="audio/l3c1-dot.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </article>
+          <article class="review-card">
+            <span>း</span>
+            <h3>၀စ္စနှစ်လုံးပေါက်</h3>
+            <p>Changes the ending sound</p>
+            <button class="audio-button" data-audio="audio/l3c1-visarga.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="practice">
+        <div class="section-heading">
+          <span class="section-number">2</span>
+          <div>
+            <p>Practice</p>
+            <h2>Listen and say each word family</h2>
+          </div>
+        </div>
+        <div class="practice-list" lang="my">
+          <div class="practice-row">
+            <span>အို</span><span>အို့</span><span>အိုး</span
+            ><button class="audio-button" data-audio="audio/l3c1-o.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </div>
+          <div class="practice-row">
+            <span>ကို</span><span>ကို့</span><span>ကိုး</span
+            ><button class="audio-button" data-audio="audio/l3c1-ko.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </div>
+          <div class="practice-row">
+            <span>ခို</span><span>ခို့</span><span>ခိုး</span
+            ><button class="audio-button" data-audio="audio/l3c1-kho.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </div>
+          <div class="practice-row highlight">
+            <span>စို</span><span>စို့</span><span>စိုး</span
+            ><button class="audio-button" data-audio="audio/l3c1-so.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </div>
+          <div class="practice-row highlight">
+            <span>တို</span><span>တို့</span><span>တိုး</span
+            ><button class="audio-button" data-audio="audio/l3c1-to.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </div>
+          <div class="practice-row highlight">
+            <span>ဖို</span><span>ဖို့</span><span>ဖိုး</span
+            ><button class="audio-button" data-audio="audio/l3c1-pho.mp3">
+              <span>🔊</span> Listen
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="vocabulary">
+        <div class="section-heading">
+          <span class="section-number">3</span>
+          <div>
+            <p>Vocabulary</p>
+            <h2>Five new words</h2>
+          </div>
+        </div>
+        <div class="word-grid">
+          <article class="word-card">
+            <span>🕊️</span>
+            <h3>ခို</h3>
+            <p>Pigeon</p>
+            <button
+              class="audio-button mini"
+              data-audio="audio/l3c1-pigeon.mp3"
+            >
+              <span>🔊</span> Play
+            </button>
+          </article>
+          <article class="word-card">
+            <span>✉️</span>
+            <h3>စာပို့</h3>
+            <p>Mail / letter</p>
+            <button class="audio-button mini" data-audio="audio/l3c1-mail.mp3">
+              <span>🔊</span> Play
+            </button>
+          </article>
+          <article class="word-card">
+            <span>🐑</span>
+            <h3>သိုး</h3>
+            <p>Sheep</p>
+            <button class="audio-button mini" data-audio="audio/l3c1-sheep.mp3">
+              <span>🔊</span> Play
+            </button>
+          </article>
+          <article class="word-card">
+            <span>🌧️</span>
+            <h3>မိုး</h3>
+            <p>Rain</p>
+            <button class="audio-button mini" data-audio="audio/l3c1-rain.mp3">
+              <span>🔊</span> Play
+            </button>
+          </article>
+          <article class="word-card">
+            <span>🍲</span>
+            <h3>အိုး</h3>
+            <p>Pot</p>
+            <button class="audio-button mini" data-audio="audio/l3c1-pot.mp3">
+              <span>🔊</span> Play
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="lesson-section reading-section" id="reading">
+        <div class="section-heading">
+          <span class="section-number">4</span>
+          <div>
+            <p>Reading</p>
+            <h2>Read along with our rainy-day friends</h2>
+          </div>
+        </div>
+        <div class="passage-grid">
+          <article class="passage-card purple-passage">
+            <span class="passage-icon">👶</span>
+            <h3>Be Brave</h3>
+            <div lang="my">
+              လူကလေး နိုးလာသည်။<br />ကလေးကို မလန့်စေရ။<br />ငို မနေစေရ။<br />ရဲဖို့
+              လိုပါသည်။
+            </div>
+            <button
+              class="audio-button"
+              data-audio="audio/l3c1-reading-one.mp3"
+            >
+              <span>▶</span> Listen
+            </button>
+          </article>
+          <article class="passage-card peach-passage">
+            <span class="passage-icon">🌧️</span>
+            <h3>Rainy Season</h3>
+            <div lang="my">
+              မိုးလ ရာသီ<br />အဘိုးတို့ လယ်တဲ<br />တဲကလေး မိုးယိုနေသလား။<br />ကူညီ၍
+              မိုးပေးပါ။
+            </div>
+            <button
+              class="audio-button"
+              data-audio="audio/l3c1-reading-two.mp3"
+            >
+              <span>▶</span> Listen
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="finish-card">
+        <span class="trophy">🏆</span>
+        <div>
+          <h2>Wonderful work!</h2>
+          <p id="finishHint">
+            Listen to every audio item to unlock the button.
+          </p>
+          <p id="finishMessage" hidden>🎉 Level 3 Course 1 completed!</p>
+        </div>
+        <button id="finishButton" type="button" disabled>
+          <span>🏆</span><span>Complete Course 1</span><span>✓</span>
+        </button>
+      </section>
+    </main>
+   <footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+
+    <script src="js/lesson.js"></script>
+    <script src="js/navbar-profile.js?v=3"></script>
+  </body>
+</html>

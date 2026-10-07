@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ယုန်ကလေးရဲ့ ဉာဏ်စွမ်း (ပုံပြင်)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Padauk', sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .story-container {
+            width: 100%;
+            max-width: 950px;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            border: 4px solid #f59e0b;
+        }
+
+        /* Header Bar */
+        .story-header {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Exit Button Style */
+        .exit-btn {
+            position: absolute;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-family: 'Padauk', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .exit-btn:hover {
+            background: white;
+            color: #ef4444;
+            transform: translateY(-2px);
+        }
+
+        /* 3D Scene Display Stage */
+        .stage {
+            height: 460px;
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 60%, #166534 60%, #14532d 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            perspective: 1200px;
+        }
+
+        /* Grass Floor Details */
+        .stage::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background: linear-gradient(to top, #15803d, #22c55e);
+            transform: rotateX(30deg);
+            transform-origin: bottom;
+            z-index: 1;
+        }
+
+        /* 3D Cave Environment */
+        .cave {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(-40px);
+            width: 280px;
+            height: 250px;
+            background: #475569;
+            border-radius: 140px 140px 0 0;
+            border: 10px solid #1e293b;
+            box-shadow: inset 0 40px 40px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+        .cave-opening {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px;
+            height: 195px;
+            background: #020617;
+            border-radius: 85px 85px 0 0;
+            box-shadow: inset 0 25px 35px rgba(0,0,0,0.95);
+        }
+
+        /* Hidden Bones inside the Cave */
+        .bone {
+            position: absolute;
+            background: #f8fafc;
+            border-radius: 4px;
+            z-index: 3;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .bone-1 { bottom: 50px; left: 46%; width: 25px; height: 8px; transform: rotate(15deg); }
+        .bone-2 { bottom: 35px; left: 52%; width: 22px; height: 8px; transform: rotate(-25deg); }
+        
+        .show-bones .bone {
+            opacity: 1;
+        }
+
+        /* Characters Wrapper with Depth */
+        .character {
+            position: absolute;
+            z-index: 5;
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 15px 10px rgba(0,0,0,0.3));
+        }
+
+        /* Common Eye Style */
+        .eye {
+            position: absolute;
+            width: 10px;
+            height: 12px;
+            background: #1e293b;
+            border-radius: 50%;
+            box-shadow: inset 2px 2px 0px rgba(255,255,255,0.9);
+            z-index: 4;
+        }
+
+        /* 1. ELEPHANT (ဆင်ကလေး) */
+        .elephant {
+            left: 45px;
+            bottom: 22px;
+            width: 130px;
+            height: 110px;
+            background: linear-gradient(135deg, #93c5fd, #60a5fa);
+            border-radius: 50% 50% 45% 45%;
+            border: 3px solid #1e3a8a;
+        }
+        .elephant::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: -22px;
+            width: 50px;
+            height: 65px;
+            background: #93c5fd;
+            border-radius: 50%;
+            border: 3px solid #1e3a8a;
+            box-shadow: inset -8px -8px 0px #fbcfe8;
+            z-index: -1;
+            transform: rotate(-10deg);
+        }
+        .elephant::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: -22px;
+            width: 50px;
+            height: 65px;
+            background: #93c5fd;
+            border-radius: 50%;
+            border: 3px solid #1e3a8a;
+            box-shadow: inset 8px -8px 0px #fbcfe8;
+            z-index: -1;
+            transform: rotate(10deg);
+        }
+        .elephant .eye { top: 38px; left: 38px; box-shadow: 36px 0 0 #1e293b, inset 2px 2px 0px rgba(255,255,255,0.9); }
+        .elephant .blush-left { position: absolute; top: 52px; left: 28px; width: 14px; height: 8px; background: #f43f5e; border-radius: 50%; opacity: 0.6; }
+        .elephant .blush-right { position: absolute; top: 52px; right: 28px; width: 14px; height: 8px; background: #f43f5e; border-radius: 50%; opacity: 0.6; }
+        .elephant .trunk {
+            position: absolute;
+            top: 45px;
+            left: 48px;
+            width: 32px;
+            height: 55px;
+            background: #60a5fa;
+            border-radius: 0 0 20px 20px;
+            border: 3px solid #1e3a8a;
+            transform-origin: top center;
+            animation: trunkSwing 3s infinite ease-in-out;
+        }
+        @keyframes trunkSwing {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg) translateY(5px); }
+        }
+
+        /* 2. BEAR (ဝက်ဝံ) */
+        .bear {
+            left: 190px;
+            bottom: 22px;
+            width: 105px;
+            height: 100px;
+            background: linear-gradient(135deg, #b45309, #92400e);
+            border-radius: 45% 45% 35% 35%;
+            border: 3px solid #451a03;
+        }
+        .bear .eye { top: 32px; left: 30px; box-shadow: 38px 0 0 #1e293b, inset 2px 2px 0px rgba(255,255,255,0.9); }
+        .bear .muzzle { position: absolute; top: 42px; left: 35px; width: 35px; height: 26px; background: #fde68a; border-radius: 50%; border: 2px solid #78350f; }
+        .bear .nose { position: absolute; top: 46px; left: 46px; width: 13px; height: 9px; background: #1c1917; border-radius: 6px; }
+        .bear::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 8px;
+            width: 22px;
+            height: 22px;
+            background: #92400e;
+            border-radius: 50%;
+            border: 2px solid #451a03;
+            box-shadow: 57px 0 0 #92400e;
+        }
+
+        /* 3. RABBIT (ယုန်ကလေး) */
+        .rabbit {
+            left: 310px;
+            bottom: 22px;
+            width: 85px;
+            height: 95px;
+            background: linear-gradient(135deg, #d97706, #b45309);
+            border-radius: 40% 40% 30% 30%;
+            border: 3px solid #78350f;
+        }
+        .rabbit .eye { top: 32px; left: 24px; box-shadow: 28px 0 0 #1e293b, inset 2px 2px 0px rgba(255,255,255,0.9); }
+        .rabbit .nose { position: absolute; top: 44px; left: 38px; width: 10px; height: 7px; background: #f43f5e; border-radius: 50%; }
+        .rabbit::before {
+            content: '';
+            position: absolute;
+            top: -55px;
+            left: 12px;
+            width: 15px;
+            height: 55px;
+            background: #d97706;
+            border-radius: 8px;
+            border: 3px solid #78350f;
+            transform-origin: bottom;
+            animation: earTwitch 2.8s infinite ease-in-out;
+            box-shadow: inset 3px 0 0 #fde68a;
+        }
+        .rabbit::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: 12px;
+            width: 15px;
+            height: 50px;
+            background: #d97706;
+            border-radius: 8px;
+            border: 3px solid #78350f;
+            transform-origin: bottom;
+            transform: rotate(12deg);
+            box-shadow: inset -3px 0 0 #fde68a;
+        }
+        @keyframes earTwitch {
+            0%, 100% { transform: rotate(-10deg); }
+            30% { transform: rotate(5deg); }
+            60% { transform: rotate(-15deg); }
+        }
+
+        /* 4. LION (ခြင်္သေ့ကြီး) */
+        .lion {
+            right: 70px;
+            bottom: 22px;
+            width: 140px;
+            height: 115px;
+            background: #f59e0b;
+            border-radius: 45% 45% 35% 35%;
+            border: 3px solid #78350f;
+            display: none;
+        }
+        .lion .eye { top: 38px; left: 38px; box-shadow: 46px 0 0 #1e293b, inset 2px 2px 0px rgba(255,255,255,0.9); }
+        
+        .lion-ear-left {
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            width: 25px;
+            height: 25px;
+            background: #d97706;
+            border-radius: 50%;
+            border: 2px solid #78350f;
+            box-shadow: inset 3px 3px 0px #fde68a;
+            z-index: -1;
+            transform: rotate(-15deg);
+        }
+        .lion-ear-right {
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            width: 25px;
+            height: 25px;
+            background: #d97706;
+            border-radius: 50%;
+            border: 2px solid #78350f;
+            box-shadow: inset -3px 3px 0px #fde68a;
+            z-index: -1;
+            transform: rotate(15deg);
+        }
+
+        .lion .muzzle {
+            position: absolute;
+            top: 48px;
+            left: 44px;
+            width: 48px;
+            height: 34px;
+            background: #fef3c7;
+            border-radius: 50%;
+            border: 2px solid #b45309;
+        }
+        .lion .nose {
+            position: absolute;
+            top: 52px;
+            left: 59px;
+            width: 18px;
+            height: 13px;
+            background: #1c1917;
+            border-radius: 50% 50% 60% 60%;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.3);
+        }
+        .lion .whisker-left-1 {
+            position: absolute; top: 58px; left: 24px; width: 22px; height: 2px; background: #78350f; transform: rotate(-10deg);
+        }
+        .lion .whisker-left-2 {
+            position: absolute; top: 66px; left: 25px; width: 20px; height: 2px; background: #78350f; transform: rotate(5deg);
+        }
+        .lion .whisker-right-1 {
+            position: absolute; top: 58px; right: 24px; width: 22px; height: 2px; background: #78350f; transform: rotate(10deg);
+        }
+        .lion .whisker-right-2 {
+            position: absolute; top: 66px; right: 25px; width: 20px; height: 2px; background: #78350f; transform: rotate(-5deg);
+        }
+        .lion::before {
+            content: '';
+            position: absolute;
+            top: -22px;
+            left: -22px;
+            right: -22px;
+            bottom: 12px;
+            background: linear-gradient(135deg, #d97706, #92400e);
+            border-radius: 50%;
+            z-index: -2;
+            border: 3px solid #451a03;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+        }
+
+        /* Speech Bubble */
+        .speech-bubble {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(30px);
+            width: 88%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 3px solid #f59e0b;
+            border-radius: 20px;
+            padding: 16px 22px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #1e293b;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            z-index: 10;
+            min-height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: #f59e0b transparent;
+            display: block;
+            width: 0;
+        }
+
+        /* Audio Player Bar */
+        .audio-player-bar {
+            background: #f8fafc;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .audio-btn {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
+            transition: background 0.2s;
+        }
+        .audio-btn:hover { background: #d97706; }
+
+        .audio-track-info {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Control Panel */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 30px;
+            background: #ffffff;
+        }
+
+        .btn {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            font-family: 'Padauk', sans-serif;
+        }
+        .btn:hover { background: #d97706; transform: translateY(-2px); }
+        .btn:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .page-indicator {
+            font-size: 16px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        /* Dynamic Motion Classes */
+        .walk-into-cave {
+            animation: walkInside 1.5s forwards ease-in-out;
+        }
+        @keyframes walkInside {
+            0% { transform: scale(1) translateY(0); }
+            50% { transform: scale(0.7) translateY(-40px) translateX(30px); }
+            100% { transform: scale(0.5) translateY(-70px) translateX(50px); opacity: 0.9; }
+        }
+
+        .lion-roar {
+            animation: fierceRoar 0.4s infinite alternate ease-in-out;
+        }
+        @keyframes fierceRoar {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-6px) rotate(-3deg); }
+        }
+
+        .rabbit-jump {
+            animation: realisticHop 0.7s infinite alternate cubic-bezier(0.25, 0.8, 0.4, 1);
+        }
+        @keyframes realisticHop {
+            0% { bottom: 22px; transform: scaleY(1) scaleX(1); }
+            100% { bottom: 95px; transform: scaleY(0.92) scaleX(1.06); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="story-container">
+        <div class="story-header" id="story-title">
+             ယုန်ကလေးရဲ့ ဉာဏ်စွမ်း (ပုံပြင်)
+            <a href="reading-session.html" class="exit-btn">✕ ထွက်ရန်</a>
+        </div>
+
+        <div class="audio-player-bar">
+            <button class="audio-btn" id="play-audio-btn" onclick="toggleAudio()" title="အသံဖွင့်/ပိတ်">▶</button>
+            <span class="audio-track-info" id="audio-status-text">အသံဖိုင် ဖွင့်နေပါသည်...</span>
+            <audio id="story-audio" src="" preload="auto"></audio>
+        </div>
+
+        <div class="stage" id="scene-stage">
+            <div class="cave" id="cave-box">
+                <div class="cave-opening"></div>
+                <div class="bone bone-1"></div>
+                <div class="bone bone-2"></div>
+            </div>
+            
+            <div class="character elephant" id="char-elephant">
+                <div class="blush-left"></div>
+                <div class="blush-right"></div>
+                <div class="eye"></div>
+                <div class="trunk"></div>
+            </div>
+            <div class="character bear" id="char-bear">
+                <div class="eye"></div>
+                <div class="muzzle"></div>
+                <div class="nose"></div>
+            </div>
+            <div class="character rabbit" id="char-rabbit">
+                <div class="eye"></div>
+                <div class="nose"></div>
+            </div>
+            <div class="character lion" id="char-lion">
+                <div class="lion-ear-left"></div>
+                <div class="lion-ear-right"></div>
+                <div class="eye"></div>
+                <div class="muzzle"></div>
+                <div class="nose"></div>
+                <div class="whisker-left-1"></div>
+                <div class="whisker-left-2"></div>
+                <div class="whisker-right-1"></div>
+                <div class="whisker-right-2"></div>
+            </div>
+
+            <div class="speech-bubble" id="story-text">
+                ရွှေတူ၊ တောတိုး၊ ကံ့ကော်နဲ့ ဆင်ကလေးတို့ဟာ အတူတကွ ပျော်ပျော်ရွှင်ရွှင် နေထိုင်ကြတာ တစ်နေ့မှာတော့ ကစားရင်း ဂူကြီးတစ်ခုကို တွေ့လို့ အထဲကို ဝင်သွားကြတဲ့အခါ...
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="prev-btn" onclick="changeSlide(-1)" disabled>နောက်သို့</button>
+            <div class="page-indicator" id="page-indicator">၁ / ၆</div>
+            <button class="btn" id="next-btn" onclick="changeSlide(1)">ရှေ့သို့</button>
+        </div>
+    </div>
+
+    <script>
+        const storyPages = [
+            {
+                title: " ယုန်ကလေးရဲ့ ဉာဏ်စွမ်း (ပုံပြင်)",
+                text: "ရှေးရှေးတုန်းက တောအုပ်ကြီးတစ်ခုမှာ ယုန် ဝက်ဝံ နဲ့ ဆင်ကလေးတို့ဟာ အတူတကွ ပျော်ပျော်ရွှင်ရွှင် နေထိုင် သွားလာကြသတဲ့။ တစ်နေ့မှာတော့ ပျော်ပျော်ရွှင်ရွှင် ကစားနေတုန်း ဂူကြီးတစ်ဂူကိုတွေ့လို့ ဝင်သွားကြတယ်တဲ့ အဲ့ဂူကြီးထဲမှာ အရိုးတွေ အသားစတွေနဲ့ အမွှေးအမျှင်တွေကို တွေ့ကြရတယ်….တဲ့",
+                audioSrc: "audio/story-part1.mp3",
+                showLion: false,
+                lionAnim: false,
+                rabbitAnim: false,
+                action: "walk",
+                showBones: false
+            },
+            {
+                title: "ဂူကြီးထဲရောက်သွားစဉ်",
+                text: "အဲ့အခါမှာ ဝက်ဝံ ကလေးက “ဒီဂူကြီးထဲမှာ အကောင်ကြီးကြီး နေတာဖြစ်မယ်” လို့ပြောသတဲ့။ ဆင်ကလေးကတော့ “သန်မာတဲ့ အကောင်ကြီး နေတာဖြစ်မယ်” လို့ပြန်ပြောသတဲ့။ ယုန်ကလေးကတော့ စဉ်းစားပြီးမှ “ဒီဂူကြီးထဲမှာ ခြင်္သေ့ကြီးနေတာဖြစ်ရမယ်” လို့ ပြောလိုက်သတဲ့….. ကွယ်",
+                audioSrc: "audio/story-part2.mp3",
+                showLion: false,
+                lionAnim: false,
+                rabbitAnim: true,
+                action: "normal",
+                showBones: true
+            },
+            {
+                title: "ခြင်္သေ့ကြီး ပြန်ရောက်လာစဉ်",
+                text: "ဒီအချိန်မှာ ခြင်္သေ့ကြီး ပြန်ရောက်လာပါရော သူတို့ သုံးကောင်ကို မြင်ရတာနဲ့ စိတ်ဆိုးပြီး ဟိန်းဟောက်လေရောတဲ့…..။ အဲ့ဒီအခါ ဝက်ဝံနဲ့ ဆင်လေးတို့နှစ်ကောင်ဟာ ငိုနေကြသတဲ့ ယုန်ကလေးတော့ ပြောရမဲ့ စကားကို စဉ်းစားနေတယ်တဲ့။",
+                audioSrc: "audio/story-part3.mp3",
+                showLion: true,
+                lionAnim: true,
+                rabbitAnim: false,
+                action: "normal",
+                showBones: true
+            },
+            {
+                title: "ယုန်ကလေးရဲ့ ဉာဏ်စမ်း",
+                text: "နောက်တော့ ရဲရဲဝံ့ဝံ့နဲ့ “အရှင်ခြင်္သေ့မင်းခင်ဗျာ… အရှင်နေတဲ့ ဂူမှန်းမသိလို့ ဝင်မိတာပါ ဒီတစ်ကြိမ်တော့ ခွင့်လွတ်ပေးပါ” လို့တောင်းပန်လိုက်တယ်တဲ့။ အဲ့ဒီအခါ ခြင်္သေ့ကြီးဟာ စိတ်ဆိုးနေရာက စိတ်ကျေနပ်သွားပါရောတဲ့ ကွယ်။",
+                audioSrc: "audio/story-part4.mp3",
+                showLion: true,
+                lionAnim: false,
+                rabbitAnim: false,
+                action: "normal",
+                showBones: false
+            },
+            {
+                title: "ပျော်ရွှင်စွာ ပြန်လာကြစဉ်",
+                text: "အရွယ်ငယ်ပေမဲ့ ရဲရဲဝံ့ဝံံ့နဲ့ ချိုချို သာသာ ပြောလိုက်တဲ့ ယုန်ကလေးကို တောဘုရင် ခြင်္သေ့ကြီးဟာ သဘောကျပြီး အာလုံးကို ပြန်လွှတ်ပေးလိုက်သတဲ့ကွယ် ဒါကြောင့် သူတို့အားလုံးဟာ ပျော်ပျော်ရွှင်ရွှင် ပြန်လာနိုင်ကြသတဲ့…။",
+                audioSrc: "audio/story-part5.mp3",
+                showLion: true,
+                lionAnim: false,
+                rabbitAnim: true,
+                action: "normal",
+                showBones: false
+            },
+            {
+                title: "မေးခွန်းနှင့် လေ့ကျင့်ခန်း",
+                text: "၁။ တောထဲမှာ ဘယ်သူတွေ နေထိုင်ကြလဲ။\n၂။ ဂူထဲမှာ ဘာတွေတွေ့ခဲ့လဲ။\n၃။ ယုန်ကလေးက ဘယ်လိုဉာဏ်ဆင်ခဲ့သလဲ။\n(သင်ခန်းစာ ပြီးဆုံးပါပြီ)",
+                audioSrc: "audio/story-part6.mp3",
+                showLion: false,
+                lionAnim: false,
+                rabbitAnim: false,
+                action: "normal",
+                showBones: false
+            }
+        ];
+
+        let currentSlide = 0;
+        const audioElement = document.getElementById('story-audio');
+        const playAudioBtn = document.getElementById('play-audio-btn');
+        const audioStatusText = document.getElementById('audio-status-text');
+
+        function updateScene() {
+            const page = storyPages[currentSlide];
+            
+            document.getElementById('story-title').childNodes[0].nodeValue = page.title + " ";
+            document.getElementById('story-text').innerText = page.text;
+            document.getElementById('page-indicator').innerText = `${currentSlide + 1} / ${storyPages.length}`;
+
+            // Load and Auto-play current page audio
+            audioElement.src = page.audioSrc;
+            audioElement.currentTime = 0;
+            
+            const playPromise = audioElement.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    playAudioBtn.innerText = "⏸";
+                    audioStatusText.innerText = "အသံဖွင့်နေသည်...";
+                }).catch(error => {
+                    // Autoplay was blocked by browser policy on initial load
+                    playAudioBtn.innerText = "▶";
+                    audioStatusText.innerText = "အသံဖွင့်ရန် ▶ ကိုနှိပ်ပါ";
+                });
+            }
+
+            const lion = document.getElementById('char-lion');
+            const rabbit = document.getElementById('char-rabbit');
+            const elephant = document.getElementById('char-elephant');
+            const bear = document.getElementById('char-bear');
+            const caveBox = document.getElementById('cave-box');
+
+            if (page.showBones) {
+                caveBox.classList.add('show-bones');
+            } else {
+                caveBox.classList.remove('show-bones');
+            }
+
+            [elephant, bear, rabbit].forEach(el => {
+                el.classList.remove('walk-into-cave', 'rabbit-jump');
+            });
+
+            if (page.action === "walk") {
+                [elephant, bear, rabbit].forEach(el => el.classList.add('walk-into-cave'));
+            } else if (page.rabbitAnim) {
+                rabbit.classList.add('rabbit-jump');
+            }
+
+            if (page.showLion) {
+                lion.style.display = 'block';
+            } else {
+                lion.style.display = 'none';
+            }
+
+            if (page.lionAnim) {
+                lion.classList.add('lion-roar');
+            } else {
+                lion.classList.remove('lion-roar');
+            }
+
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === storyPages.length - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= storyPages.length) currentSlide = storyPages.length - 1;
+            updateScene();
+        }
+
+        function toggleAudio() {
+            if (audioElement.paused) {
+                audioElement.play().then(() => {
+                    playAudioBtn.innerText = "⏸";
+                    audioStatusText.innerText = "အသံဖွင့်နေသည်...";
+                }).catch(e => {
+                    audioStatusText.innerText = "အသံဖိုင် ရှာမတွေ့ပါ။";
+                });
+            } else {
+                audioElement.pause();
+                playAudioBtn.innerText = "▶";
+                audioStatusText.innerText = "အသံ ခဏရပ်ထားသည်";
+            }
+        }
+
+        audioElement.onended = function() {
+            playAudioBtn.innerText = "▶";
+            audioStatusText.innerText = "အသံဖိုင် ပြီးဆုံးပါပြီ";
+        };
+
+        // Initialize scene
+        window.addEventListener('DOMContentLoaded', () => {
+            updateScene();
+        });
+    </script>
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+</body>
+</html>

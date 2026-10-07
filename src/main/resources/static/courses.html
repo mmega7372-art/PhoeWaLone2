@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+		
+        /* 1. Remove background circles and reset backdrop */
+        .circle, 
+        .circle-left, 
+        .circle-right, 
+        [class*="circle"],
+        body::before, 
+        body::after,
+        main::before, 
+        main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: #111111;
+        }
+
+        /* 2. Header Navbar Alignment & Dynamic Logo Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: #ffffff;
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111111;
+            text-decoration: none;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .nav-right-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #111111;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #6e48c4;
+        }
+
+        .btn-mm-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-mm-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* 3. Main Container Layout */
+        .courses-container {
+            max-width: 1100px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .courses-hero-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+        }
+
+        .courses-hero-card h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #111111;
+            margin: 0 0 12px 0;
+        }
+
+        .courses-hero-card p {
+            font-size: 16px;
+            color: #555555;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Callout Banner */
+        .cta-banner {
+            background-color: #f7f5fd;
+            border: 1px solid #eae6fa;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .cta-banner h2 {
+            font-size: 30px;
+            font-weight: 800;
+            color: #111111;
+            margin: 0 0 10px 0;
+        }
+
+        .cta-banner p {
+            font-size: 15px;
+            color: #555555;
+            margin: 0 0 25px 0;
+        }
+
+        .btn-primary-cta {
+            display: inline-block;
+            background-color: #6e48c4;
+            color: #ffffff;
+            padding: 12px 36px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(110, 72, 196, 0.2);
+        }
+
+        .btn-primary-cta:hover {
+            background-color: #5935a8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(110, 72, 196, 0.3);
+        }
+
+        /* 3-Column Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 35px 28px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(110, 72, 196, 0.08);
+            border-color: #eae6fa;
+        }
+
+        .tool-card h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #111111;
+            margin: 0 0 12px 0;
+        }
+
+        .tool-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555555;
+            margin: 0 0 25px 0;
+        }
+
+        .btn-card-action {
+            background-color: #f7f5fd;
+            color: #6e48c4;
+            border: 1px solid #eae6fa;
+            padding: 12px 0;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-card-action:hover {
+            background-color: #6e48c4;
+            color: #ffffff;
+            border-color: #6e48c4;
+        }
+
+        @media (max-width: 900px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            .courses-hero-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/shared-navbar.css">
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="course-navbar">
+  <a class="nav-brand" href="index1.html" aria-label="Phoe Wa Lone home">
+    <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+    <span>Phoe Wa Lone</span>
+  </a>
+  <div class="nav-right-wrapper">
+    <nav class="course-nav course-nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="courses.html" class="active">Courses</a>
+
+	  <a class="btn-nav-login" href="login.html">Log in</a>
+	  <a class="btn-nav-signup" href="signup.html">Sign up</a>
+      <button class="btn-mm-pill" type="button" onclick="window.location.href='coursesmm1.html'">MM</button>
+    </nav>
+  </div>
+</header>
+
+    <main class="courses-container">
+
+        <!-- Main Section Heading Card -->
+        <section class="courses-hero-card">
+            <h1>Interactive Learning Tools</h1>
+            <p>
+                A structured journey through the Burmese Language, blending ancient linguistic traditions with modern learning methodologies.
+            </p>
+        </section>
+
+        <!-- Center Callout Banner -->
+        <div class="cta-banner">
+            <h2>Ready to Start your journey?</h2>
+            <p>
+                Join hundreds of students currently mastering Burmese with our specialized Phoe Wa Lone curriculum
+            </p>
+            <a href="signup.html" class="btn-primary-cta">Get Started</a>
+        </div>
+
+        <!-- 3-Column Tools Showcase Grid -->
+        <section class="tools-grid">
+            
+            <!-- Tool 1: Flash Card -->
+            <div class="tool-card">
+                <div>
+                    <h3>Daily Phrases</h3>
+                    <p>Interactive practice with spaced repetition to build your core vocabulary fast.</p>
+                </div>
+                <a href="signup.html" class="btn-card-action">Start now</a>
+            </div>
+
+            <!-- Tool 2: Writing Sheet -->
+            <div class="tool-card">
+                <div>
+                    <h3>Writing Sheet</h3>
+                    <p>Downloadable PDFs designed for offline handwriting and stroke order practice.</p>
+                </div>
+                <a href="signup.html" class="btn-card-action">Download pack</a>
+            </div>
+
+            <!-- Tool 3: Reading Session -->
+            <div class="tool-card">
+                <div>
+                    <h3>Reading Session</h3>
+                    <p>Let's read fun stories and poems to improve your reading skills and pronunciation.</p>
+                </div>
+                <a href="signup.html" class="btn-card-action">Explore</a>
+            </div>
+
+        </section>
+		
+    </main>
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+    <!-- Scripts -->
+    <script src="js/logo.js"></script>
+    
+</body>
+</html>

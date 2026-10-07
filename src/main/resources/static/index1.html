@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoe Wa Lone - Learn Burmese</title>
+    <!-- Correctly linked to static/css/style.css -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* Ensures logo and brand sit neatly on the far left */
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        /* Respectful Acknowledgment Badge */
+        .acknowledgment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 8px 14px;
+            background-color: rgba(110, 72, 196, 0.08);
+            border-left: 3px solid #6e48c4;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            line-height: 1.4;
+        }
+
+        .acknowledgment-badge strong {
+            color: #6e48c4;
+        }
+    </style>
+    <link rel="stylesheet" href="css/shared-navbar.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="index.html" aria-label="Phoe Wa Lone home">
+            <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+            <span>Phoe Wa Lone</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="index1.html" class="active">Home</a>
+                <a href="about1.html">About Us</a>
+                <a href="courses1.html">Courses</a>
+                <a href="curriculum.html" class="active">Curriculum</a>
+                <button class="btn-mm-pill" type="button" onclick="window.location.href='indexmm1.html'">MM</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Hero Container split layout -->
+    <main class="main-container" style="min-height: calc(100vh - 240px); padding-bottom: 0;">
+        
+        <!-- Hero Descriptions Side -->
+        <div class="hero-side">
+            <h1>Learn Burmese<br><span>With Phoe Wa Lone</span></h1>
+            <p class="hero-tagline">
+                An online learning platform designed to make learning Burmese fun and easy.
+                <span>Includes special lessons, audio pronunciations, and exercises tailored for beginners and children.</span>
+            </p>
+
+            <!-- Respectful Thanks Section -->
+            <div class="acknowledgment-badge">
+                <span>🙏 <strong>Special thanks to My Myanmarzar</strong> for kindly providing the writing sheet PDF resources.</span>
+            </div>
+
+            <div style="margin-top: 24px;">
+                <a href="signup.html" class="btn-cta-large">
+                    Start Learning Free &nbsp; &rarr;
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Side Image Container -->
+        <div class="hero-image-container">
+            <img src="images/image1.jpg" alt="Child learning Burmese language">
+        </div>
+
+    </main>
+
+    <!-- Lower Tri-Feature Overview Block -->
+    <section class="features-container">
+        <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Beginner Friendly</h3>
+            <p>Specially designed system for absolute beginners and kids with no prior knowledge</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🗣️</div>
+            <h3>Real-Life Conversation</h3>
+            <p>Practical sentence structures and daily conversational patterns you can actually use</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">❤️</div>
+            <h3>Track Your Progress</h3>
+            <p>Systematically records your learning progress along with interactive quizzes</p>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="js/logo.js"></script>
+    <script src="/js/navbar-profile.js"></script>
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Daily Burmese Phrases Practice" />
+  <title>Daily Phrases | Phoe Wa Lone</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Myanmar:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <!-- LINK TO YOUR CSS FILE HERE -->
+  <link rel="stylesheet" href="dailyphrase.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="course-navbar">
+    <a class="nav-brand" href="../index1.html">
+      <img src="../images/Logo.jpg" alt="Phoe Wa Lone logo" />
+      <span>Phoe Wa Lone</span>
+    </a>
+    <nav class="course-nav">
+      <a href="../index1.html">Home</a>
+      <a href="../about1.html">About Us</a>
+      <a class="active"  href="../courses1.html">Courses</a>
+      <a href="../curriculum.html">Curriculum</a>
+      <button id="languageToggle" type="button">MM</button>
+    </nav>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="container">
+    <header class="page-header">
+      <h1>Daily Burmese Phrases</h1>
+      <p>Master essential everyday expressions with pronunciation and audio practice.</p>
+    </header>
+
+    <section class="phrases-card">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h3>Essentials</h3>
+        </div>
+        <ul class="phrase-list" id="phraseList"></ul>
+      </aside>
+
+      <article class="display-area">
+        <!-- 1. Burmese Phrase on top -->
+        <h2 id="burmeseText" class="burmese-text">မင်္ဂလာပါ</h2>
+
+        <!-- 2. Illustration Image (Sits in the middle) -->
+        <div class="illustration-container">
+          <img id="phraseImage" src="images/hello.jpg" alt="Phrase illustration" class="phrase-illustration-img" />
+        </div>
+
+        <!-- 3. Phonetic and English text below image -->
+        <div class="phrase-details">
+          <p id="phoneticText" class="phonetic-text">mingalarpar</p>
+          <p id="englishText" class="english-text">Hello</p>
+        </div>
+
+        <!-- Audio Control Button -->
+        <div class="audio-control">
+          <button id="playAudioBtn" class="btn-audio" aria-label="Play audio">
+            <i class="fa-solid fa-volume-high"></i>
+            <span>Listen Audio</span>
+          </button>
+        </div>
+
+        <audio id="audioPlayer" src=""></audio>
+      </article>
+    </section>
+  </main>
+
+  <!-- LINK TO YOUR JAVASCRIPT FILE HERE -->
+  <script src="dailyphrase.js"></script>
+  <script src="../js/navbar-profile.js"></script>
+</body>
+</html>

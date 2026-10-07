@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ဂဏန်းများရေတွက်ခြင်း - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Base App CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shared-navbar.css">
+    <!-- Dedicated Page CSS -->
+    <link rel="stylesheet" href="/css/count.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* 1. Forcefully remove background circles and reset backdrop */
+        .circle, 
+        .circle-left, 
+        .circle-right, 
+        [class*="circle"],
+        body::before, 
+        body::after,
+        main::before, 
+        main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Padauk', 'Inter', sans-serif;
+            color: #111111;
+        }
+
+        /* Explicit Dynamic/Mobile Responsive Tweaks for Navbar */
+        @media (max-width: 760px) { 
+            .course-navbar { min-height: 76px; padding: 10px 20px; flex-direction: row !important; align-items: center !important; gap: 12px; } 
+            .nav-brand { font-size: 21px; } 
+            .nav-brand img { width: 48px; height: 48px; flex-basis: 48px; } 
+            .course-nav { gap: 0 !important; flex-wrap: nowrap !important; } 
+            .course-nav a { display: none; } 
+            .course-nav button, .course-nav .btn-eng-pill { min-width: 60px; height: 40px; } 
+        }
+
+        /* Explicit ENG Switcher Button Styling */
+        .btn-eng-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-eng-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* 3. Counter Page Layout Container */
+        .counter-page-container {
+            max-width: 950px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .breadcrumb {
+            font-size: 15px;
+            font-weight: 600;
+            color: #6e48c4;
+            margin-bottom: 10px;
+        }
+
+        .number-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: #111111;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        /* Number Selector Pills Bar */
+        .number-selector-bar {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        .num-pill {
+            flex: 0 0 auto;
+            min-width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
+            background: #ffffff;
+            color: #111111;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .num-pill:hover {
+            border-color: #eae6fa;
+            color: #6e48c4;
+        }
+
+        .num-pill.active {
+            background: #6e48c4;
+            color: #ffffff;
+            border-color: #6e48c4;
+            box-shadow: 0 4px 12px rgba(110, 72, 196, 0.25);
+        }
+
+        /* Progress Card styling */
+        .progress-wrapper {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 16px;
+            padding: 18px 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 700;
+            color: #6e48c4;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #6e48c4;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* Showcase Card */
+        .showcase-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .digit-display {
+            font-size: 90px;
+            font-weight: 800;
+            color: #111111;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .audio-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f7f5ff;
+            padding: 8px 20px;
+            border-radius: 30px;
+        }
+
+        .pronounce-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #6e48c4;
+        }
+
+        .btn-play-audio {
+            background: #6e48c4;
+            color: #ffffff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-play-audio:hover {
+            background: #5935a8;
+            transform: scale(1.05);
+        }
+
+        .items-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            min-height: 50px;
+            align-items: center;
+        }
+
+        .visual-emoji {
+            font-size: 32px;
+        }
+
+        /* Interactive Writing Sheet Canvas */
+        .writing-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .writing-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            border: 2px dashed #eae6fa;
+            border-radius: 20px;
+            background-color: #faf9fe;
+            touch-action: none;
+            transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .canvas-wrapper.success {
+            border: 3px solid #2e7d32;
+            background-color: #f1f8e9;
+            transform: scale(1.02);
+        }
+
+        .canvas-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 140px;
+            font-weight: 800;
+            color: rgba(110, 72, 196, 0.15);
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .canvas-watermark.hidden-watermark {
+            opacity: 0;
+        }
+
+        #drawCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            cursor: crosshair;
+        }
+
+        .writing-feedback {
+            font-size: 15px;
+            font-weight: 700;
+            min-height: 20px;
+            color: #6e48c4;
+            transition: color 0.3s ease;
+        }
+
+        .writing-feedback.correct {
+            color: #2e7d32;
+        }
+
+        .btn-clear-canvas {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            color: #111111;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-clear-canvas:hover {
+            border-color: #6e48c4;
+            color: #6e48c4;
+        }
+
+        /* Navigation Step Controls */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .right-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-step {
+            background: #eae6fa;
+            color: #6e48c4;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-step:hover:not(:disabled) {
+            background: #6e48c4;
+            color: #ffffff;
+        }
+
+        .btn-step:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Done Button Styling */
+        .btn-done {
+            background: #2e7d32;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            display: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+        }
+
+        .btn-done:hover {
+            background: #1b5e20;
+            transform: translateY(-1px);
+        }
+
+        .btn-back {
+            background: #eae6fa;
+            border: none;
+            color: #6e48c4;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="indexmm1.html" aria-label="ဖိုးဝလုံး ပင်မစာမျက်နှာ">
+            <img class="brand-logo" src="/images/Logo.jpg" alt="ဖိုးဝလုံး လိုဂို">
+            <span>ဖိုးဝလုံး</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="/../indexmm1.html">ပင်မစာမျက်နှာ</a>
+                <a href="/../aboutmm1.html">ကျွန်ုပ်တို့အကြောင်း</a>
+                <a href="/../coursesmm1.html">သင်ခန်းစာများ</a>
+                <a href="/../curriculummm.html" class="active">သင်ရိုးညွှန်းတမ်း</a>
+				<button class="btn-mm-pill" type="button" onclick="window.location.href='count.html'">ENG</button>
+				         
+            </nav>
+            <div id="user-profile-container"></div>
+        </div>
+    </header>
+
+    <main class="counter-page-container">
+        <div class="back-nav">
+            <a href="/curriculummm.html" class="btn-back">← နောက်သို့</a>
+        </div>
+
+        <div class="breadcrumb">သင်ရိုးမာတိကာ &gt; ဂဏန်းများ ရေတွက်ခြင်း</div>
+        <h1 class="number-title" id="display-title">ဂဏန်း သုည</h1>
+
+        <!-- Top Jump Selector Bar (0 to 10) -->
+        <div class="number-selector-bar" id="pill-container"></div>
+
+        <!-- Progress Bar -->
+        <div class="progress-wrapper">
+            <div class="progress-header">
+                <span>တိုးတက်မှု အခြေအနေ</span>
+                <span id="progress-percent">၀%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Main Showcase Card -->
+        <div class="showcase-card">
+            
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="digit-display" id="burmese-digit">၀</div>
+                
+                <div class="audio-section">
+                    <span class="pronounce-text" id="pronounce-label">သုည (Zero)</span>
+                    <button class="btn-play-audio" onclick="playCurrentAudio()" title="အသံနားထောင်မည်">
+                        ▶
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Fruit Count Visualizer -->
+            <div class="items-grid" id="visual-items-container"></div>
+
+            <!-- Writing Sheet Section -->
+            <div class="writing-section">
+                <div class="writing-title">ဂဏန်းအား လိုက်လံရေးဆွဲပါ</div>
+                <div class="canvas-wrapper" id="canvas-wrapper">
+                    <div class="canvas-watermark" id="watermark-digit">၀</div>
+                    <canvas id="drawCanvas" width="280" height="280"></canvas>
+                </div>
+                <div class="writing-feedback" id="writing-feedback">အရိပ်ပေါ်တွင် လိုက်လံ ရေးဆွဲပါ!</div>
+                <button class="btn-clear-canvas" onclick="clearCanvas()">ပြန်လည်ရေးသားမည်</button>
+            </div>
+
+        </div>
+
+        <!-- Carousel Step Controls -->
+        <div class="nav-controls">
+            <button class="btn-step" id="btn-prev" onclick="changeNumber(-1)">← နောက်သို့</button>
+            <div class="right-btn-group">
+                <button class="btn-step" id="btn-next" onclick="changeNumber(1)">ရှေ့သို့ →</button>
+                <button class="btn-done" id="btn-done" onclick="finishLesson()">ပြီးစီးပြီ ✓</button>
+            </div>
+        </div>
+
+    </main>
+
+    <canvas id="targetCanvas" width="280" height="280" style="display: none;"></canvas>
+    <audio id="number-audio-player" style="display: none;"></audio>
+
+    <script>
+        // Session and API Tracking Parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const transactionId = urlParams.get('transaction_id') || localStorage.getItem('transaction_id') || 1;
+
+        const mmDigits = ["၀", "၁", "၂", "၃", "၄", "၅", "၆", "၇", "၈", "၉", "၁၀"];
+
+        const numbersData = [
+            { val: 0, title: "ဂဏန်း သုည", burmeseDigit: "၀", label: "သုည (Zero)", audio: "/audio/0.mp3", emoji: "🚫" },
+            { val: 1, title: "ဂဏန်း တစ်", burmeseDigit: "၁", label: "တစ် (One)", audio: "/audio/1.mp3", emoji: "🍎" },
+            { val: 2, title: "ဂဏန်း နှစ်", burmeseDigit: "၂", label: "နှစ် (Two)", audio: "/audio/2.mp3", emoji: "🍎" },
+            { val: 3, title: "ဂဏန်း သုံး", burmeseDigit: "၃", label: "သုံး (Three)", audio: "/audio/3.mp3", emoji: "🍎" },
+            { val: 4, title: "ဂဏန်း လေး", burmeseDigit: "၄", label: "လေး (Four)", audio: "/audio/4.mp3", emoji: "🍎" },
+            { val: 5, title: "ဂဏန်း ငါး", burmeseDigit: "၅", label: "ငါး (Five)", audio: "/audio/5.mp3", emoji: "🍎" },
+            { val: 6, title: "ဂဏန်း ခြောက်", burmeseDigit: "၆", label: "ခြောက် (Six)", audio: "/audio/6.mp3", emoji: "🍎" },
+            { val: 7, title: "ဂဏန်း ခုနစ်", burmeseDigit: "၇", label: "ခုနစ် (Seven)", audio: "/audio/7.mp3", emoji: "🍎" },
+            { val: 8, title: "ဂဏန်း ရှစ်", burmeseDigit: "၈", label: "ရှစ် (Eight)", audio: "/audio/8.mp3", emoji: "🍎" },
+            { val: 9, title: "ဂဏန်း ကိုး", burmeseDigit: "၉", label: "ကိုး (Nine)", audio: "/audio/9.mp3", emoji: "🍎" },
+            { val: 10, title: "ဂဏန်း တစ်ဆယ်", burmeseDigit: "၁၀", label: "တစ်ဆယ် (Ten)", audio: "/audio/10.mp3", emoji: "🍎" }
+        ];
+
+        let currentIndex = 0;
+        let isDrawing = false;
+        let canvas, ctx;
+        let targetCanvas, targetCtx;
+        let isVerified = false;
+        let targetPixelsCount = 0;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initCanvas();
+            renderPills();
+            updateUI();
+        });
+
+        function initCanvas() {
+            canvas = document.getElementById('drawCanvas');
+            ctx = canvas.getContext('2d');
+
+            targetCanvas = document.getElementById('targetCanvas');
+            targetCtx = targetCanvas.getContext('2d');
+
+            ctx.strokeStyle = '#6e48c4';
+            ctx.lineWidth = 22; // Easy stroke thickness
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseleave', stopDrawing);
+
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', stopDrawing);
+        }
+
+        function generateTargetMask(digit, fontSize) {
+            targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+            targetCtx.fillStyle = '#000000';
+            targetCtx.font = `800 ${fontSize}px Padauk, sans-serif`;
+            targetCtx.textAlign = 'center';
+            targetCtx.textBaseline = 'middle';
+            targetCtx.fillText(digit, targetCanvas.width / 2, targetCanvas.height / 2);
+
+            const imgData = targetCtx.getImageData(0, 0, targetCanvas.width, targetCanvas.height);
+            targetPixelsCount = 0;
+            for (let i = 3; i < imgData.data.length; i += 4) {
+                if (imgData.data[i] > 100) targetPixelsCount++;
+            }
+        }
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            if (isVerified) return;
+            isDrawing = true;
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing || isVerified) return;
+            const pos = getPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function handleTouchStart(e) { e.preventDefault(); startDrawing(e); }
+        function handleTouchMove(e) { e.preventDefault(); draw(e); }
+
+        function stopDrawing() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            verifyStrokeAccuracy();
+        }
+
+        function renderFlawlessDigitOnCanvas() {
+            const item = numbersData[currentIndex];
+            const fontSize = (item.val === 10) ? 100 : 140;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('watermark-digit').classList.add('hidden-watermark');
+
+            ctx.fillStyle = '#6e48c4';
+            ctx.font = `800 ${fontSize}px Padauk, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(item.burmeseDigit, canvas.width / 2, canvas.height / 2);
+        }
+
+        function verifyStrokeAccuracy() {
+            if (isVerified || targetPixelsCount === 0) return;
+
+            const userImgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const targetImgData = targetCtx.getImageData(0, 0, targetCanvas.width, targetCanvas.height);
+
+            let matchedPixels = 0;
+
+            for (let i = 3; i < userImgData.data.length; i += 4) {
+                const userAlpha = userImgData.data[i];
+                const targetAlpha = targetImgData.data[i];
+
+                if (userAlpha > 30 && targetAlpha > 30) {
+                    matchedPixels++;
+                }
+            }
+
+            const coverageRatio = matchedPixels / targetPixelsCount;
+
+            // Easy threshold (28%)
+            if (coverageRatio >= 0.28) {
+                isVerified = true;
+                renderFlawlessDigitOnCanvas();
+
+                const wrapper = document.getElementById('canvas-wrapper');
+                const feedback = document.getElementById('writing-feedback');
+                
+                wrapper.classList.add('success');
+                feedback.classList.add('correct');
+                feedback.innerText = 'အထူးပင်ကောင်းမွန်ပါသည်။ ရေးသားမှု မှန်ကန်ပါသည် ✓';
+            }
+        }
+
+        function clearCanvas() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                isVerified = false;
+                
+                const wrapper = document.getElementById('canvas-wrapper');
+                const feedback = document.getElementById('writing-feedback');
+                const watermark = document.getElementById('watermark-digit');
+                
+                watermark.classList.remove('hidden-watermark');
+                wrapper.classList.remove('success');
+                feedback.classList.remove('correct');
+                feedback.innerText = 'အရိပ်ပေါ်တွင် လိုက်လံ ရေးဆွဲပါ!';
+            }
+        }
+
+        function renderPills() {
+            const pillContainer = document.getElementById("pill-container");
+            pillContainer.innerHTML = "";
+            
+            numbersData.forEach((item, idx) => {
+                const btn = document.createElement("button");
+                btn.className = `num-pill ${idx === currentIndex ? 'active' : ''}`;
+                btn.innerText = mmDigits[idx];
+                btn.onclick = () => {
+                    currentIndex = idx;
+                    updateUI();
+                };
+                pillContainer.appendChild(btn);
+            });
+        }
+
+        // Helper to convert English numbers to Burmese numerals for UI display
+        function toBurmeseNumerals(number) {
+            return String(number).split('').map(digit => {
+                const d = parseInt(digit, 10);
+                return isNaN(d) ? digit : mmDigits[d];
+            }).join('');
+        }
+
+        function updateUI() {
+            const item = numbersData[currentIndex];
+
+            document.getElementById("display-title").innerText = item.title;
+            document.getElementById("burmese-digit").innerText = item.burmeseDigit;
+            document.getElementById("pronounce-label").innerText = item.label;
+
+            const watermark = document.getElementById("watermark-digit");
+            watermark.innerText = item.burmeseDigit;
+            
+            let fontSize = 140;
+            if (item.val === 10) {
+                fontSize = 100;
+                watermark.style.fontSize = "100px";
+            } else {
+                watermark.style.fontSize = "140px";
+            }
+
+            generateTargetMask(item.burmeseDigit, fontSize);
+            clearCanvas();
+
+            const totalSteps = numbersData.length - 1;
+            const percentage = Math.round((currentIndex / totalSteps) * 100);
+            document.getElementById("progress-fill").style.width = percentage + "%";
+            document.getElementById("progress-percent").innerText = toBurmeseNumerals(percentage) + "%";
+
+            const visualContainer = document.getElementById("visual-items-container");
+            visualContainer.innerHTML = "";
+            
+            if (item.val === 0) {
+                visualContainer.innerHTML = `<span style="color:#9ca3af; font-weight:600;">(ရေတွက်ရန် ပစ္စည်းမရှိပါ)</span>`;
+            } else {
+                for (let i = 0; i < item.val; i++) {
+                    const span = document.createElement("span");
+                    span.className = "visual-emoji";
+                    span.innerText = item.emoji;
+                    visualContainer.appendChild(span);
+                }
+            }
+
+            const pills = document.querySelectorAll(".num-pill");
+            pills.forEach((p, idx) => {
+                if (idx === currentIndex) p.classList.add("active");
+                else p.classList.remove("active");
+            });
+
+            const btnPrev = document.getElementById("btn-prev");
+            const btnNext = document.getElementById("btn-next");
+            const btnDone = document.getElementById("btn-done");
+
+            btnPrev.disabled = (currentIndex === 0);
+            btnNext.disabled = (currentIndex === numbersData.length - 1);
+
+            if (currentIndex === numbersData.length - 1) {
+                btnDone.style.display = "inline-block";
+            } else {
+                btnDone.style.display = "none";
+            }
+        }
+
+        function changeNumber(step) {
+            const newIndex = currentIndex + step;
+            if (newIndex >= 0 && newIndex < numbersData.length) {
+                currentIndex = newIndex;
+                updateUI();
+            }
+        }
+
+        async function finishLesson() {
+            try {
+                const response = await fetch('/api/progress/complete-course', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        transactionId: transactionId,
+                        courseKey: 'COUNTING_NUMBERS'
+                    })
+                });
+
+                if (response.ok) {
+                    alert("ဂုဏ်ယူပါတယ်။ သင်သည် ဂဏန်းများ ရေတွက်ခြင်းနှင့် ရေးသားခြင်း သင်ခန်းစာကို အောင်မြင်စွာ ပြီးဆုံးခဲ့ပါပြီ 🎉");
+                    window.location.href = `/curriculummm.html?transaction_id=${transactionId}`;
+                    return;
+                }
+            } catch (err) {
+                console.error("Error saving progress to backend:", err);
+            }
+
+            alert("ဂုဏ်ယူပါတယ်။ သင်သည် ဂဏန်းများ ရေတွက်ခြင်းနှင့် ရေးသားခြင်း သင်ခန်းစာကို အောင်မြင်စွာ ပြီးဆုံးခဲ့ပါပြီ 🎉");
+            window.location.href = `/curriculummm.html?transaction_id=${transactionId}`;
+        }
+
+        function playCurrentAudio() {
+            const audioPath = numbersData[currentIndex].audio;
+            const player = document.getElementById("number-audio-player");
+            if (!player) return;
+
+            player.pause();
+            player.src = audioPath;
+            player.load();
+            player.play().catch(err => console.log("Audio deferred:", err));
+        }
+    </script>
+    <script src="/js/navbar-profile.js"></script>
+    <!-- Dynamic Logo Generator Script -->
+    <script src="/js/logo.js"></script>
+</body>
+</html>

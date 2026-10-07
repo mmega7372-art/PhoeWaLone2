@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorizing Alphabet - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shared-navbar.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* 1. Remove background circles and reset backdrop */
+        .circle, 
+        .circle-left, 
+        .circle-right, 
+        [class*="circle"],
+        body::before, 
+        body::after,
+        main::before, 
+        main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: #111111;
+        }
+
+        /* 2. Page Layout Container */
+        .alphabet-container {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-nav {
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            background: #eae6fa;
+            border: none;
+            color: #6e48c4;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background: #6e48c4;
+            color: #ffffff;
+            transform: translateX(-4px);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: #111111;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #555555;
+            font-size: 15px;
+            line-height: 1.5;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* 3. Alphabet Flex Grid */
+        .alphabet-flex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .alphabet-btn {
+            flex: 0 1 calc((100% - (20px * 4)) / 5); 
+            min-width: 140px;
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
+        }
+
+        .alphabet-btn:hover {
+            border-color: #eae6fa;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(110, 72, 196, 0.1);
+        }
+
+        .alphabet-btn:active {
+            transform: scale(0.96);
+            background-color: #f7f5ff;
+        }
+
+        .char-burmese {
+            font-size: 44px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 5px;
+        }
+
+        .char-roman {
+            font-size: 14px;
+            color: #6e48c4;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        .audio-wave-icon {
+            font-size: 12px;
+            color: #aaaaaa;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .alphabet-btn:hover .audio-wave-icon {
+            color: #6e48c4;
+        }
+
+        @media (max-width: 768px) {
+            .alphabet-btn {
+                flex: 0 1 calc((100% - (15px * 2)) / 3);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar (Identical to curriculum.html) -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="/../index1.html" aria-label="Phoe Wa Lone home">
+            <img class="brand-logo" src="/images/Logo.jpg" alt="Phoe Wa Lone logo">
+            <span>Phoe Wa Lone</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="/../index1.html">Home</a>
+                <a href="/../about1.html">About Us</a>
+                <a href="/../courses1.html">Courses</a>
+                <a href="/../curriculum.html" class="active">Curriculum</a>
+                <button class="btn-mm-pill" type="button" onclick="window.location.href='memomm.html'">MM</button>
+            </nav>
+            <!-- Dynamic User Profile Container controlled by navbar-profile.js -->
+            <div id="user-profile-container"></div>
+        </div>
+    </header>
+
+    <main class="main-container" style="display: block; min-height: calc(100vh - 100px);">
+        <div class="alphabet-container">
+            <div class="page-header">
+                <h1 class="page-title">Memorizing Alphabets</h1>
+                <p>
+                    Click any Burmese letter card below to listen to its clear pronunciation guide.
+                </p>
+            </div>
+
+            <div class="alphabet-flex-grid" id="consonants-grid"></div>
+        </div>
+        <div class="back-nav" style="text-align: center;">
+            <a href="/curriculum.html" class="btn-back">← Back to Curriculum</a>
+        </div>
+    </main>
+
+    <!-- Master HTML5 Audio Element -->
+    <audio id="master-audio-player" preload="auto" style="display: none;"></audio>
+
+    <script>
+        const burmeseAlphabets = [
+            { id: 1, letter: "က", roman: "ka", audio: "/audio/ka.mp3" },
+            { id: 2, letter: "ခ", roman: "kha", audio: "/audio/kha.mp3" },
+            { id: 3, letter: "ဂ", roman: "ga", audio: "/audio/ga.mp3" },
+            { id: 4, letter: "ဃ", roman: "gha", audio: "/audio/gha.mp3" },
+            { id: 5, letter: "င", roman: "nga", audio: "/audio/nga.mp3" },
+            { id: 6, letter: "စ", roman: "sa", audio: "/audio/sa.mp3" },
+            { id: 7, letter: "ဆ", roman: "sha", audio: "/audio/sha.mp3" },
+            { id: 8, letter: "ဇ", roman: "za", audio: "/audio/za.mp3" },
+            { id: 9, letter: "ဈ", roman: "zha", audio: "/audio/zha.mp3" },
+            { id: 10, letter: "ည", roman: "nya", audio: "/audio/nya.mp3" },
+            { id: 11, letter: "ဋ", roman: "ta", audio: "/audio/tatan_code.mp3" },
+            { id: 12, letter: "ဌ", roman: "hta", audio: "/audio/hta_code.mp3" },
+            { id: 13, letter: "ဍ", roman: "da", audio: "/audio/da_code.mp3" },
+            { id: 14, letter: "ဎ", roman: "dha", audio: "/audio/dha_code.mp3" },
+            { id: 15, letter: "ဏ", roman: "na", audio: "/audio/na_code.mp3" },
+            { id: 16, letter: "တ", roman: "ta", audio: "/audio/ta.mp3" },
+            { id: 17, letter: "ထ", roman: "hta", audio: "/audio/hta.mp3" },
+            { id: 18, letter: "ဒ", roman: "da", audio: "/audio/da.mp3" },
+            { id: 19, letter: "ဓ", roman: "dha", audio: "/audio/dha.mp3" },
+            { id: 20, letter: "န", roman: "na", audio: "/audio/na.mp3" },
+            { id: 21, letter: "ပ", roman: "pa", audio: "/audio/pa.mp3" },
+            { id: 22, letter: "ဖ", roman: "hpa", audio: "/audio/hpa.mp3" },
+            { id: 23, letter: "ဗ", roman: "ba", audio: "/audio/ba.mp3" },
+            { id: 24, letter: "ဘ", roman: "bha", audio: "/audio/bha.mp3" },
+            { id: 25, letter: "မ", roman: "ma", audio: "/audio/ma.mp3" },
+            { id: 26, letter: "ယ", roman: "ya", audio: "/audio/ya.mp3" },
+            { id: 27, letter: "ရ", roman: "ra", audio: "/audio/ra.mp3" },
+            { id: 28, letter: "လ", roman: "la", audio: "/audio/la.mp3" },
+            { id: 29, letter: "ဝ", roman: "wa", audio: "/audio/wa.mp3" },
+            { id: 30, letter: "သ", roman: "tha", audio: "/audio/tha.mp3" },
+            { id: 31, letter: "ဟ", roman: "ha", audio: "/audio/ha.mp3" },
+            { id: 32, letter: "ဠ", roman: "la", audio: "/audio/la_heavy.mp3" },
+            { id: 33, letter: "အ", roman: "ah", audio: "/audio/ah.mp3" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const targetGrid = document.getElementById("consonants-grid");
+            if (!targetGrid) return;
+            
+            burmeseAlphabets.forEach(item => {
+                const card = document.createElement("button");
+                card.className = "alphabet-btn";
+                card.setAttribute("aria-label", `Pronounce letter ${item.roman}`);
+                
+                card.innerHTML = `
+                    <span class="char-burmese">${item.letter}</span>
+                    <span class="char-roman">${item.roman}</span>
+                    <span class="audio-wave-icon">🔊 Listen</span>
+                `;
+                
+                card.addEventListener("click", function() {
+                    playAudio(item.audio);
+                });
+                
+                targetGrid.appendChild(card);
+            });
+        });
+
+        function playAudio(audioFilePath) {
+            const player = document.getElementById("master-audio-player");
+            if (!player) return;
+
+            player.pause();
+            player.src = audioFilePath;
+            player.load();
+            
+            player.play()
+                .then(() => {
+                    console.log("🔊 Playing audio:", audioFilePath);
+                })
+                .catch(error => {
+                    console.error("Playback execution halted:", error);
+                });
+        }
+    </script>
+    <script src="/js/navbar-profile.js"></script>
+    <!-- Dynamic Logo Generator Script -->
+    <script src="/js/logo.js"></script>
+</body>
+</html>

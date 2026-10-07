@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Phoe Wa Lone</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <style>
+        /* Header & Dynamic Logo Group Styling */
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111111;
+            text-decoration: none;
+            line-height: 1;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <!-- Dynamic JS Logo + Brand Name Group -->
+        <a href="index1.html" class="brand-group">
+            <div class="logo-badge"></div>
+            <div class="brand">Phoe Wa Lone</div>
+        </a>
+
+        <nav class="nav-links">
+            <a href="index1.html">Home</a>
+            <a href="about1.html">About Us</a>
+            <a href="courses1.html">Courses</a>
+            <a href="curriculum.html">Curriculum</a>
+            <a href="profile.html" class="active">My Profile</a>
+        </nav>
+    </header>
+
+    <main class="main-container" style="display: block;">
+        <div class="profile-container">
+            <div class="profile-layout">
+                
+                <aside class="profile-card">
+                    <div class="avatar-circle" id="user-avatar-initial">...</div>
+                    <h3 class="user-display-name" id="user-display-name">Loading...</h3>
+                    <p class="user-email-text" id="user-email-text">Checking email profile...</p>
+                    <div><span class="profile-badge-tag" id="user-role-badge">Student</span></div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                        <a class="btn-edit-trigger" onclick="openEditModal()">⚙️ Change Info</a>
+                        <a class="btn-edit-trigger" style="color:#7d40e7;" onclick="openPasswordModal()">🔒 Change Password</a>
+                    </div>
+                    
+                    <button class="btn-logout-action" style="margin-top:15px;" onclick="handleLogout()">Log Out</button>
+                </aside>
+
+                <section class="profile-content-panel">
+                    <h3 class="panel-section-title">My Learning Dashboard</h3>
+                    <div class="course-progress-card">
+                        <div class="course-info-left">
+                            <h4>Burmese Language Course</h4>
+                            <p>Standard path curriculum timeline</p>
+                        </div>
+                        <div class="progress-meter-box">
+                            <div class="progress-meter-track">
+                                <div id="dashboard-progress-fill" class="progress-meter-fill"></div>
+                            </div>
+                            <span id="dashboard-progress-pct" class="progress-meter-percentage">0%</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-card">
+            <h2>Update Profile Info</h2>
+            <div id="modal-status-msg" class="status-msg"></div>
+            <div class="form-group">
+                <label for="edit-username">Username Name</label>
+                <input type="text" id="edit-username">
+            </div>
+            <div class="form-group">
+                <label for="edit-email">Email Address</label>
+                <input type="email" id="edit-email">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" onclick="closeEditModal()">Cancel</button>
+                <button class="btn-primary" style="flex: 1;" onclick="saveProfileChanges()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD MODAL (OTP DRIVEN) -->
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal-card">
+            <h2>Reset Password</h2>
+            <div id="password-status-msg" class="status-msg" style="padding:10px; margin-bottom:10px; border-radius:8px; display:none;"></div>
+            
+            <!-- Step A: Request Trigger -->
+            <div id="otp-initial-step">
+                <p style="margin-bottom:20px; color:#4a4a4a; font-size:14px;">Click the button below to send a security confirmation token directly to your account's verified email profile.</p>
+                
+                <div class="modal-actions">
+                    <button class="btn-modal-cancel" onclick="closePasswordModal()">Exit</button>
+                    <button class="btn-primary" style="flex: 2;" onclick="requestOtpToken()">Send OTP Code</button>
+                </div>
+            </div>
+
+            <!-- Step B: Verification Context Input Fields -->
+            <div id="otp-verify-step" style="display:none; text-align:left;">
+                <div class="form-group">
+                    <label for="pwd-otp">Enter 6-Digit OTP</label>
+                    <input type="text" id="pwd-otp" placeholder="e.g. 123456" maxlength="6">
+                </div>
+                <div class="form-group" style="margin-top:15px;">
+                    <label for="pwd-new">New Safe Password</label>
+                    <input type="password" id="pwd-new" placeholder="Enter new password value">
+                </div>
+                <!-- Added Confirm Password Field -->
+                <div class="form-group" style="margin-top:15px;">
+                    <label for="pwd-confirm">Confirm New Password</label>
+                    <input type="password" id="pwd-confirm" placeholder="Retype new password value">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-modal-cancel" onclick="closePasswordModal()">Cancel</button>
+                    <button class="btn-primary" style="flex: 1;" onclick="submitPasswordReset()">Update Security Record</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEmailValue = "";
+
+        document.addEventListener("DOMContentLoaded", function() {
+            loadUserProfile();
+        });
+
+        function loadUserProfile() {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser || loggedInUser === "undefined") {
+                window.location.href = "login.html";
+                return;
+            }
+            document.getElementById("user-display-name").innerText = loggedInUser;
+            document.getElementById("user-avatar-initial").innerText = loggedInUser.trim().charAt(0).toUpperCase();
+
+            fetch(`/api/users/profile-details?username=${encodeURIComponent(loggedInUser)}`)
+                .then(res => res.json())
+                .then(user => {
+                    if (user && user.email && user.email !== "No email linked") {
+                        currentEmailValue = user.email;
+                        document.getElementById("user-email-text").innerText = user.email;
+                    } else {
+                        currentEmailValue = "";
+                        document.getElementById("user-email-text").innerText = "No email linked";
+                    }
+                    if (user && user.role) document.getElementById("user-role-badge").innerText = user.role;
+                }).catch(() => {
+                    document.getElementById("user-email-text").innerText = "No email linked";
+                });
+
+            fetch(`/api/transaction/progress?username=${encodeURIComponent(loggedInUser)}&courseId=1`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.status === "SUCCESS") {
+                        document.getElementById("dashboard-progress-fill").style.width = data.progressPercentage + "%";
+                        document.getElementById("dashboard-progress-pct").innerText = data.progressPercentage + "%";
+                    }
+                });
+        }
+
+        // Edit Info Controls
+        function openEditModal() {
+            document.getElementById("modal-status-msg").style.display = "none";
+            document.getElementById("edit-username").value = localStorage.getItem("loggedInUser") || "";
+            document.getElementById("edit-email").value = currentEmailValue || "";
+            document.getElementById("editModal").style.display = "flex";
+        }
+        function closeEditModal() { document.getElementById("editModal").style.display = "none"; }
+
+        function showModalMessage(text, isError) {
+            const msg = document.getElementById("modal-status-msg");
+            msg.innerText = text;
+            msg.className = isError ? "status-msg error" : "status-msg success";
+            msg.style.display = "block";
+        }
+
+        function saveProfileChanges() {
+            const currentUsername = localStorage.getItem("loggedInUser");
+            const newUsername = document.getElementById("edit-username").value.trim();
+            const newEmail = document.getElementById("edit-email").value.trim();
+
+            if (!newUsername || !newEmail) {
+                showModalMessage("Fields cannot be left blank.", true);
+                return;
+            }
+
+            fetch('/api/users/update-profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentUsername, newUsername, newEmail })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.status === "SUCCESS") {
+                    localStorage.setItem("loggedInUser", newUsername); 
+                    showModalMessage(data.message, false);
+                    setTimeout(() => { closeEditModal(); loadUserProfile(); }, 1000);
+                } else {
+                    showModalMessage(data.message, true);
+                }
+            });
+        }
+
+        // Password Reset Controls
+        function openPasswordModal() {
+            document.getElementById("password-status-msg").style.display = "none";
+            document.getElementById("otp-initial-step").style.display = "block";
+            document.getElementById("otp-verify-step").style.display = "none";
+            document.getElementById("passwordModal").style.display = "flex";
+        }
+        function closePasswordModal() { document.getElementById("passwordModal").style.display = "none"; }
+
+        function showPasswordMessage(text, isError) {
+            const msg = document.getElementById("password-status-msg");
+            msg.innerText = text;
+            msg.style.background = isError ? "#fde8e8" : "#e6fffa";
+            msg.style.color = isError ? "#e53e3e" : "#319795";
+            msg.style.display = "block";
+        }
+
+        function requestOtpToken() {
+            const username = localStorage.getItem("loggedInUser");
+            showPasswordMessage("Sending security token code...", false);
+
+            fetch('/api/auth/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.status === "SUCCESS") {
+                    showPasswordMessage(data.message, false);
+                    document.getElementById("otp-initial-step").style.display = "none";
+                    document.getElementById("otp-verify-step").style.display = "block";
+                } else {
+                    showPasswordMessage(data.message || "Failed to dispatch email verification parameters.", true);
+                }
+            }).catch(() => showPasswordMessage("Failed to connect to email system pipeline.", true));
+        }
+
+        function submitPasswordReset() {
+            const username = localStorage.getItem("loggedInUser");
+            const otp = document.getElementById("pwd-otp").value.trim();
+            const newPassword = document.getElementById("pwd-new").value.trim();
+            const confirmPassword = document.getElementById("pwd-confirm").value.trim();
+
+            // 1. Check for empty fields
+            if (!otp || !newPassword || !confirmPassword) {
+                showPasswordMessage("All fields are required.", true);
+                return;
+            }
+
+            // 2. Validate password match constraints
+            if (newPassword !== confirmPassword) {
+                showPasswordMessage("Passwords do not match. Please try again.", true);
+                return;
+            }
+
+            fetch('/api/auth/verify-otp-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, otp, newPassword })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.status === "SUCCESS") {
+                    showPasswordMessage(data.message, false);
+                    // Clear out password fields on successful reset
+                    document.getElementById("pwd-otp").value = "";
+                    document.getElementById("pwd-new").value = "";
+                    document.getElementById("pwd-confirm").value = "";
+                    setTimeout(() => { closePasswordModal(); }, 1500);
+                } else {
+                    showPasswordMessage(data.message, true);
+                }
+            }).catch(() => showPasswordMessage("Error validating security updates.", true));
+        }
+
+        function handleLogout() {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <!-- Scripts -->
+    <script src="/js/logo.js"></script>
+</body>
+</html>

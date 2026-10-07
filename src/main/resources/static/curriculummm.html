@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>သင်ရိုးညွှန်းတမ်း - ဖိုးဝလုံး</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* 1. Forcefully remove ALL purple decorative background circles */
+        .circle, 
+        .circle-left, 
+        .circle-right, 
+        [class*="circle"],
+        body::before, 
+        body::after,
+        main::before, 
+        main::after,
+        .main-container::before, 
+        .main-container::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        /* 2. Reset Background Color */
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        /* 3. Header Styling & Dynamic Logo Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: #ffffff;
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111111;
+            text-decoration: none;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .nav-right-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #111111;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #6e48c4;
+        }
+
+        /* Explicit ENG Switcher Button Styling */
+        .btn-eng-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-eng-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* 4. Curriculum Body Content */
+        .curriculum-hero {
+            text-align: center;
+            padding: 40px 10% 20px 10%;
+        }
+
+        .curriculum-badge {
+            display: inline-block;
+            background-color: #eae6fa;
+            color: #6e48c4;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 15px;
+        }
+
+        .curriculum-section {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Accordion Container */
+        .accordion-group {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 22px 30px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            background: none;
+            border: none;
+            width: 100%;
+            padding: 0;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        .trigger-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-grow: 1;
+        }
+
+        .level-badge {
+            width: 44px;
+            height: 44px;
+            background: #eae6fa;
+            color: #6e48c4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .accordion-item.active .level-badge {
+            background: #6e48c4;
+            color: #ffffff;
+        }
+
+        .level-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: #111111;
+            min-width: 140px;
+        }
+
+        .arrow-indicator {
+            font-size: 12px;
+            color: #111111;
+            transition: transform 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .accordion-item.active .arrow-indicator {
+            transform: rotate(180deg);
+        }
+
+        .accordion-pane {
+            display: grid;
+            grid-template-rows: 0fr;
+            padding-left: 69px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-pane {
+            grid-template-rows: 1fr;
+            padding-top: 20px;
+            padding-bottom: 10px;
+        }
+
+        .pane-overflow-wrapper {
+            overflow: hidden;
+        }
+
+        .lesson-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 380px;
+        }
+
+        .course-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 140px);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .lesson-btn {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            border-radius: 12px;
+            background: #b09ff2;
+            color: #111111;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .lesson-btn:hover, .lesson-btn:focus-visible {
+            background: #6e48c4;
+            color: #ffffff;
+            outline: none;
+        }
+
+        @media (max-width: 820px) {
+            .course-grid-layout {
+                grid-template-columns: repeat(2, 140px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .accordion-pane {
+                padding-left: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/shared-navbar.css">
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="navbar">
+        <!-- Far Left: Dynamic JS Logo + Brand Name Group -->
+        <a href="indexmm1.html" class="brand-group">
+            <div class="logo-badge"></div>
+            <div class="brand">ဖိုးဝလုံး</div>
+        </a>
+        
+        <div class="nav-right-wrapper">
+            <nav class="nav-links">
+                <a href="indexmm1.html">ပင်မစာမျက်နှာ</a>
+                <a href="aboutmm1.html">ကျွန်ုပ်တို့အကြောင်း</a>
+                <a href="coursesmm1.html">သင်ခန်းစာများ</a>
+                <a href="curriculummm.html" class="active">သင်ရိုးညွှန်းတမ်း</a>
+                <!-- Button switching back to English version -->
+               <button class="btn-mm-pill" type="button" onclick="window.location.href='curriculum.html'">ENG</button>
+            </nav>
+
+            <!-- Profile / Auth area controlled by navbar-profile.js -->
+       
+    </header>
+
+    <!-- Main Section Heading -->
+    <section class="curriculum-hero">
+        <div class="curriculum-badge">ကျွန်ုပ်တို့၏ သင်ရိုးညွှန်းတမ်း</div>
+        <h1 style="font-size: 38px; font-weight: 800; color: #111111; margin-top: 5px; margin-bottom: 15px;">
+            အသေးစိတ် လေ့လာမှုလမ်းကြောင်းများ
+        </h1>
+        <p style="font-size: 16px; color: #444444; max-width: 720px; margin: 0 auto; line-height: 1.6;">
+            မြန်မာဘာသာစကား၏ အခြေခံအုတ်မြစ်ဖြစ်ပြီး ယဉ်ကျေးမှုနှင့် ဘာသာစကားဆိုင်ရာ အမွေအနှစ်များကို ပေါ်လွင်စေသော မြန်မာဗျည်းအက္ခရာများကို လေ့လာသင်ယူလိုက်ပါ။
+        </p>
+    </section>
+
+    <!-- Curriculum Content Section -->
+    <main class="curriculum-section">
+        <div class="accordion-group" role="tablist">
+            
+            <!-- Level 0: Beginner -->
+            <div class="accordion-item" id="level-0">
+                <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-0" onclick="toggleLevel('level-0')">
+                    <div class="trigger-left">
+                        <div class="level-badge">၀</div>
+                        <span class="level-name">အခြေခံအဆင့်</span>
+                    </div>
+                    <div class="arrow-indicator" aria-hidden="true">▼</div>
+                </button>
+                
+                <div class="accordion-pane" id="pane-0" role="region">
+                    <div class="pane-overflow-wrapper">
+                        <div class="lesson-timeline">
+                            <button class="lesson-btn" onclick="location.href='sources/memomm.html'">ဗျည်းအက္ခရာများ မှတ်သားခြင်း</button>
+                            <button class="lesson-btn" onclick="location.href='sources/writing_coursesmm.html'">အက္ခရာ ရေးဆွဲနည်း</button>
+                            <button class="lesson-btn" onclick="location.href='sources/countmm.html'">ဂဏန်းများ ရေတွက်ခြင်း</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 1 -->
+            <div class="accordion-item" id="level-1">
+                <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-1" onclick="toggleLevel('level-1')">
+                    <div class="trigger-left">
+                        <div class="level-badge">၁</div>
+                        <span class="level-name">အဆင့် ၁</span>
+                    </div>
+                    <div class="arrow-indicator" aria-hidden="true">▼</div>
+                </button>
+                <div class="accordion-pane" id="pane-1" role="region">
+                    <div class="pane-overflow-wrapper">
+                        <div class="course-grid-layout">
+                            <button class="lesson-btn" onclick="location.href='/Level1/l1c1.html'">သင်ခန်းစာ ၁</button>
+                            <button class="lesson-btn" onclick="location.href='/Level1/l1c2.html'">သင်ခန်းစာ ၂</button>
+                            <button class="lesson-btn" onclick="location.href='/Level1/l1c3.html'">သင်ခန်းစာ ၃</button>
+                            <button class="lesson-btn" onclick="location.href='/Level1/l1c4.html'">သင်ခန်းစာ ၄</button>
+                            <button class="lesson-btn" onclick="location.href='/Level1/l1c5.html'">သင်ခန်းစာ ၅</button>
+							<button class="lesson-btn" onclick="location.href='/Level1/quizzmm.html'">လေ့ကျင့်ခန်း</button>
+                           </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 2 -->
+            <div class="accordion-item" id="level-2">
+                <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-2" onclick="toggleLevel('level-2')">
+                    <div class="trigger-left">
+                        <div class="level-badge">၂</div>
+                        <span class="level-name">အဆင့် ၂</span>
+                    </div>
+                    <div class="arrow-indicator" aria-hidden="true">▼</div>
+                </button>
+                <div class="accordion-pane" id="pane-2" role="region">
+                    <div class="pane-overflow-wrapper">
+						<div class="course-grid-layout">
+						                        <button class="lesson-btn" onclick="location.href='/Level2/l2c1mm.html'">သင်ခန်းစာ ၁</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level2/l2c2mm.html'">သင်ခန်းစာ ၂</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level2/l2c3mm.html'">သင်ခန်းစာ ၃</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level2/l2c4mm.html'">သင်ခန်းစာ ၄</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level2/l2c5mm.html'">သင်ခန်းစာ ၅</button>
+						                       </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 3 -->
+            <div class="accordion-item" id="level-3">
+                <button class="accordion-trigger" aria-expanded="false" aria-controls="pane-3" onclick="toggleLevel('level-3')">
+                    <div class="trigger-left">
+                        <div class="level-badge">၃</div>
+                        <span class="level-name">အဆင့် ၃</span>
+                    </div>
+                    <div class="arrow-indicator" aria-hidden="true">▼</div>
+                </button>
+                <div class="accordion-pane" id="pane-3" role="region">
+                    <div class="pane-overflow-wrapper">
+						<div class="course-grid-layout">
+						                        <button class="lesson-btn" onclick="location.href='/Level3/l3c1mm.html'">သင်ခန်းစာ ၁</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level3/l3c2mm.html'">သင်ခန်းစာ ၂</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level3/l3c3mm.html'">သင်ခန်းစာ ၃</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level3/l3c4mm.html'">သင်ခန်းစာ ၄</button>
+						                        <button class="lesson-btn" onclick="location.href='/Level3/l3c5mm.html'">သင်ခန်းစာ ၅</button>
+						                       </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+		<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+    </main>
+
+    <script>
+        function toggleLevel(levelId) {
+            const currentItem = document.getElementById(levelId);
+            const trigger = currentItem.querySelector('.accordion-trigger');
+            const isActive = currentItem.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+            });
+
+            if (!isActive) {
+                currentItem.classList.add('active');
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+        }
+    </script>
+    <!-- Scripts -->
+    <script src="/js/logo.js"></script>
+    <script src="/js/navbar-profile.js"></script>
+</body>
+</html>

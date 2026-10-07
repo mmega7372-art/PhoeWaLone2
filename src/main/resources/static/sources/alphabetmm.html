@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>အက္ခရာရေးဆွဲလေ့ကျင့်ရန် - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shared-navbar.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* Reset & Base Setup */
+        .circle, .circle-left, .circle-right, [class*="circle"],
+        body::before, body::after, main::before, main::after {
+            display: none !important;
+            background: none !important;
+            content: none !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Padauk', 'Inter', sans-serif;
+            color: #111111;
+        }
+
+        /* Explicit Dynamic/Mobile Responsive Tweaks for Navbar */
+        @media (max-width: 760px) { 
+            .course-navbar { min-height: 76px; padding: 10px 20px; flex-direction: row !important; align-items: center !important; gap: 12px; } 
+            .nav-brand { font-size: 21px; } 
+            .nav-brand img { width: 48px; height: 48px; flex-basis: 48px; } 
+            .course-nav { gap: 0 !important; flex-wrap: nowrap !important; } 
+            .course-nav a { display: none; } 
+            .course-nav button, .course-nav .btn-eng-pill { min-width: 60px; height: 40px; } 
+        }
+
+        /* Explicit Language Switcher Button Styling */
+        .btn-eng-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-eng-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* Container */
+        .alphabet-practice-container {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto 60px auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-nav {
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            background: #eae6fa;
+            border: none;
+            color: #6e48c4;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background: #6e48c4;
+            color: #ffffff;
+            transform: translateX(-4px);
+        }
+
+        .page-header-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #111111;
+            margin: 0 0 8px 0;
+        }
+
+        .subtitle {
+            color: #555555;
+            font-size: 15px;
+            margin: 0 0 30px 0;
+        }
+
+        /* Progress Card */
+        .overall-progress-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            margin-bottom: 25px;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6e48c4;
+        }
+
+        .btn-restart {
+            background: #fff0f0;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-restart:hover {
+            background: #ffebee;
+        }
+
+        .progress-track-wrapper {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill-display {
+            width: 0%;
+            height: 100%;
+            background: #6e48c4;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Practice Header */
+        .character-practice-header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .character-guide-text {
+            flex: 1;
+        }
+
+        .character-guide-text h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .character-guide-text p {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .gif-container {
+            width: 160px;
+            height: 160px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Grid Workspace */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .char-selection-card, .canvas-card {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        .char-selection-card h3, .canvas-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .current-display {
+            font-size: 64px;
+            font-weight: 800;
+            color: #6e48c4;
+            text-align: center;
+            margin: 10px 0;
+            font-family: 'Padauk', sans-serif;
+        }
+
+        .score-badge {
+            text-align: center;
+            font-weight: 700;
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .char-btn {
+            background: #faf8ff;
+            border: 1px solid #e9dcfd;
+            border-radius: 10px;
+            padding: 10px 0;
+            font-size: 22px;
+            font-family: 'Padauk', sans-serif;
+            font-weight: 700;
+            color: #6e48c4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .char-btn.done::after {
+            content: "✓";
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: 12px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .char-btn:hover, .char-btn.active {
+            background: #6e48c4;
+            color: #ffffff;
+            border-color: #6e48c4;
+        }
+
+        /* --- Telegram Style Pen Weight Control Bar --- */
+        .pen-weight-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8f6fe;
+            padding: 10px 18px;
+            border-radius: 30px;
+            margin-bottom: 15px;
+            border: 1px solid #eae6fa;
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pen-dot-preview {
+            border-radius: 50%;
+            background-color: #6e48c4;
+            display: inline-block;
+            flex-shrink: 0;
+            transition: width 0.1s ease, height 0.1s ease;
+        }
+
+        .pen-dot-preview.small {
+            width: 6px;
+            height: 6px;
+        }
+
+        .pen-dot-preview.large {
+            width: 22px;
+            height: 22px;
+        }
+
+        .pen-dot-preview.current {
+            width: 22px;
+            height: 22px;
+        }
+
+        .pen-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #d8b4fe;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .pen-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6e48c4;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(110, 72, 196, 0.4);
+            transition: transform 0.1s ease;
+        }
+
+        .pen-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        .pen-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6e48c4;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(110, 72, 196, 0.4);
+        }
+
+        .pen-size-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #6e48c4;
+            min-width: 38px;
+            text-align: right;
+        }
+
+        /* Canvas Box */
+        .canvas-wrapper {
+            position: relative;
+            width: 360px;
+            height: 300px;
+            margin: 0 auto 15px auto;
+            border: 2px dashed #d8b4fe;
+            border-radius: 14px;
+            background-color: #faf8ff;
+            overflow: hidden;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .canvas-wrapper.success {
+            border: 2px solid #2e7d32 !important;
+            background-color: #f1f8e9 !important;
+        }
+
+        .canvas-guide-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 180px;
+            font-weight: 900;
+            color: rgba(110, 72, 196, 0.35);
+            pointer-events: none;
+            font-family: 'Padauk', sans-serif;
+            transition: opacity 0.3s ease;
+            user-select: none;
+        }
+
+        #paintCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 360px;
+            height: 300px;
+            cursor: crosshair;
+            z-index: 2;
+            touch-action: none;
+        }
+
+        .writing-feedback-message {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6e48c4;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .writing-feedback-message.correct {
+            color: #2e7d32;
+        }
+
+        .canvas-actions, .bottom-actions-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn-clear, .btn-verify, .btn-done, .btn-exit-action {
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-clear { background: #f0f0f0; color: #333333; }
+        .btn-verify { background: #eae6fa; color: #6e48c4; }
+        .btn-done { background: #6e48c4; color: #ffffff; flex: 1; transition: background 0.3s ease, opacity 0.3s ease; }
+        .btn-done:disabled { background: #cccccc; color: #666666; cursor: not-allowed; opacity: 0.7; }
+        .btn-exit-action { background: #f5f5f5; color: #666666; }
+    </style>
+</head>
+<body>
+
+    <!-- Shared Navigation Bar -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="/../indexmm1.html" aria-label="Phoe Wa Lone Home">
+            <img class="brand-logo" src="/images/Logo.jpg" alt="Phoe Wa Lone Logo">
+            <span>ဖိုးဝလုံး</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="/../indexmm1.html">ပင်မစာမျက်နှာ</a>
+                <a href="/../aboutmm1.html">ကျွန်ုပ်တို့အကြောင်း</a>
+                <a href="/../courses1.html">သင်ခန်းစာများ</a>
+                <a href="/../curriculummm.html" class="active">သင်ရိုးညွှန်းတမ်း</a>
+                <button class="btn-eng-pill" id="lang-switch-btn" type="button" onclick="window.location.href='alphabet.html'">ENG</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="alphabet-practice-container">
+        <div class="back-nav">
+            <a href="writing_coursesmm.html" class="btn-back">← နောက်သို့</a>
+        </div>
+
+        <h1 class="page-header-title" id="course-title-display">သင်ခန်းစာ ၁ လေ့ကျင့်ရန်</h1>
+        <p class="subtitle">အောက်ပါ ဗျည်းအက္ခရာများထဲမှ တစ်ခုကို ရွေးချယ်၍ လမ်းညွှန်ပုံစံပေါ်တွင် ထပ်မံရေးဆွဲပါ။</p>
+
+        <div class="overall-progress-card">
+            <div class="progress-meta">
+                <span class="progress-label">သင်၏ ရေးဆွဲမှု တိုးတက်မှု</span>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="btn-restart" onclick="restartCourseProgress()">🔄 ပြန်စမည်</button>
+                    <span id="local-progress-text" class="progress-percentage-text">၀% ပြီးစီးပါပြီ</span>
+                </div>
+            </div>
+            <div class="progress-track-wrapper">
+                <div id="local-progress-bar" class="progress-fill-display"></div>
+            </div>
+        </div>
+
+        <div class="character-practice-header">
+            <div class="character-guide-text">
+                <h2>အက္ခရာ ရေးဆွဲနည်း လမ်းညွှန်</h2>
+                <p>မြန်မာဗျည်းများကို မှန်ကန်စွာ ရေးဆွဲနည်း လေ့လာရန် အောက်ပါ ရေးဆွဲပုံဗီဒီယိုကို ကြည့်ရှုပါ။</p>
+            </div>
+            <div class="gif-container">
+                <video id="stroke-guide-video" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: contain;">
+                    <source id="video-source" src="/gift/wa.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <div class="workspace-grid">
+            <section class="char-selection-card">
+                <h3>ရွေးချယ်ထားသော အက္ခရာ</h3>
+                <div class="current-display" id="active-char-preview">ဝ</div>
+                <div id="score-display-badge" class="score-badge">ရမှတ်: ၀%</div>
+                <p style="font-size:13px; color:#666;">ဤသင်ခန်းစာမှ အက္ခရာတစ်ခုကို ရွေးပါ-</p>
+                <div class="char-grid" id="consonants-injector-box"></div>
+            </section>
+
+            <section class="canvas-card">
+                <h3>ရေးဆွဲရန် ကင်းဗတ်စ်</h3>
+                <p style="font-size:13px; color:#666; margin-bottom:15px;">အက္ခရာ လမ်းညွှန်ပုံစံပေါ်တွင် တိကျစွာ ထပ်မံရေးဆွဲပါ။</p>
+
+                <!-- Telegram Style Pen Weight Control Line -->
+                
+
+                <div class="canvas-wrapper" id="canvas-wrapper-box">
+                    <div class="canvas-guide-overlay" id="canvas-bg-guide">ဝ</div>
+                    <canvas id="paintCanvas" width="360" height="300"></canvas>
+                </div>
+                <div id="writing-feedback-text" class="writing-feedback-message">နောက်ခံ လမ်းညွှန်ပေါ်တွင် ထပ်မံရေးဆွဲပါ!</div>
+                <div class="canvas-actions">
+                    <button class="btn-clear" onclick="clearCanvasDrawings()">ဖျက်မည်</button>
+                   
+                </div>
+                
+                <div class="bottom-actions-container">
+                    <button id="btn-mark-done" class="btn-done" onclick="finishCourseAndSaveToDatabase()" disabled>ပြီးစီးကြောင်း မှတ်သားမည်</button>
+                    <a href="writing_courses.html" class="btn-exit-action" id="exit-link">ထွက်မည်</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Hidden Offscreen Canvas for Pixel Analysis -->
+    <canvas id="targetMaskCanvas" width="360" height="300" style="display: none;"></canvas>
+
+    <script>
+        const COURSE_DATA = {
+            1: { name: "သင်ခန်းစာ ၁", letters: ["ဝ", "ဂ", "ပ", "င"], videoMap: { "ဝ": "wa.mp4", "ဂ": "ga.mp4", "ပ": "pa.mp4", "င": "nga.mp4" } },
+            2: { name: "သင်ခန်းစာ ၂", letters: ["ထ", "တ", "က", "ဘ"], videoMap: { "ထ": "hta.mp4", "တ": "ta.mp4", "က": "ka.mp4", "ဘ": "bha.mp4" } },
+            3: { name: "သင်ခန်းစာ ၃", letters: ["သ", "လ", "ယ", "ဟ"], videoMap: { "သ": "tha.mp4", "လ": "la.mp4", "ယ": "ya.mp4", "ဟ": "ha.mp4" } },
+            4: { name: "သင်ခန်းစာ ၄", letters: ["စ", "ဓ", "ခ", "ဆ"], videoMap: { "စ": "sa.mp4", "ဓ": "dha.mp4", "ခ": "kha.mp4", "ဆ": "sha.mp4" } },
+            5: { name: "သင်ခန်းစာ ၅", letters: ["မ", "ဖ", "ဗ", "ရ", "န"], videoMap: { "မ": "ma.mp4", "ဖ": "pha.mp4", "ဗ": "ba.mp4", "ရ": "ra.mp4", "န": "na.mp4" } },
+            6: { name: "သင်ခန်းစာ ၆", letters: ["ဇ", "ဒ", "အ", "ည"], videoMap: { "ဇ": "za.mp4", "ဒ": "da.mp4", "အ": "ah.mp4", "ည": "nya.mp4" } },
+            7: { name: "သင်ခန်းစာ ၇", letters: ["ဃ", "ဈ", "ဋ", "ဌ"], videoMap: { "ဃ": "gha.mp4", "ဈ": "zha.mp4", "ဋ": "ta_code.mp4", "ဌ": "ttha.mp4" } },
+            8: { name: "သင်ခန်းစာ ၈", letters: ["ဍ", "ဎ", "ဏ", "ဠ"], videoMap: { "ဍ": "dda.mp4", "ဎ": "ddha.mp4", "ဏ": "nna.mp4", "ဠ": "lla.mp4" } }
+        };
+
+        function toBurmeseDigits(number) {
+            const burmeseDigits = ['၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'];
+            return String(number).split('').map(digit => burmeseDigits[digit] || digit).join('');
+        }
+
+        let activeCourseId = 1;
+        let activeCharIndex = 0;
+        let completedLetters = new Set();
+
+        let autoCanvas, autoCtx;
+        let targetMaskCanvas, targetMaskCtx;
+        let isDrawing = false;
+        let targetPixelsCount = 0;
+        let currentPenWeight = 22;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let transactionId = urlParams.get('transaction_id') || localStorage.getItem('transaction_id') || '';
+        let userId = urlParams.get('user_id') || localStorage.getItem('user_id') || '';
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const courseParam = parseInt(urlParams.get('course'));
+            if (courseParam && COURSE_DATA[courseParam]) {
+                activeCourseId = courseParam;
+            }
+
+            if (!userId || !transactionId) {
+                try {
+                    const sessionRes = await fetch('/api/user/session');
+                    if (sessionRes.ok) {
+                        const sessionData = await sessionRes.json();
+                        if (sessionData.userId) userId = sessionData.userId;
+                        if (sessionData.transactionId) transactionId = sessionData.transactionId;
+                    }
+                } catch (e) {
+                    console.warn("အသုံးပြုသူ ဆက်ရှင်ကို အလိုအလျောက် ရယူနိုင်ခြင်း မရှိပါ:", e);
+                }
+            }
+
+            const langBtn = document.getElementById('lang-switch-btn');
+            if (langBtn) {
+                langBtn.onclick = function() {
+                    window.location.href = `alphabet.html?course=${activeCourseId}&user_id=${userId}&transaction_id=${transactionId}`;
+                };
+            }
+
+            const exitLink = document.getElementById('exit-link');
+            if (exitLink) {
+                exitLink.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+            }
+
+            const backBtn = document.querySelector('.btn-back');
+            if (backBtn) {
+                backBtn.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+            }
+
+            renderCourseConsonants(activeCourseId);
+            initAutoCorrectEngine();
+            checkIfCourseAlreadyCompleted();
+        });
+
+        function changePenWeight(weight) {
+            currentPenWeight = parseInt(weight);
+            if (autoCtx) {
+                autoCtx.lineWidth = currentPenWeight;
+            }
+            
+            // Dynamic visual dot indicator update
+            const dot = document.getElementById('penDotPreview');
+            if (dot) {
+                dot.style.width = `${currentPenWeight}px`;
+                dot.style.height = `${currentPenWeight}px`;
+            }
+
+            const sizeText = document.getElementById('penSizeText');
+            if (sizeText) {
+                sizeText.innerText = `${currentPenWeight}px`;
+            }
+        }
+
+        function renderCourseConsonants(courseId) {
+            const course = COURSE_DATA[courseId];
+            document.getElementById('course-title-display').innerText = `${course.name} လေ့ကျင့်ရန်`;
+
+            const injector = document.getElementById('consonants-injector-box');
+            injector.innerHTML = '';
+
+            course.letters.forEach((char, index) => {
+                const btn = document.createElement('button');
+                btn.className = `char-btn ${index === activeCharIndex ? 'active' : ''}`;
+                btn.id = `btn-char-${index}`;
+                btn.innerText = char;
+                btn.onclick = () => {
+                    activeCharIndex = index;
+                    selectCharacter(char, btn, course);
+                };
+                injector.appendChild(btn);
+            });
+
+            if (course.letters.length > 0) {
+                selectCharacter(course.letters[activeCharIndex], injector.children[activeCharIndex], course);
+            }
+        }
+
+        function selectCharacter(char, btnElement, course) {
+            document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            document.getElementById('active-char-preview').innerText = char;
+            document.getElementById('canvas-bg-guide').innerText = char;
+
+            const videoFileName = course.videoMap[char] || "wa.mp4";
+            const videoElement = document.getElementById('stroke-guide-video');
+            const videoSource = document.getElementById('video-source');
+            videoSource.src = `/gift/${videoFileName}`;
+            videoElement.load();
+            videoElement.play().catch(() => {});
+
+            clearCanvasDrawings();
+            updateAutoTargetMask();
+        }
+
+        function initAutoCorrectEngine() {
+            autoCanvas = document.getElementById('paintCanvas');
+            if (!autoCanvas) return;
+            autoCtx = autoCanvas.getContext('2d');
+
+            autoCanvas.width = 360;
+            autoCanvas.height = 300;
+
+            targetMaskCanvas = document.getElementById('targetMaskCanvas');
+            targetMaskCtx = targetMaskCanvas.getContext('2d');
+
+            autoCtx.strokeStyle = '#6e48c4';
+            autoCtx.lineWidth = currentPenWeight;
+            autoCtx.lineCap = 'round';
+            autoCtx.lineJoin = 'round';
+
+            autoCanvas.addEventListener('mousedown', startDrawing);
+            autoCanvas.addEventListener('mousemove', draw);
+            autoCanvas.addEventListener('mouseup', stopDrawing);
+            autoCanvas.addEventListener('mouseleave', stopDrawing);
+
+            autoCanvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            autoCanvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            autoCanvas.addEventListener('touchend', stopDrawing);
+
+            if (document.fonts) {
+                document.fonts.ready.then(() => updateAutoTargetMask());
+            } else {
+                setTimeout(updateAutoTargetMask, 300);
+            }
+        }
+
+        function getCurrentChar() {
+            const preview = document.getElementById('active-char-preview');
+            return preview ? preview.innerText.trim() : 'ဝ';
+        }
+
+        function updateAutoTargetMask() {
+            if (!targetMaskCtx) return;
+            const currentChar = getCurrentChar();
+
+            targetMaskCtx.clearRect(0, 0, targetMaskCanvas.width, targetMaskCanvas.height);
+            targetMaskCtx.fillStyle = '#000000';
+            targetMaskCtx.font = '900 180px "Padauk", "Inter", sans-serif';
+            targetMaskCtx.textAlign = 'center';
+            targetMaskCtx.textBaseline = 'middle';
+
+            targetMaskCtx.fillText(currentChar, targetMaskCanvas.width / 2, targetMaskCanvas.height / 2);
+
+            const imgData = targetMaskCtx.getImageData(0, 0, targetMaskCanvas.width, targetMaskCanvas.height);
+            targetPixelsCount = 0;
+
+            for (let i = 3; i < imgData.data.length; i += 4) {
+                if (imgData.data[i] > 50) {
+                    targetPixelsCount++;
+                }
+            }
+        }
+
+        function getPos(e) {
+            const rect = autoCanvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getPos(e);
+            autoCtx.beginPath();
+            autoCtx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            autoCtx.lineTo(pos.x, pos.y);
+            autoCtx.stroke();
+
+            verifyStrokeAccuracy();
+        }
+
+        function handleTouchStart(e) { e.preventDefault(); startDrawing(e); }
+        function handleTouchMove(e) { e.preventDefault(); draw(e); }
+
+        function stopDrawing() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            verifyStrokeAccuracy();
+        }
+
+        function verifyStrokeAccuracy() {
+            if (targetPixelsCount === 0) {
+                updateAutoTargetMask();
+                if (targetPixelsCount === 0) return;
+            }
+
+            const userImgData = autoCtx.getImageData(0, 0, autoCanvas.width, autoCanvas.height);
+            const targetImgData = targetMaskCtx.getImageData(0, 0, targetMaskCanvas.width, targetMaskCanvas.height);
+
+            let matchedPixels = 0;
+
+            for (let i = 3; i < userImgData.data.length; i += 4) {
+                if (userImgData.data[i] > 30 && targetImgData.data[i] > 30) {
+                    matchedPixels++;
+                }
+            }
+
+            const coverageRatio = matchedPixels / targetPixelsCount;
+            const currentScore = Math.min(100, Math.round(coverageRatio * 100));
+
+            const scoreBadge = document.getElementById('score-display-badge');
+            if (scoreBadge) scoreBadge.innerText = `ရမှတ်: ${toBurmeseDigits(currentScore)}%`;
+
+            const markDoneBtn = document.getElementById('btn-mark-done');
+            const wrapper = document.getElementById('canvas-wrapper-box');
+            const feedback = document.getElementById('writing-feedback-text');
+
+            if (coverageRatio >= 0.70) {
+                if (wrapper) wrapper.classList.add('success');
+                if (feedback) {
+                    feedback.classList.add('correct');
+                    feedback.innerText = currentScore >= 100 ? 'ဂုဏ်ယူပါတယ်။ ရမှတ် ၁၀၀% ရရှိခဲ့ပါတယ် ✓' : 'ဂုဏ်ယူပါတယ်။ သတ်မှတ်ရမှတ် ပြည့်မီသွားပါပြီ ✓';
+                }
+                if (markDoneBtn) {
+                    markDoneBtn.removeAttribute('disabled');
+                }
+            } else {
+                if (wrapper) wrapper.classList.remove('success');
+                if (feedback) {
+                    feedback.classList.remove('correct');
+                    feedback.innerText = 'နောက်ခံ လမ်းညွှန်ပေါ်တွင် ထပ်မံရေးဆွဲပါ!';
+                }
+                if (markDoneBtn) {
+                    markDoneBtn.setAttribute('disabled', 'true');
+                }
+            }
+        }
+
+        function evaluateCanvasStrokes() { verifyStrokeAccuracy(); }
+
+        function clearCanvasDrawings() {
+            if (autoCtx && autoCanvas) {
+                autoCtx.clearRect(0, 0, autoCanvas.width, autoCanvas.height);
+            }
+            isDrawing = false;
+
+            const wrapper = document.getElementById('canvas-wrapper-box');
+            const feedback = document.getElementById('writing-feedback-text');
+            const watermark = document.getElementById('canvas-bg-guide');
+            const scoreBadge = document.getElementById('score-display-badge');
+            const markDoneBtn = document.getElementById('btn-mark-done');
+
+            if (watermark) watermark.style.opacity = '0.35';
+            if (wrapper) wrapper.classList.remove('success');
+            if (feedback) {
+                feedback.classList.remove('correct');
+                feedback.innerText = 'နောက်ခံ လမ်းညွှန်ပေါ်တွင် ထပ်မံရေးဆွဲပါ!';
+            }
+            if (scoreBadge) scoreBadge.innerText = 'ရမှတ်: ၀%';
+            if (markDoneBtn) markDoneBtn.setAttribute('disabled', 'true');
+        }
+
+        async function checkIfCourseAlreadyCompleted() {
+            try {
+                const response = await fetch(`/api/progress/writing?user_id=${userId}&transaction_id=${transactionId}&course_id=${activeCourseId}`);
+                if (!response.ok) return;
+                
+                const data = await response.json();
+                const completedCourses = data.completedCourses || [];
+                const courseKey = `COURSE_${activeCourseId}`;
+
+                if (data.userId && String(data.userId) === String(userId) && (completedCourses.includes(courseKey) || data.is_completed)) {
+                    const course = COURSE_DATA[activeCourseId];
+                    course.letters.forEach((char) => completedLetters.add(char));
+                    
+                    document.querySelectorAll('.char-btn').forEach(btn => btn.classList.add('done'));
+                    document.getElementById('local-progress-bar').style.width = `100%`;
+                    document.getElementById('local-progress-text').innerText = `၁၀၀% ပြီးစီးပါပြီ`;
+                }
+            } catch (err) {
+                console.error("သင်ခန်းစာ တိုးတက်မှု အခြေအနေကို ရယူရန် မအောင်မြင်ပါ:", err);
+            }
+        }
+
+        async function restartCourseProgress() {
+            if (!confirm("ဤသင်ခန်းစာ၏ တိုးတက်မှုကို ၀% သို့ ပြန်လည်စတင်ရန် သေချာပါသလား။")) {
+                return;
+            }
+
+            try {
+                const courseKey = `COURSE_${activeCourseId}`;
+                await fetch('/api/progress/reset-course', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: userId,
+                        transactionId: transactionId,
+                        courseKey: courseKey
+                    })
+                });
+
+                completedLetters.clear();
+                document.querySelectorAll('.char-btn').forEach(btn => btn.classList.remove('done'));
+                document.getElementById('local-progress-bar').style.width = `0%`;
+                document.getElementById('local-progress-text').innerText = `၀% ပြီးစီးပါပြီ`;
+
+                clearCanvasDrawings();
+                alert("သင်ခန်းစာ တိုးတက်မှုကို ပြန်လည်စတင်လိုက်ပါပြီ။");
+            } catch (error) {
+                console.error("သင်ခန်းစာ တိုးတက်မှုကို ပြန်လည်စတင်စဉ် အမှားအယွင်းရှိပါသည်:", error);
+                completedLetters.clear();
+                document.querySelectorAll('.char-btn').forEach(btn => btn.classList.remove('done'));
+                document.getElementById('local-progress-bar').style.width = `0%`;
+                document.getElementById('local-progress-text').innerText = `၀% ပြီးစီးပါပြီ`;
+                clearCanvasDrawings();
+            }
+        }
+
+        async function finishCourseAndSaveToDatabase() {
+            const markDoneBtn = document.getElementById('btn-mark-done');
+            if (markDoneBtn && markDoneBtn.hasAttribute('disabled')) return;
+
+            const course = COURSE_DATA[activeCourseId];
+            const currentChar = course.letters[activeCharIndex];
+
+            completedLetters.add(currentChar);
+
+            const activeBtn = document.getElementById(`btn-char-${activeCharIndex}`);
+            if (activeBtn) activeBtn.classList.add('done');
+
+            const percent = Math.round((completedLetters.size / course.letters.length) * 100);
+            document.getElementById('local-progress-bar').style.width = `${percent}%`;
+            document.getElementById('local-progress-text').innerText = `${toBurmeseDigits(percent)}% ပြီးစီးပါပြီ`;
+
+            const courseKey = `COURSE_${activeCourseId}`;
+            
+            try {
+                const response = await fetch('/api/progress/complete-course', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: userId,
+                        transactionId: transactionId,
+                        courseKey: courseKey,
+                        completedLetters: Array.from(completedLetters).join(',')
+                    })
+                });
+
+                if (response.ok) {
+                    if (completedLetters.size === course.letters.length) {
+                        alert(`🎉 ဂုဏ်ယူပါတယ်! ${course.name} ကို အောင်မြင်စွာ ပြီးဆုံးခဲ့ပါပြီ။`);
+                        window.location.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+                        return;
+                    }
+                } else {
+                    console.warn("ဆာဗာမှ အမှားတုံ့ပြန်မှု ပြုလုပ်ခဲ့သဖြင့် ဒေသတွင်း၌သာ အပ်ဒိတ်လုပ်ပါသည်");
+                }
+            } catch (error) {
+                console.error("တိုးတက်မှုကို ဒေတာဘေ့စ်သို့ သိမ်းဆည်းစဉ် အမှားအယွင်းရှိပါသည်:", error);
+            }
+
+            if (completedLetters.size === course.letters.length) {
+                alert(`🎉 ဂုဏ်ယူပါတယ်! ${course.name} ကို အောင်မြင်စွာ ပြီးဆုံးခဲ့ပါပြီ။`);
+                window.location.href = `writing_courses.html?user_id=${userId}&transaction_id=${transactionId}`;
+                return;
+            }
+
+            if (activeCharIndex < course.letters.length - 1) {
+                activeCharIndex++;
+                const nextBtn = document.getElementById(`btn-char-${activeCharIndex}`);
+                const nextChar = course.letters[activeCharIndex];
+                selectCharacter(nextChar, nextBtn, course);
+            }
+        }
+    </script>
+    <script src="/js/navbar-profile.js"></script>
+    <script src="/js/logo.js"></script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+/* --- Global Styles & Theme Variables --- */
+:root {
+  --primary-color: #7c5cfc;
+  --primary-hover: #6848e0;
+  --bg-light: #f8f7ff;
+  --card-bg: #eae5ff;
+  --text-dark: #2d2b38;
+  --text-muted: #6e6b7b;
+  --white: #ffffff;
+  --radius-lg: 24px;
+  --radius-md: 12px;
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Baloo 2', 'Noto Sans Myanmar', Tahoma, sans-serif;
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+/* --- Navigation Bar --- */
+.course-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+  background-color: var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.nav-brand img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.course-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.course-nav a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: var(--transition);
+}
+
+.course-nav a.active,
+.course-nav a:hover {
+  color: var(--primary-color);
+}
+
+#languageToggle {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#languageToggle:hover {
+  background-color: var(--primary-hover);
+}
+
+/* --- Container & Headers --- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* --- Phrases Dashboard Layout --- */
+.phrases-card {
+  display: flex;
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(124, 92, 252, 0.08);
+  overflow: hidden;
+  height: 520px; /* Locked fixed height for card container */
+  border: 2px solid var(--card-bg);
+}
+
+/* --- Sidebar Style --- */
+.sidebar {
+  width: 320px;
+  background-color: #f3f0ff;
+  border-right: 2px solid var(--card-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar-header {
+  padding: 1.2rem 1.5rem;
+  background-color: var(--card-bg);
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.phrase-list {
+  list-style: none;
+  overflow-y: auto; /* Enables internal scrolling */
+  flex: 1; /* Takes up all remaining vertical space in sidebar */
+}
+
+/* Custom Scrollbar Styling for Sidebar */
+.phrase-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.phrase-list::-webkit-scrollbar-thumb {
+  background-color: #cbbeff;
+  border-radius: 10px;
+}
+
+.phrase-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color);
+}
+
+.phrase-item {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #e2dcff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition);
+  font-weight: 600;
+}
+
+.phrase-item:hover {
+  background-color: var(--card-bg);
+}
+
+.phrase-item.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.phrase-item .check-icon {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* --- Display Area Style --- */
+
+.display-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem; /* Reduced top/bottom padding */
+  text-align: center;
+  background-color: var(--white);
+  height: 100%;
+}
+
+/* 1. Burmese Phrase on top */
+.burmese-text {
+  font-size: 2.8rem;
+  color: var(--text-dark);
+  font-weight: 700;
+  font-family: 'Noto Sans Myanmar', sans-serif;
+  margin-bottom: 0.25rem;
+}
+
+/* 2. Illustration Image Container */
+.illustration-container {
+  width: 100%;
+  max-width: 420px;
+  height: 210px; /* Reduced to bring everything below it up */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25rem 0;
+}
+
+/* 3. Larger Image scaling smoothly inside */
+.phrase-illustration-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Keeps drawing ratio clear without cropping */
+  display: block;
+}
+
+/* 4. Details below image */
+.phrase-details {
+  margin: 0.25rem 0;
+}
+
+.phonetic-text {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.english-text {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* --- Audio Button --- */
+.btn-audio {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(124, 92, 252, 0.3);
+}
+
+.btn-audio:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-audio:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .course-navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .phrases-card {
+    flex-direction: column;
+    height: auto;
+  }
+  .sidebar {
+    width: 100%;
+    max-height: 250px;
+  }
+  .illustration-container {
+    height: 180px;
+  }
+  .burmese-text {
+    font-size: 2.2rem;
+  }
+}

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Session - Phoe Wa Lone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Myanmar:wght@400;600;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Shared App & Navbar CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/shared-navbar.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Baloo 2', 'Noto Sans Myanmar', 'Inter', sans-serif;
+            color: #0f172a;
+            overflow-x: hidden; 
+            background: linear-gradient(180deg, #f8f5ff, #f0fbff 55%, #fff9e8);
+        }
+
+        body::before, body::after { 
+            content: ""; 
+            position: fixed; 
+            width: 240px; 
+            height: 240px; 
+            z-index: -1; 
+            border-radius: 50%; 
+            opacity: .45; 
+            animation: cloudFloat 7s ease-in-out infinite alternate; 
+        }
+        body::before { top: 150px; left: -90px; background: #ddd1ff; }
+        body::after { right: -80px; bottom: 80px; background: #c9f2e2; animation-delay: 1.2s; }
+
+        /* --- Header Navbar Custom Overrides --- */
+        .btn-mm-pill {
+            background-color: #8c52ff !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-mm-pill:hover {
+            background-color: #6e48c4 !important;
+        }
+
+        /* Red Logout Button Styling */
+        .logout-btn, 
+        #logout-btn, 
+        .dropdown-menu button.logout-btn,
+        .dropdown-item.logout-btn {
+            color: #dc2626 !important;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover, 
+        #logout-btn:hover {
+            color: #b91c1c !important;
+            background-color: #fef2f2 !important;
+        }
+
+        /* --- Main Layout Container --- */
+        .reading-session-container {
+            width: 100%;
+            max-width: 1050px;
+            margin: 0 auto 60px auto;
+            padding: 35px 20px;
+            position: relative;
+        }
+
+        .reading-session-container::before { 
+            content: "📚"; 
+            float: right; 
+            font-size: 4.5rem; 
+            animation: iconBounce 2.4s ease-in-out infinite; 
+        }
+
+        .back-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #6e48c4;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .page-header-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #2d2148; 
+            text-shadow: 0 3px 0 #fff;
+            margin: 0 0 8px 0;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 15px;
+            margin: 0 0 28px 0;
+        }
+
+        /* --- Mode Selector Grid --- */
+        .session-type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .session-type-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .session-card {
+            background: #ffffff;
+            border: 3px solid #edf2f7;
+            border-radius: 20px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 0 #e7def8;
+            text-align: left;
+            font-family: inherit;
+            color: inherit;
+            width: 100%;
+            text-decoration: none;
+            display: block;
+        }
+
+        .session-card:nth-child(1) { background: linear-gradient(145deg, #fff4cb, #fff); }
+        .session-card:nth-child(2) { background: linear-gradient(145deg, #dff6ee, #fff); }
+
+        .session-card:hover {
+            border-color: #6e48c4;
+            transform: translateY(-7px) rotate(-.5deg); 
+            box-shadow: 0 14px 0 #d9cdf4;
+        }
+
+        .session-card.active {
+            border-color: #6e48c4;
+            background: #faf8ff;
+        }
+
+        .session-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .session-icon {
+            font-size: 28px;
+            display: inline-block; 
+            animation: iconBounce 2.2s ease-in-out infinite;
+        }
+
+        .session-card-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .session-card-desc {
+            font-size: 14px;
+            color: #64748b;
+            margin: 0 0 16px 0;
+            line-height: 1.5;
+        }
+
+        .session-card-action {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6e48c4;
+        }
+
+        /* --- Main Workspace Content --- */
+        .reading-workspace-card {
+            background: #ffffff;
+            border: 2px solid #e3daf7;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 14px 35px rgba(77,52,128,.11);
+        }
+
+        .section-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .level-badge {
+            background-color: #eae6fa;
+            color: #6e48c4;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .reading-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        /* --- Individual Poem Cards --- */
+        .poem-card {
+            border: 3px solid #e5dcfa; 
+            box-shadow: 0 9px 0 #ddd1f5; 
+            transition: transform .25s ease, box-shadow .25s ease;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .poem-card:nth-child(odd) { background: linear-gradient(145deg, #fff0f5, #fff); }
+        .poem-card:nth-child(even) { background: linear-gradient(145deg, #e7f3ff, #fff); }
+
+        .poem-card:hover { 
+            transform: translateY(-7px); 
+            box-shadow: 0 15px 0 #d4c6f0; 
+        }
+
+        .poem-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .poem-number {
+            font-size: 13px;
+            font-weight: 800;
+            color: #6e48c4;
+        }
+
+        .btn-listen {
+            background-color: #6e48c4;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform .2s ease, background 0.2s ease;
+        }
+
+        .btn-listen:hover {
+            background-color: #5835a8;
+            transform: scale(1.07) rotate(-1deg);
+        }
+
+        .poem-title {
+            font-family: 'Padauk', 'Noto Sans Myanmar', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .poem-body {
+            font-family: 'Padauk', 'Noto Sans Myanmar', sans-serif;
+            font-size: 22px;
+            line-height: 1.8;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+
+        .poem-body p {
+            margin: 0 0 12px 0;
+        }
+
+        .poem-author { 
+            margin: 20px 8px 0; 
+            color: #6e48c4; 
+            font: 700 1.05rem 'Noto Sans Myanmar', sans-serif; 
+            text-align: right; 
+        }
+
+        /* --- SEQUENTIAL HIGHLIGHT STYLING --- */
+        .word {
+            display: inline-block;
+            padding: 0 4px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .word.active-word {
+            background-color: #8c52ff;
+            color: #ffffff;
+            transform: scale(1.08);
+            box-shadow: 0 2px 8px rgba(140, 82, 255, 0.3);
+        }
+
+        .word.passed-word {
+            color: #6e48c4;
+            font-weight: 700;
+        }
+
+        .placeholder-box {
+            text-align: center;
+            padding: 48px 20px;
+            color: #64748b;
+        }
+
+        .placeholder-box h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 12px 0 8px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: #94a3b8;
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+            background: #ffffff;
+            margin-top: 60px;
+        }
+
+        @keyframes iconBounce { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-9px) rotate(3deg); } }
+        @keyframes cloudFloat { from { transform: translate(0,0) scale(1); } to { transform: translate(28px,-22px) scale(1.08); } }
+
+        @media (max-width: 760px) { 
+            .course-navbar { min-height: 76px; padding: 10px 20px; flex-direction: row !important; align-items: center !important; gap: 12px; } 
+            .nav-brand { font-size: 21px; } 
+            .nav-brand img { width: 48px; height: 48px; flex-basis: 48px; } 
+            .course-nav { gap: 0 !important; flex-wrap: nowrap !important; } 
+            .course-nav a { display: none; } 
+            .course-nav button { min-width: 60px; height: 40px; } 
+        }
+
+        @media (prefers-reduced-motion: reduce) { 
+            *, *::before, *::after { 
+                animation: none !important; 
+                scroll-behavior: auto !important; 
+            } 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="course-navbar">
+        <a class="nav-brand" href="index1.html" aria-label="Phoe Wa Lone home">
+            <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+            <span>Phoe Wa Lone</span>
+        </a>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="index1.html">Home</a>
+                <a href="about1.html">About Us</a>
+                <a href="courses1.html" class="active">Courses</a>
+                <a href="curriculum.html">Curriculum</a>
+                <button class="btn-mm-pill" type="button" onclick="window.location.href='reading-sessionmm.html'">MM</button>
+            </nav>
+            <!-- Dynamic User Profile Container -->
+            <div id="user-profile-container"></div>
+        </div>
+    </header>
+
+    <main class="reading-session-container">
+
+        <a class="back-link" href="courses1.html">← Back to courses</a>
+
+        <h1 class="page-header-title">Reading Session</h1>
+        <p class="subtitle">Read, listen, and practice Burmese rhymes and interactive stories.</p>
+
+        <!-- Session Type Selectors -->
+        <div class="session-type-grid">
+            <button class="session-card active" id="tab-btn-poems" onclick="switchSession('poems')">
+                <div class="session-card-header">
+                    <span class="session-icon">📜</span>
+                    <h2 class="session-card-title">Poem Session</h2>
+                </div>
+                <p class="session-card-desc">Sing, listen, and read fun Burmese rhymes with interactive audio guide.</p>
+                <span class="session-card-action">Browse poems →</span>
+            </button>
+            <a class="session-card" href="story.html" id="tab-btn-stories">
+                <div class="session-card-header">
+                    <span class="session-icon">📖</span>
+                    <h2 class="session-card-title">Story Session</h2>
+                </div>
+                <p class="session-card-desc">Meet fun characters in wonderful short stories designed for learners.</p>
+                <span class="session-card-action">Browse stories →</span>
+            </a>
+        </div>
+
+        <!-- Poem Content Workspace -->
+        <section class="reading-workspace-card" id="poems-session-content">
+            <div class="section-badge-row">
+                <span class="level-badge">Level 1</span>
+                <h2 class="page-header-title" style="font-size: 24px; margin: 0;">Easy Poems</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px;">Start with short, memorable verses to practice your reading.</p>
+
+            <div class="reading-cards-grid">
+                
+                <!-- Poem Card 1 -->
+                <article class="poem-card" id="card-poem-1">
+                    <div>
+                        <div class="poem-card-top">
+                            <span class="poem-number">🌸 Poem 01</span>
+                            <button class="btn-listen" type="button" 
+                                    data-audio="audio/mamawawa.mp3" 
+                                    data-timings="[2,3,4,4.8,5.7,6.4,8.0,9.2,10,11,12,13.5,14.5,15.9,16.92,17.8,18.5]"
+                                    onclick="playAudio(this, 'card-poem-1')">
+                                <span class="play-icon">▶</span>
+                                <span class="btn-text">Listen</span>
+                            </button>
+                        </div>
+                        <h3 class="poem-title" lang="my">👧 မမ ဝဝ</h3>
+                        <div class="poem-body" lang="my">
+                            <p>
+                                <span class="word">မမ</span> <span class="word">ဝဝ</span><br>
+                                <span class="word">ထထ</span> <span class="word">က</span><br>
+                                <span class="word">အက</span> <span class="word">ပထမ။</span>
+                            </p>
+                            <p>
+                                <span class="word">ကပါ</span> <span class="word">ကပါ</span><br>
+                                <span class="word">မမရာ</span><br>
+                                <span class="word">ညည</span> <span class="word">လသာသာ။</span>
+                            </p>
+                            <p>
+                                <span class="word">ညအခါ</span><br>
+                                <span class="word">ငါစာရ။</span><br>
+                                <span class="word">မမ</span> <span class="word">ဝဝ</span><br>
+                                <span class="word">ထထ</span> <span class="word">က။</span>
+								<p class="poem-author">တင်မိုး</p>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Poem Card 2 -->
+                <article class="poem-card" id="card-poem-2">
+                    <div>
+                        <div class="poem-card-top">
+                            <span class="poem-number">☀️ Poem 02</span>
+                            <button class="btn-listen" type="button" 
+                                    data-audio="audio/phoetharhtoo.mp3" 
+                                    data-timings="[2.5, 4.5,6,7.6,9,10.5,11.5,12.8,14.5,15.8,17,18]"
+                                    onclick="playAudio(this, 'card-poem-2')">
+                                <span class="play-icon">▶</span>
+                                <span class="btn-text">Listen</span>
+                            </button>
+                        </div>
+                        <h3 class="poem-title" lang="my">👦 ဖိုးသာထူး</h3>
+                        <div class="poem-body" lang="my">
+                            <p>
+                                <span class="word">ဖိုးသာထူး</span> <span class="word">ဖိုးသာထူး</span><br>
+                                <span class="word">အလွန်ဝတဲ့</span> <span class="word">ဖိုးသာထူး။</span>
+                            </p>
+                            <p>
+                                <span class="word">ဖိုးသာထူးက</span> <span class="word">ဝမ်းပူပူ</span><br>
+                                <span class="word">ဖိုးဝကြီးနဲ့</span> <span class="word">တူ။</span>
+                            </p>
+                            <p>
+                                <span class="word">တူပါသကွဲ့</span> <span class="word">မယုံငြား</span><br>
+                                <span class="word">သည်မှာ</span> <span class="word">ကြည့်ပါလား။</span>
+								<p class="poem-author">မောင်ဖြူး</p>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Poem Card 3 (Updated with timing timestamps) -->
+                <article class="poem-card" id="card-poem-3">
+                    <div>
+                        <div class="poem-card-top">
+                            <span class="poem-number">🪷 Poem 03</span>
+                            <button class="btn-listen" type="button"
+                                    data-audio="audio/kya-sit-kyo.mp3"
+                                    data-timings="[1.5,3.2,4.8,6.2,8.0,9.5,11.0,12.5,14.0,15.5,17.0,18.5,20.0,21.5,23.0,24.5,26.0]"
+                                    onclick="playAudio(this, 'card-poem-3')">
+                                <span class="play-icon">▶</span>
+                                <span class="btn-text">Listen</span>
+                            </button>
+                        </div>
+                        <h3 class="poem-title" lang="my">🪷 ကြာဆစ်ကြိုး</h3>
+                        <div class="poem-body" lang="my">
+                            <p><span class="word">ကြာဖြူကြာနီ</span> <span class="word">ကြာညိုနှောလို့</span><br>
+                               <span class="word">တို့လယ်တောမှာ</span> <span class="word">ပွင့်ကြတယ်။</span></p>
+                            <p><span class="word">ကောက်စိုက်အပြန်</span> <span class="word">ရေကန်ကြီး</span><br>
+                               <span class="word">ကြာတစ်စည်းလောက်</span> <span class="word">ချိုးခဲ့ကွယ်။</span></p>
+                            <p><span class="word">ကြာပွင့်ကြာငုံ</span> <span class="word">ထုံထုံမွှေးကို</span><br>
+                               <span class="word">မလေးဘယ်သို့</span> <span class="word">သုံးပါ့မယ်။</span></p>
+                            <p><span class="word">ကြားရိုးကြာနွယ်</span> <span class="word">ဘယ်ညာဆစ်လို့</span><br>
+                               <span class="word">ရွေကြာဆစ်ကြိုး</span> <span class="word">ဆွဲပါ့မယ်။</span><br>
+                               <span class="word">ဆွဲပါ့မယ်။</span></p>
+                            <p class="poem-author">မင်းသု၀ဏ်</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Poem Card 4 (Updated with timing timestamps) -->
+                <article class="poem-card" id="card-poem-4">
+                    <div>
+                        <div class="poem-card-top">
+                            <span class="poem-number">🫐 Poem 04</span>
+                            <button class="btn-listen" type="button"
+                                    data-audio="audio/thapyay-thee-kout.mp3"
+                                    data-timings="[1.8,3.5,5.0,6.5,8.2,9.8,11.2,12.8,14.5,16.0,17.5,19.0,20.5,22.0,23.5,25.0,26.5]"
+                                    onclick="playAudio(this, 'card-poem-4')">
+                                <span class="play-icon">▶</span>
+                                <span class="btn-text">Listen</span>
+                            </button>
+                        </div>
+                        <h3 class="poem-title" lang="my">🫐 သပြေသီးကောက်</h3>
+                        <div class="poem-body" lang="my">
+                            <p><span class="word">ဝါဆိုဝါခေါင်</span> <span class="word">ရေတွေကြီးလို့</span><br>
+                               <span class="word">သပြေသီးမှည့်</span> <span class="word">ကောက်စို့ကွယ်။</span></p>
+                            <p><span class="word">ခရာဆူးချုံ</span> <span class="word">ဟိုအထဲက</span><br>
+                               <span class="word">မျှော့နက်မည်းကြီး</span> <span class="word">တွယ်တတ်တယ်။</span></p>
+                            <p><span class="word">မျှော့နက်ဆိုတာ</span> <span class="word">ချိုနဲ့လားကွဲ့</span><br>
+                               <span class="word">မြွေနဂါးတောင်</span> <span class="word">ကြောက်ဘူးကွယ်။</span></p>
+                            <p><span class="word">တို့လည်းကြောက်ပေါင်</span> <span class="word">အတူသွားစို့</span><br>
+                               <span class="word">အုန်းလက်နွားလေး</span> <span class="word">ထားခဲ့မယ်။</span><br>
+                               <span class="word">သွားကွယ်</span> <span class="word">သွားကွယ်။</span></p>
+                            <p class="poem-author">မင်းသု၀ဏ်</p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Story Placeholder Workspace -->
+        <section class="reading-workspace-card" id="stories-session-content" style="display: none;">
+            <div class="placeholder-box">
+                <span style="font-size: 48px;">🦉📖</span>
+                <h3>New stories are coming soon!</h3>
+                <p>Our reading owl is preparing some wonderful adventures for you. Stay tuned!</p>
+            </div>
+        </section>
+
+        <!-- Shared Audio Player -->
+        <audio id="reading-audio" preload="none"></audio>
+    </main>
+
+    <footer>© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+
+    <script>
+        function switchSession(sessionType) {
+            const poemsContent = document.getElementById('poems-session-content');
+            const storiesContent = document.getElementById('stories-session-content');
+            const btnPoems = document.getElementById('tab-btn-poems');
+            const btnStories = document.getElementById('tab-btn-stories');
+
+            if (sessionType === 'poems') {
+                poemsContent.style.display = 'block';
+                storiesContent.style.display = 'none';
+                btnPoems.classList.add('active');
+                btnStories.classList.remove('active');
+            } else {
+                poemsContent.style.display = 'none';
+                storiesContent.style.display = 'block';
+                btnStories.classList.add('active');
+                btnPoems.classList.remove('active');
+            }
+        }
+
+        let activeBtn = null;
+        let activeCardId = null;
+        let wordElements = [];
+        let timeStamps = [];
+
+        const audioElement = document.getElementById('reading-audio');
+
+        function playAudio(buttonEl, cardId) {
+            const audioSrc = buttonEl.getAttribute('data-audio');
+
+            if (!audioSrc) {
+                alert('Please set a valid audio path in data-audio="..."');
+                return;
+            }
+
+            const playIcon = buttonEl.querySelector('.play-icon');
+            const btnText = buttonEl.querySelector('.btn-text');
+
+            // Toggle Pause/Play
+            if (activeBtn === buttonEl) {
+                if (audioElement.paused) {
+                    audioElement.play().catch(e => console.error(e));
+                    if (playIcon) playIcon.textContent = '⏸';
+                    if (btnText) btnText.textContent = 'Pause';
+                } else {
+                    audioElement.pause();
+                    if (playIcon) playIcon.textContent = '▶';
+                    if (btnText) btnText.textContent = 'Listen';
+                }
+                return;
+            }
+
+            // Reset active state of previous card/button
+            resetHighlights();
+            if (activeBtn) {
+                const prevIcon = activeBtn.querySelector('.play-icon');
+                const prevText = activeBtn.querySelector('.btn-text');
+                if (prevIcon) prevIcon.textContent = '▶';
+                if (prevText) prevText.textContent = 'Listen';
+            }
+
+            // Setup new card word elements & timing array
+            activeBtn = buttonEl;
+            activeCardId = cardId;
+            const cardEl = document.getElementById(cardId);
+            wordElements = Array.from(cardEl.querySelectorAll('.word'));
+
+            try {
+                timeStamps = JSON.parse(buttonEl.getAttribute('data-timings') || '[]');
+            } catch (e) {
+                timeStamps = [];
+            }
+
+            audioElement.src = audioSrc;
+            audioElement.play().then(() => {
+                if (playIcon) playIcon.textContent = '⏸';
+                if (btnText) btnText.textContent = 'Playing...';
+            }).catch(err => {
+                console.error("Audio Load Error:", err);
+                alert("Could not load audio. Make sure '" + audioSrc + "' exists!");
+                resetPlaybackState();
+            });
+
+            audioElement.onended = resetPlaybackState;
+        }
+
+        // Live Audio Sync with Karaoke Highlighting
+        audioElement.addEventListener('timeupdate', () => {
+            if (!activeCardId || wordElements.length === 0 || timeStamps.length === 0) return;
+
+            const currentTime = audioElement.currentTime;
+            let currentWordIdx = -1;
+
+            // Find current word index based on timing thresholds
+            for (let i = 0; i < timeStamps.length; i++) {
+                if (currentTime >= timeStamps[i]) {
+                    currentWordIdx = i;
+                } else {
+                    break;
+                }
+            }
+
+            // Apply highlight CSS classes
+            wordElements.forEach((wordEl, idx) => {
+                wordEl.classList.remove('active-word', 'passed-word');
+
+                if (idx === currentWordIdx) {
+                    wordEl.classList.add('active-word');
+                } else if (idx < currentWordIdx) {
+                    wordEl.classList.add('passed-word');
+                }
+            });
+        });
+
+        function resetHighlights() {
+            if (wordElements) {
+                wordElements.forEach(el => el.classList.remove('active-word', 'passed-word'));
+            }
+        }
+
+        function resetPlaybackState() {
+            resetHighlights();
+            if (activeBtn) {
+                const playIcon = activeBtn.querySelector('.play-icon');
+                const btnText = activeBtn.querySelector('.btn-text');
+                if (playIcon) playIcon.textContent = '▶';
+                if (btnText) btnText.textContent = 'Listen';
+            }
+            activeBtn = null;
+            activeCardId = null;
+            wordElements = [];
+            timeStamps = [];
+        }
+    </script>
+    <script src="js/navbar-profile.js"></script>
+    <!-- Dynamic Logo Generator Script -->
+    <script src="js/logo.js"></script>
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+</body>
+</html>

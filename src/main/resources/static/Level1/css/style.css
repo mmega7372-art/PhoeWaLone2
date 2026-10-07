@@ -1,0 +1,461 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+.footer-note {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 14px;
+    color: #888888;
+}
+
+body {
+    background-color: #fafdff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Decorative Purple Circles */
+body::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: #e1d5ff;
+    border-radius: 50%;
+    top: 20%;
+    right: 28%;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: #e1d5ff;
+    border-radius: 50%;
+    bottom: -10%;
+    right: -5%;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+/* Header Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    background: transparent;
+    position: relative;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a253c;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #7f56da;
+}
+
+/* Split Main Container */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 12%;
+    min-height: calc(100vh - 100px);
+    position: relative;
+    z-index: 5;
+}
+
+/* Left Side: Auth Card Container */
+.auth-side {
+    flex: 1;
+    max-width: 480px;
+}
+
+.auth-card {
+    background: #e6ddff;
+    border-radius: 24px;
+    padding: 45px 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    text-align: center;
+}
+
+.auth-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 6px;
+}
+
+.auth-card .tagline {
+    font-size: 13px;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+}
+
+/* Input Fields styling */
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px 20px;
+    background: #c3b4fc;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    color: #4e3ba3;
+    font-weight: 500;
+    outline: none;
+    transition: box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+    color: #8c7ec4;
+}
+
+.form-group input:focus {
+    box-shadow: 0 0 0 3px rgba(127, 86, 218, 0.3);
+}
+
+/* Forgot Password Link */
+.forgot-link {
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 25px;
+}
+
+.forgot-link a {
+    font-size: 13px;
+    color: #5333ed;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* Purple Action Buttons */
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: #7d40e7;
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #672ec9;
+}
+
+/* Secondary Navigation Buttons (Navbar Context) */
+.btn-nav-login {
+    color: #7d40e7 !important;
+    margin-right: 15px;
+}
+
+.btn-nav-signup {
+    background: #7d40e7;
+    color: #ffffff !important;
+    padding: 10px 24px;
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+.btn-nav-signup:hover {
+    background: #672ec9;
+}
+
+/* OR Divider Line */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #555555;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 25px 0;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #a395db;
+}
+
+.divider:not(:empty)::before { margin-right: .5em; }
+.divider:not(:empty)::after { margin-left: .5em; }
+
+/* Bottom Footer Redirection Links */
+.auth-footer {
+    font-size: 13px;
+    color: #555555;
+}
+
+.auth-footer a {
+    color: #000000;
+    text-decoration: underline;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+/* Status Notifications */
+.status-msg {
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    display: none;
+    text-align: left;
+}
+.status-msg.error { background: #fde8e8; color: #e53e3e; }
+.status-msg.success { background: #edf7ed; color: #2e7d32; }
+
+/* Right Side: Image Showcase Container Layout */
+.showcase-side {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 2;
+}
+
+.alphabet-image-card {
+    width: 100%;
+    max-width: 440px;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 16px; /* Clean border spacing around your mockup graphic */
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alphabet-image-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    display: block;
+    object-fit: contain;
+}
+/* ==========================================================================
+   HOME PAGE HERO & FEATURES SECTIONS (Keeps all Auth rules completely safe)
+   ========================================================================== */
+
+/* Hero Content Area on Left */
+.hero-side {
+    flex: 1.2;
+    text-align: left;
+    padding-right: 40px;
+}
+
+.hero-side h1 {
+    font-size: 54px;
+    font-weight: 800;
+    color: #111111;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.hero-side h1 span {
+    color: #7f56da;
+}
+
+.hero-side .hero-tagline {
+    font-size: 18px;
+    color: #444444;
+    line-height: 1.6;
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+.hero-side .hero-tagline span {
+    display: block;
+    margin-top: 8px;
+}
+
+/* Large CTA Button */
+.btn-cta-large {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 18px 36px;
+    background: #a38bf5;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-cta-large:hover {
+    background: #8e72f1;
+}
+
+.btn-cta-large:active {
+    transform: scale(0.98);
+}
+
+/* Right Side Image Showcase (Replaces auth image card layout on Home) */
+.hero-image-container {
+    flex: 0.8;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.hero-image-container img {
+    max-width: 380px;
+    height: auto;
+    object-fit: contain;
+    position: relative;
+    z-index: 3;
+}
+
+/* Active Link State for Navigation */
+.nav-links a.active {
+    color: #7f56da;
+}
+
+/* Bottom Feature Cards Grid Container */
+.features-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    background: #ffffff;
+    border-radius: 16px;
+    margin: 40px 10%;
+    padding: 30px 40px;
+    box-shadow: 0 4px 20px rgba(149, 157, 165, 0.05);
+    position: relative;
+    z-index: 10;
+}
+
+.feature-card {
+    flex: 1;
+    text-align: center;
+    padding: 10px 20px;
+    position: relative;
+}
+
+/* Divider Lines between feature cards */
+.feature-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 15%;
+    height: 70%;
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Feature Badge Icons */
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #e6ddff;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    color: #111111;
+    font-size: 20px;
+}
+
+.feature-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.5;
+}
+.courses-hero, .cta-banner, .tools-grid {
+    position: relative;
+    z-index: 10; /* Pushes the text content to the very front layer */
+}
+/* Align items inside the header cleanly */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+/* Container to keep logo and title grouped together */
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+/* Enforce strict size on the logo image */
+.logo-img {
+  width: 48px;
+  height: 48px;
+  min-width: 48px; /* Stops flexbox from squishing the image */
+  min-height: 48px;
+  border-radius: 50%;
+  object-fit: cover; /* Keeps aspect ratio clean inside circle */
+  display: block;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
+}

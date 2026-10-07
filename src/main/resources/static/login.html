@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - Phoe Wa Lone</title>
+    <!-- Linked to your exact CSS structure -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+		.footer-note {
+		    text-align: center;
+		    margin-top: 50px;
+		    font-size: 14px;
+		    color: #888888;
+		}
+        /* Header & Brand Logo Styling */
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111111;
+            text-decoration: none;
+            line-height: 1;
+            margin: 0;
+        }
+    </style>
+      <link rel="stylesheet" href="css/shared-navbar.css">
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="course-navbar">
+  <a class="nav-brand" href="index.html" aria-label="Phoe Wa Lone home">
+    <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+    <span>Phoe Wa Lone</span>
+  </a>
+  <div class="nav-right-wrapper">
+    <nav class="course-nav course-nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="courses.html">Courses</a>
+    
+      <a class="btn-nav-login active-auth" href="login.html">Log in</a>
+      <a class="btn-nav-signup" href="signup.html">Sign up</a>
+      <button class="btn-mm-pill" type="button" onclick="window.location.href='loginmm.html'">MM</button>
+     
+    </nav>
+  </div>
+</header>
+
+    <!-- Split Main Container -->
+    <main class="main-container">
+        
+        <!-- Left Side: Auth Card Container -->
+        <div class="auth-side">
+            <div class="auth-card">
+                
+                <h2>Log In</h2>
+                <p class="tagline">Access your lessons and track your progress</p>
+
+                <!-- Status Notifications -->
+                <div id="error-message" class="status-msg error"></div>
+                <div id="success-message" class="status-msg success"></div>
+
+                <!-- Input Fields Form Sheet -->
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="usernameInput">Username or Email</label>
+                        <input type="text" id="usernameInput" placeholder="Enter your username or email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordInput">Password</label>
+                        <input type="password" id="passwordInput" placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="forgot-link">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-primary">LogIn</button>
+                </form>
+
+                <!-- OR Divider Line -->
+                <div class="divider">OR</div>
+
+                <!-- Bottom Footer Redirection Links -->
+                <p class="auth-footer">
+                    Don't have an account? <a href="signup.html">Sign Up</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Side: Image Showcase Container Layout -->
+        <div class="showcase-side">
+            <div class="alphabet-image-card">
+                <!-- Points directly to your Burmese letters graphic asset -->
+                <img src="images/image2.jpg" alt="Burmese Script Graphic">
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript Authorization Engine Router Fetch Controller Logic -->
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const identity = document.getElementById("usernameInput").value.trim();
+            const password = document.getElementById("passwordInput").value;
+            
+            const errorDiv = document.getElementById("error-message");
+            const successDiv = document.getElementById("success-message");
+
+            // Reset visibility states using class defaults
+            errorDiv.style.display = "none";
+            successDiv.style.display = "none";
+
+            fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: identity, 
+                    password: password
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network issues encountered calling backend operations mapping router handlers.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === "SUCCESS") {
+                    successDiv.style.display = "block";
+                    successDiv.innerText = "Login successful! Redirecting to Dashboard...";
+
+                    // Saves the raw username token mapping values to localStorage structures
+                    localStorage.setItem("loggedInUser", data.message || identity);
+
+                    setTimeout(() => {
+                        window.location.href = "dashboard.html";
+                    }, 1200);
+                } else {
+                    errorDiv.style.display = "block";
+                    errorDiv.innerText = data.message;
+                }
+            })
+            .catch(err => {
+                console.error("Login Interface Operations System Fault Trace Context:", err);
+                errorDiv.style.display = "block";
+                errorDiv.innerText = "Backend connection failed. Ensure your Spring Boot app is running on port 8080.";
+            });
+        }
+    </script>
+
+    <!-- Scripts -->
+    <script src="js/logo.js"></script>
+   
+	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+</body>
+</html>
