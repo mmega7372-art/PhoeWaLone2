@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - phoewalone2_db</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f4f6f9; }
+        h2, h3 { color: #333; }
+        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #343a40; color: white; }
+        button { padding: 6px 14px; cursor: pointer; border-radius: 4px; }
+        .btn-danger { background-color: #dc3545; color: white; border: none; }
+        .btn-primary { background-color: #007bff; color: white; border: none; }
+        .form-container { background: #fff; padding: 20px; margin-top: 30px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 600px; }
+        input, select { padding: 8px; margin: 8px 0; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .header-bar { display: flex; justify-content: space-between; align-items: center; }
+        .logout-btn { background-color: #6c757d; color: white; border: none; padding: 8px 15px; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <div>
+            <h2>Admin Dashboard: User Management</h2>
+            <p>Database: <strong>phoewalone2_db</strong></p>
+        </div>
+        <a href="/login.html" class="logout-btn" onclick="localStorage.clear()">Log Out</a>
+    </div>
+
+    <!-- Users Table (READ) -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- Populated dynamically via JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Create / Edit Form (CREATE & UPDATE) -->
+    <div class="form-container">
+        <h3 id="form-title">Add New User</h3>
+        <input type="hidden" id="userId">
+        
+        <label>Username:</label>
+        <input type="text" id="username" placeholder="Enter username">
+        
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="Enter email">
+        
+        <label id="password-label">Password:</label>
+        <input type="password" id="password" placeholder="Enter password">
+        
+        <label>Role:</label>
+        <select id="role">
+            <option value="STUDENT">STUDENT</option>
+            <option value="ADMIN">ADMIN</option>
+        </select>
+        
+        <br><br>
+        <button class="btn-primary" onclick="saveUser()">Save User</button>
+        <button onclick="resetForm()" style="background-color: #e2e8f0; border: none;">Cancel / Reset</button>
+    </div>
+
+    <script>
+        // Fetch and load users when page opens
+        window.onload = function() {
+            loadUsers();
+        };
+
+        function loadUsers() {
+            fetch('/api/admin/users')
+                .then(res => res.json())
+                .then(users => {
+                    const tbody = document.getElementById('userTableBody');
+                    tbody.innerHTML = "";
+                    users.forEach(user => {
+                        let tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>${user.role}</td>
+                            <td>
+                                <button class="btn-primary" onclick="editUser(${user.id}, '${user.username}', '${user.email}', '${user.role}')">Edit</button>
+                                <button class="btn-danger" onclick="deleteUser(${user.id})">Delete</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(err => console.error('Error loading users:', err));
+        }
+
+        function editUser(id, username, email, role) {
+            document.getElementById('form-title').innerText = "Edit User (ID: " + id + ")";
+            document.getElementById('userId').value = id;
+            document.getElementById('username').value = username;
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = ""; 
+            document.getElementById('password-label').innerText = "Password (Skipped on updates):";
+            document.getElementById('role').value = role;
+            window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+        }
+
+        function resetForm() {
+            document.getElementById('form-title').innerText = "Add New User";
+            document.getElementById('userId').value = "";
+            document.getElementById('username').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('password').value = "";
+            document.getElementById('password-label').innerText = "Password:";
+            document.getElementById('role').value = "STUDENT";
+        }
+
+        function saveUser() {
+            const id = document.getElementById('userId').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            if (!username || !email) {
+                alert("Username and Email are required!");
+                return;
+            }
+
+            let url = '/api/admin/users/create';
+            let formData = new URLSearchParams();
+            formData.append('username', username);
+            formData.append('email', email);
+            formData.append('role', role);
+
+            if (id) {
+                url = '/api/admin/users/update';
+                formData.append('id', id);
+            } else {
+                if (!password) {
+                    alert("Password is required for new users!");
+                    return;
+                }
+                formData.append('password', password);
+            }
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === "SUCCESS") {
+                    resetForm();
+                    loadUsers();
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        function deleteUser(id) {
+            if (confirm("Are you sure you want to delete user ID " + id + "?")) {
+                fetch('/api/admin/users/delete/' + id, {
+                    method: 'DELETE'
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === "SUCCESS") loadUsers();
+                })
+                .catch(err => console.error('Error:', err));
+            }
+        }
+    </script>
+</body>
+</html>
