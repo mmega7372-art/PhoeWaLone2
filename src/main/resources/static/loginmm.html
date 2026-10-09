@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>အကောင့်ဝင်ရန် - ဖိုးဝလုံး</title>
+    <title>အကောင့်ဝင်ရန် - ဖိုးဝလုံ (Phoe Wa Lone)</title>
+    <!-- Linked to your exact CSS structure -->
     <link rel="stylesheet" href="css/style.css">
     <style>
 		.footer-note {
@@ -39,26 +40,26 @@
             margin: 0;
         }
     </style>
-      <link rel="stylesheet" href="css/shared-navbar.css">
+    <link rel="stylesheet" href="css/shared-navbar.css">
 </head>
 <body>
 
     <!-- Header Navigation Bar -->
-    <header class="navbar">
-        <!-- Dynamic JS Logo + Brand Name Group -->
-        <a href="indexmm.html" class="brand-group">
-            <div class="logo-badge"></div>
-            <div class="brand">ဖိုးဝလုံး</div>
+    <header class="course-navbar">
+        <a class="nav-brand" href="index.html" aria-label="Phoe Wa Lone home">
+            <img class="brand-logo" src="images/Logo.jpg" alt="ဖိုးဝလုံ လိုဂို">
+            <span>ဖိုးဝလုံ</span>
         </a>
-
-        <nav class="nav-links">
-            <a href="indexmm.html">ပင်မစာမျက်နှာ</a>
-            <a href="aboutmm.html">ကျွန်ုပ်တို့အကြောင်း</a>
-            <a href="coursesmm.html">သင်ခန်းစာများ</a>
-            <a href="loginmm.html" class="btn-nav-signup">အကောင့်ဝင်ရန်</a>
-            <a href="signupmm.html" class="btn-nav-signup">အကောင့်ဖွင့်ရန်</a>
-           <button class="btn-mm-pill" type="button" onclick="window.location.href='login.html'">ENG</button>
-        </nav>
+        <div class="nav-right-wrapper">
+            <nav class="course-nav course-nav-links" aria-label="Main navigation">
+                <a href="index.html">ပင်မစာမျက်နှာ</a>
+                <a href="about.html">အကြောင်းအရာ</a>
+                <a href="courses.html">သင်တန်းများ</a>
+                <a class="btn-nav-login active-auth" href="loginmm.html">အကောင့်ဝင်ရန်</a>
+                <a class="btn-nav-signup" href="signup.html">အကောင့်ဖွင့်ရန်</a>
+                <button class="btn-mm-pill" type="button" onclick="window.location.href='login.html'">EN</button>
+            </nav>
+        </div>
     </header>
 
     <!-- Split Main Container -->
@@ -67,27 +68,28 @@
         <!-- Left Side: Auth Card Container -->
         <div class="auth-side">
             <div class="auth-card">
+                
                 <h2>အကောင့်ဝင်ရန်</h2>
-                <p class="tagline">သင်ခန်းစာများကို ဆက်လက်လေ့လာရန် အကောင့်ဝင်ပါ</p>
+                <p class="tagline">သင်ခန်းစာများကို ကြည့်ရှုပြီး တိုးတက်မှုကို ခြေရာခံပါ</p>
 
                 <!-- Status Notifications -->
-                <div id="error-message" class="status-msg error" style="display: none;"></div>
-                <div id="success-message" class="status-msg success" style="display: none;"></div>
+                <div id="error-message" class="status-msg error"></div>
+                <div id="success-message" class="status-msg success"></div>
 
                 <!-- Input Fields Form Sheet -->
                 <form id="loginForm" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label for="usernameInput">အသုံးပြုသူအမည် သို့မဟုတ် အီးမေးလ်</label>
-                        <input type="text" id="usernameInput" placeholder="Username သို့မဟုတ် Email ရိုက်ထည့်ပါ" required>
+                        <label for="usernameInput">အသုံးပြုသူအမည် (သို့) အီးမေးလ်</label>
+                        <input type="text" id="usernameInput" placeholder="သင်၏ အသုံးပြုသူအမည် သို့မဟုတ် အီးမေးလ်ကို ထည့်ပါ" required>
                     </div>
 
                     <div class="form-group">
                         <label for="passwordInput">စကားဝှက် (Password)</label>
-                        <input type="password" id="passwordInput" placeholder="Password ရိုက်ထည့်ပါ" required>
+                        <input type="password" id="passwordInput" placeholder="သင်၏ စကားဝှက်ကို ထည့်ပါ" required>
                     </div>
 
                     <div class="forgot-link">
-                        <a href="#">စကားဝှက်မေ့နေပါသလား?</a>
+                        <a href="#">စကားဝှက် မေ့နေပါသလား?</a>
                     </div>
 
                     <button type="submit" class="btn-primary">အကောင့်ဝင်မည်</button>
@@ -98,7 +100,7 @@
 
                 <!-- Bottom Footer Redirection Links -->
                 <p class="auth-footer">
-                    အကောင့်မရှိသေးဘူးလား? <a href="signupmm.html">အကောင့်အသစ်ဖွင့်ရန်</a>
+                    အကောင့်မရှိသေးဘူးလား? <a href="signup.html">အကောင့်ဖွင့်ရန်</a>
                 </p>
             </div>
         </div>
@@ -106,13 +108,14 @@
         <!-- Right Side: Image Showcase Container Layout -->
         <div class="showcase-side">
             <div class="alphabet-image-card">
-                <img src="images/image2.jpg" alt="Burmese Script Graphic">
+                <!-- Points directly to your Burmese letters graphic asset -->
+                <img src="images/image2.jpg" alt="မြန်မာအက္ခရာ ပုံဖော်ပြချက်">
             </div>
         </div>
 
     </main>
 
-    <!-- JavaScript Authorization Engine Router Fetch Controller Logic -->
+    <!-- JavaScript Authorization Engine Router Fetch Controller Logic with Role Redirection -->
     <script>
         function handleLogin(event) {
             event.preventDefault();
@@ -123,7 +126,7 @@
             const errorDiv = document.getElementById("error-message");
             const successDiv = document.getElementById("success-message");
 
-            // Reset visibility states
+            // Reset visibility states using class defaults
             errorDiv.style.display = "none";
             successDiv.style.display = "none";
 
@@ -139,46 +142,43 @@
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Network issues encountered calling backend operations.");
+                    throw new Error("Network issues encountered calling backend operations mapping router handlers.");
                 }
                 return response.json();
             })
             .then(data => {
                 if (data.status === "SUCCESS") {
                     successDiv.style.display = "block";
-                    successDiv.innerText = "အကောင့်ဝင်ခြင်း အောင်မြင်ပါသည်။ ခေတ္တစောင့်ဆိုင်းပေးပါ...";
+                    successDiv.innerText = "အကောင့်ဝင်ခြင်း အောင်မြင်ပါသည်။ စာမျက်နှာသို့ ပို့ဆောင်နေပါသည်...";
 
-                    // SAFETY CHECK: If backend returns [object HTMLInputElement], save the user's input value instead
-                    let userSaveValue = data.message;
-                    if (userSaveValue === "[object HTMLInputElement]" || !userSaveValue) {
-                        userSaveValue = identity; 
-                    }
-
-                    // Save the clean string to storage
-                    localStorage.setItem("loggedInUser", userSaveValue);
+                    // Save session data to localStorage
+                    localStorage.setItem("loggedInUser", data.message || identity);
+                    localStorage.setItem("userRole", data.role);
 
                     setTimeout(() => {
-                        window.location.href = "dashboard.html";
+                        // Role-based redirection logic
+                        if (data.role === "ADMIN") {
+                            window.location.href = "admindashboard.html"; // Routes to Admin Dashboard
+                        } else {
+                            window.location.href = "dashboard.html"; // Routes to Student Dashboard
+                        }
                     }, 1200);
                 } else {
                     errorDiv.style.display = "block";
-                    if (data.message && data.message.includes("Invalid")) {
-                        errorDiv.innerText = "အသုံးပြုသူအမည်/အီးမေးလ် သို့မဟုတ် စကားဝှက် မှားယွင်းနေပါသည်။";
-                    } else {
-                        errorDiv.innerText = data.message || "အကောင့်ဝင်ခြင်း မအောင်မြင်ပါ။";
-                    }
+                    errorDiv.innerText = data.message;
                 }
             })
             .catch(err => {
                 console.error("Login Interface Operations System Fault Trace Context:", err);
                 errorDiv.style.display = "block";
-                errorDiv.innerText = "ဆာဗာနှင့် ချိတ်ဆက်မှု မအောင်မြင်ပါ။ Spring Boot app အလုပ်လုပ်နေကြောင်း သေချာပါစေ။";
+                errorDiv.innerText = "ဆာဗာသို့ ချိတ်ဆက်၍မရပါ။ Spring Boot အက်ပ် ပွင့်နေခြင်း ရှိမရှိ စစ်ဆေးပါ။";
             });
         }
     </script>
 
     <!-- Scripts -->
-    <script src="/js/logo.js"></script>
-	<footer class="footer-note">© 2026 Phoe Wa Lone. Learn Burmese with confidence.</footer>
+    <script src="js/logo.js"></script>
+   
+    <footer class="footer-note">© 2026 ဖိုးဝလုံ။ ယုံကြည်မှုရှိရှိဖြင့် မြန်မာစာကို လေ့လာပါ။</footer>
 </body>
 </html>
