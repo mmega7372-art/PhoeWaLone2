@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 1 · Assessment Quiz | Phoe Wa Lone</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Myanmar:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/css/shared-navbar.css">
+</head>
+<body>
+
+  <!-- Site Header Navigation (Matching Phoe Wa Lone Navbar) -->
+  <header class="course-navbar">
+    <a class="nav-brand" href="index1.html" aria-label="Phoe Wa Lone home">
+      <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+      <span>Phoe Wa Lone</span>
+    </a>
+    <div class="nav-right-wrapper">
+      <nav class="course-nav course-nav-links" aria-label="Main navigation">
+        <a href="/index1.html">Home</a>
+        <a href="/about1.html">About Us</a>
+        <a href="/courses1.html">Courses</a>
+        <a class="active" href="/curriculum.html">Curriculum</a>
+        <button
+          class="language-button"
+          id="languageToggle"
+          type="button"
+          aria-label="Switch to Myanmar"
+        >
+          MM
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Quiz Container -->
+  <main class="quiz-main">
+    <div class="quiz-card-wrapper">
+
+      <!-- Top Bar / Progress -->
+      <div class="top-bar">
+        <a class="btn-back-link" href="/curriculum.html">← Back to Curriculum</a>
+        <div class="progress-section">
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-fill"></div>
+          </div>
+          <span id="question-tracker" class="question-tracker">Question 1 of 10</span>
+        </div>
+      </div>
+
+      <!-- Quiz Body Area -->
+      <div id="quiz-box" class="quiz-box">
+        <div class="eyebrow-badge">LEVEL 1 ASSESSMENT</div>
+        <h2 id="instruction-title" class="instruction-title">Instruction Title</h2>
+
+        <!-- Prompt Area (Text Box with Big Dashed Border / Audio) -->
+        <div id="prompt-area" class="prompt-area">
+          <button id="btn-audio-prompt" class="btn-audio-prompt hidden">
+            <span>🔊</span> Listen Audio
+          </button>
+          <div id="prompt-text" class="prompt-text-box"></div>
+        </div>
+
+        <!-- Sentence Builder Zone -->
+        <div id="sentence-builder-zone" class="sentence-zone hidden">
+          <div id="answer-slots" class="answer-slots"></div>
+          <div class="slot-line"></div>
+        </div>
+
+        <!-- Interactive Options Grid -->
+        <div id="interactive-area" class="interactive-area"></div>
+      </div>
+
+      <!-- Footer Bar -->
+      <footer class="bottom-bar">
+        <div id="feedback-banner" class="feedback-banner hidden">
+          <div class="feedback-content">
+            <span id="feedback-icon" class="feedback-icon">✓</span>
+            <div>
+              <h4 id="feedback-title">Awesome!</h4>
+              <p id="feedback-desc"></p>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-check" class="btn-action" disabled>CHECK ANSWER</button>
+      </footer>
+
+      <!-- Result Screen -->
+      <div id="result-screen" class="result-screen hidden">
+        <div class="celebrate-badge">🎉 🌟 🎊</div>
+        <h2>Quiz Completed!</h2>
+        <p>Great job on completing your Level 1 Assessment!</p>
+        
+        <div class="stat-grid single-stat">
+          <div class="stat-card purple-card">
+            <span class="stat-label">ACCURACY</span>
+            <span id="stat-accuracy" class="stat-value">100%</span>
+          </div>
+        </div>
+
+        <button onclick="location.reload()" class="btn-action">TRY AGAIN 🔄</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Centered Footer -->
+  <footer class="footer-note">
+    © 2026 Phoe Wa Lone. Learn Burmese with confidence.
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="js/navbar-profile.js"></script>
+</body>
+</html>
