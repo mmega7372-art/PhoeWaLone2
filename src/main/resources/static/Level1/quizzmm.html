@@ -1,437 +1,125 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Level 1 Master Quiz | Phoe Wa Lone</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 1 · Assessment Quiz | Phoe Wa Lone</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Padauk', 'Baloo 2', sans-serif;
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      overflow-x: hidden;
-    }
-    
-    /* Floating Emojis Background */
-    .emoji-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .floating-emoji {
-      position: absolute;
-      font-size: 2rem;
-      user-select: none;
-      animation: floatAndRotate 12s infinite ease-in-out;
-      opacity: 0.7;
-    }
-
-    @keyframes floatAndRotate {
-      0% {
-        transform: translateY(105vh) rotate(0deg) scale(0.8);
-      }
-      50% {
-        transform: translateY(50vh) rotate(180deg) scale(1.2);
-      }
-      100% {
-        transform: translateY(-10vh) rotate(360deg) scale(0.8);
-      }
-    }
-
-    .quiz-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-    }
-
-    .option-btn {
-      transition: all 0.2s ease-in-out;
-    }
-
-    .option-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .option-btn.selected {
-      border-color: #3b82f6;
-      background-color: #eff6ff;
-    }
-
-    .option-btn.correct {
-      border-color: #22c55e;
-      background-color: #f0fdf4;
-      color: #15803d;
-    }
-
-    .option-btn.incorrect {
-      border-color: #ef4444;
-      background-color: #fef2f2;
-      color: #b91c1c;
-    }
-  </style>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Myanmar:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/css/shared-navbar.css">
 </head>
-<body class="min-h-screen flex flex-col justify-between text-slate-800">
+<body>
 
-  <!-- Floating Emojis Background -->
-  <div class="emoji-bg" id="emojiBg"></div>
-
-  <!-- Header -->
-  <header class="relative z-10 w-full bg-white/80 backdrop-blur-md border-b border-sky-100 py-4 px-6 flex justify-between items-center shadow-sm">
-    <div class="flex items-center gap-3">
-      <span class="text-3xl">⭐</span>
-      <div>
-        <h1 class="font-bold text-xl text-sky-800 leading-none">ဖိုးဝလုံး</h1>
-        <p class="text-xs text-sky-600 font-semibold mt-1">Level 1 စာမေးပွဲ ပဟေဠိ (သင်ခန်းစာ ၁ - ၅)</p>
-      </div>
-    </div>
-    <div class="bg-sky-100 text-sky-800 font-bold px-4 py-1.5 rounded-full text-sm">
-      မေးခွန်း <span id="currentQ">၁</span> / <span id="totalQ">၁၀</span>
+  <!-- Site Header Navigation (Matching curriculum.html) -->
+  <header class="course-navbar">
+    <a class="nav-brand" href="index1.html" aria-label="Phoe Wa Lone home">
+      <img class="brand-logo" src="images/Logo.jpg" alt="Phoe Wa Lone logo">
+      <span>Phoe Wa Lone</span>
+    </a>
+    <div class="nav-right-wrapper">
+      <nav class="course-nav course-nav-links" aria-label="Main navigation">
+		<a href="/index1.html">Home</a>
+		       <a href="/about1.html">About Us</a>
+		       <a href="/courses1.html">Courses</a>
+		       <a class="active" href="/curriculum.html">Curriculum</a>
+		       <button
+		         class="language-button"
+		         id="languageToggle"
+		         type="button"
+		         aria-label="Switch to Myanmar"
+		       >
+		         MM
+		       </button>
+      </nav>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="relative z-10 container mx-auto px-4 py-8 max-w-2xl flex-grow flex flex-col justify-center">
+  <!-- Main Quiz Container -->
+  <main class="quiz-main">
+    <div class="quiz-card-wrapper">
 
-    <!-- Progress Bar -->
-    <div class="w-full bg-slate-200 h-3 rounded-full mb-6 overflow-hidden shadow-inner">
-      <div id="progressBar" class="bg-gradient-to-r from-sky-400 to-blue-600 h-full w-0 transition-all duration-300"></div>
-    </div>
-
-    <!-- Quiz Box -->
-    <div id="quizContainer" class="quiz-card rounded-3xl p-6 md:p-8 border border-white">
-      <!-- Question Section -->
-      <div id="questionBox">
-        <div class="flex items-center gap-2 mb-2">
-          <span id="badgeCategory" class="text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">
-            သင်ခန်းစာ ၁
-          </span>
+      <!-- Top Bar / Progress -->
+      <div class="top-bar">
+        <a class="btn-back-link" href="/curriculum.html">← Back to Curriculum</a>
+        <div class="progress-section">
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-fill"></div>
+          </div>
+          <span id="question-tracker" class="question-tracker">Question 1 of 10</span>
         </div>
-        <h2 id="questionText" class="text-xl md:text-2xl font-bold text-slate-800 mb-6 leading-relaxed">
-          မေးခွန်းရယူနေသည်...
-        </h2>
-
-        <!-- Options Grid -->
-        <div id="optionsGrid" class="grid grid-cols-1 gap-3.5 mb-6"></div>
-
-        <!-- Explanation Box -->
-        <div id="explanationBox" class="hidden p-4 rounded-2xl mb-6 text-sm leading-relaxed"></div>
-
-        <!-- Action Footer -->
-        <div class="flex justify-between items-center pt-2">
-          <button id="hintBtn" class="text-amber-600 bg-amber-50 hover:bg-amber-100 font-semibold text-sm px-4 py-2 rounded-xl border border-amber-200 transition-colors flex items-center gap-1.5">
-            💡 <span>အကူအညီကြည့်မည်</span>
-          </button>
-          <button id="nextBtn" class="hidden bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-xl transition-transform active:scale-95 shadow-lg shadow-blue-500/30">
-            နောက်မေးခွန်း →
-          </button>
-        </div>
-        
-        <!-- Hint Display -->
-        <div id="hintText" class="hidden mt-3 text-xs text-amber-800 bg-amber-50/80 p-3 rounded-xl border border-amber-200"></div>
       </div>
 
-      <!-- Results View -->
-      <div id="resultsBox" class="hidden text-center py-6">
-        <div class="text-6xl mb-4" id="resultEmoji">🎉</div>
-        <h2 class="text-3xl font-extrabold text-slate-800 mb-2">ဖြေဆိုပြီးပါပြီ။</h2>
-        <p class="text-slate-600 mb-6">Level 1 ဖြေဆိုမှု ရလဒ်များ -</p>
-        
-        <div class="bg-sky-50 rounded-2xl p-6 border border-sky-100 mb-6 max-w-sm mx-auto">
-          <div class="text-5xl font-black text-sky-600 mb-1" id="scoreDisplay">၀ / ၁၀</div>
-          <p id="scoreMessage" class="text-sky-800 font-semibold text-sm mt-2">တော်တော်လေး ကြိုးစားထားတာပဲ။</p>
+      <!-- Quiz Body Area -->
+      <div id="quiz-box" class="quiz-box">
+        <div class="eyebrow-badge">LEVEL 1 ASSESSMENT</div>
+        <h2 id="instruction-title" class="instruction-title">Instruction Title</h2>
+
+        <!-- Prompt Area (Text / Audio Only - No Mascot) -->
+        <div id="prompt-area" class="prompt-area">
+          <button id="btn-audio-prompt" class="btn-audio-prompt hidden">
+            <span>🔊</span> Listen Audio
+          </button>
+          <div id="prompt-text" class="prompt-text-box"></div>
         </div>
 
-        <button onclick="restartQuiz()" class="bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:brightness-110 transition-all active:scale-95">
-          🔄 ပြန်လည်ဖြေဆိုမည်
-        </button>
-		<button onclick="" class="bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:brightness-110 transition-all active:scale-95">
-		          
-		        </button>
+        <!-- Sentence Builder Zone -->
+        <div id="sentence-builder-zone" class="sentence-zone hidden">
+          <div id="answer-slots" class="answer-slots"></div>
+          <div class="slot-line"></div>
+        </div>
+
+        <!-- Interactive Options Grid -->
+        <div id="interactive-area" class="interactive-area"></div>
       </div>
+
+      <!-- Footer Bar -->
+      <footer class="bottom-bar">
+        <div id="feedback-banner" class="feedback-banner hidden">
+          <div class="feedback-content">
+            <span id="feedback-icon" class="feedback-icon">✓</span>
+            <div>
+              <h4 id="feedback-title">Awesome!</h4>
+              <p id="feedback-desc"></p>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-check" class="btn-action" disabled>CHECK ANSWER</button>
+      </footer>
+
+     
+	  <!-- Result Screen -->
+	  <div id="result-screen" class="result-screen hidden">
+	    <div class="celebrate-badge">🎉 🌟 🎊</div>
+	    <h2>Quiz Completed!</h2>
+	    <p>Great job on completing your Level 1 Assessment!</p>
+	    
+	   
+	    <div class="stat-grid single-stat">
+	      <div class="stat-card purple-card">
+	        <span class="stat-label">ACCURACY</span>
+	        <span id="stat-accuracy" class="stat-value">100%</span>
+	      </div>
+	    </div>
+
+	    <button onclick="location.reload()" class="btn-action">TRY AGAIN 🔄</button>
+	  </div>
 
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="relative z-10 text-center py-4 text-xs font-semibold text-slate-500">
-    ဖိုးဝလုံး · Level 1 သင်ယူမှုအတွေ့အကြုံ
+  <footer class="footer-note" style="text-align: center; padding: 1.5rem 1rem; color: #64748B; font-size: 0.9rem;">
+    © 2026 Phoe Wa Lone. Learn Burmese with confidence.
   </footer>
 
-  <script>
-    const emojis = ['🎈', '🐰', '✏️', '🐘', '🦋', '🐝', '📖', '⭐', '✨', '🌙', '🐟', '🐉', '🏆', '💡'];
-    const emojiBg = document.getElementById('emojiBg');
 
-    function createFloatingEmojis() {
-      const count = 18;
-      for (let i = 0; i < count; i++) {
-        const el = document.createElement('div');
-        el.className = 'floating-emoji';
-        el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        el.style.left = `${Math.random() * 95}%`;
-        el.style.animationDuration = `${7 + Math.random() * 10}s`;
-        el.style.animationDelay = `${Math.random() * 5}s`;
-        emojiBg.appendChild(el);
-      }
-    }
-
-    const toBurmeseDigits = (num) => {
-      const myanNums = ['၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'];
-      return num.toString().split('').map(d => myanNums[parseInt(d)] || d).join('');
-    };
-
-    const quizData = [
-      {
-        course: "သင်ခန်းစာ ၁",
-        question: "\"ဧ\" အသံထွက်စေရန် ဗျည်း၏ ရှေ့တွင် ရေးသားရသော သင်္ကေတမှာ မည်သည့်အရာနည်း။",
-        options: [
-          { text: "ေ (သဝေထိုး)", isCorrect: true, rationale: "သဝေထိုး (ေ) ကို ဗျည်းတစ်ခု၏ ရှေ့တွင် ရေးသားပါက \"ဧ\" အသံထွက်ပါသည်။" },
-          { text: "ာ (ရေးချ)", isCorrect: false, rationale: "ရေးချ (ာ) ကို ဗျည်း၏ အနောက်တွင် ရေးသားပါက \"အား\" အသံထွက်ပါသည်။" },
-          { text: "ိ (လုံးကြီးတင်)", isCorrect: false, rationale: "လုံးကြီးတင် (ိ) ကို ဗျည်း၏ အပေါ်တွင် ရေးသားပါက \"အိ\" အသံထွက်ပါသည်။" },
-          { text: "း (ဝစ္စနှစ်လုံးပေါက်)", isCorrect: false, rationale: "ဝစ္စနှစ်လုံးပေါက် (း) ကို အသံ အတက်အကျ ပြောင်းလဲရန် ဗျည်း၏ အနောက်တွင် ရေးပါသည်။" }
-        ],
-        hint: "ယင်းသည် ဗျည်း၏ ဘယ်ဘက် (သို့မဟုတ်) အရှေ့တွင် ရှိသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၂",
-        question: "ခ၊ ဂ၊ င၊ ဒ၊ ပ၊ ဝ စသည့် ဗျည်းများနှင့် တွဲဖက်သုံးလေ့ရှိသော အရပ်ရှည် သင်္ကေတမှာ မည်သည့်အရာနည်း။",
-        options: [
-          { text: "ါ (မောက်ချ)", isCorrect: true, rationale: "မောက်ချ (ါ) သည် အရပ်ရှည်သော သင်္ကေတဖြစ်ပြီး ခ၊ ဂ၊ င၊ ဒ၊ ပ၊ ဝ စသည့် ဗျည်းစာလုံးများနှင့် သီးသန့်တွဲသုံးပါသည်။" },
-          { text: "ာ (ရေးချ)", isCorrect: false, rationale: "ရေးချ (ာ) ကို အခြားအထွေထွေ ဗျည်းများတွင် ပုံမှန်သုံးပါသည်။" },
-          { text: "ီ (လုံးကြီးတင်ဆံခတ်)", isCorrect: false, rationale: "လုံးကြီးတင်ဆံခတ် (ီ) ကို \"အီး\" အသံထွက်ရန် ဗျည်း၏ အပေါ်တွင် ရေးပါသည်။" },
-          { text: "ဲ (နောက်ပစ်)", isCorrect: false, rationale: "နောက်ပစ် (ဲ) ကို \"အဲ\" အသံထွက်ရန် သုံးပါသည်။" }
-        ],
-        hint: "ရေးချကဲ့သို့ \"အား\" အသံထွက်သော်လည်း အရပ်ပိုရှည်ပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၂",
-        question: "\"ငါး\" ဆိုသည်မှာ အင်္ဂလိပ်လို မည်သည့်အဓိပ္ပာယ်နည်း။",
-        options: [
-          { text: "Fish (ငါး)", isCorrect: true, rationale: "\"ငါး\" သည် င ကို မောက်ချ၊ ဝစ္စနှစ်လုံးပေါက် တွဲစပ်ထားခြင်းဖြစ်ပြီး ရေထဲတွင် ကူးခတ်သော ငါးကို ဆိုလိုပါသည်။" },
-          { text: "Bamboo (ဝါး)", isCorrect: false, rationale: "Bamboo သည် \"ဝါး\" ဖြစ်ပါသည်။" },
-          { text: "Teacher (ဆရာမ)", isCorrect: false, rationale: "Teacher သည် \"ဆရာ/မ\" ဖြစ်ပါသည်။" },
-          { text: "Dragon (နဂါး)", isCorrect: false, rationale: "Dragon သည် \"နဂါး\" ဖြစ်ပါသည်။" }
-        ],
-        hint: "ယင်းသည် ရေထဲတွင် ကူးခတ်နေထိုင်ပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၃",
-        question: "\"၏\" ဆိုသော အထူးသင်္ကေတသည် စာကြောင်းထဲတွင် မည်သည့်လုပ်ဆောင်ချက်ကို လုပ်ဆောင်ပေးသနည်း။",
-        options: [
-          { text: "ပိုင်ဆိုင်မှုကို ပြသခြင်း", isCorrect: true, rationale: "\"၏\" ကို ပိုင်ဆိုင်မှုပြသရာတွင် သုံးသည် (ဥပမာ - မောင်မောင်၏ စာအုပ်)။" },
-          { text: "အနီးရှိအရာကို ညွှန်ပြခြင်း", isCorrect: false, rationale: "\"ဤ\" သင်္ကေတသည် \"ဒီ\" သို့မဟုတ် အနီးရှိအရာကို ညွှန်ပြပါသည်။" },
-          { text: "နေရာ သို့မဟုတ် အချိန်ကို ပြသခြင်း", isCorrect: false, rationale: "\"၌\" သင်္ကေတသည် နေရာ သို့မဟုတ် အချိန်ကို ညွှန်ပြပါသည်။" },
-          { text: "လုပ်ဆောင်ချက်များကို ဆက်စပ်ပေးခြင်း", isCorrect: false, rationale: "\"၍\" သင်္ကေတသည် အကြောင်းအရင်းနှင့် ရလဒ်ကို ဆက်စပ်ပေးပါသည်။" }
-        ],
-        hint: "အင်္ဂလိပ်စာအရေးအသား၏ apostrophe 's ကဲ့သို့ သုံးပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၃",
-        question: "နေရာ သို့မဟုတ် အချိန်ကို ညွှန်ပြရန် မည်သည့်အထူးသင်္ကေတကို သုံးသနည်း။",
-        options: [
-          { text: "၌", isCorrect: true, rationale: "\"၌\" ကို နေရာ သို့မဟုတ် အချိန်ညွှန်ပြရာတွင် သုံးသည် (ဥပမာ - ကျောင်း၌ စာသင်သည်)။" },
-          { text: "ဤ", isCorrect: false, rationale: "\"ဤ\" သည် \"ဒါ/ဒီ\" ဟု အဓိပ္ပာယ်ရပါသည်။" },
-          { text: "၏", isCorrect: false, rationale: "\"၏\" သည် ပိုင်ဆိုင်မှုကို ပြသပါသည်။" },
-          { text: "၍", isCorrect: false, rationale: "\"၍\" သည် အကြောင်းအရာများကို ချိတ်ဆက်ပေးပါသည်။" }
-        ],
-        hint: "ကျောင်းတွင်၊ အိမ်တွင် စသည့် နေရာပြစကားလုံးများတွင် သုံးပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၄",
-        question: "မည်သည့် အက္ခရာတွဲ သင်္ကေတသည် အသံရှည် \"အီး\" အသံကို ထွက်စေသနည်း။",
-        options: [
-          { text: "ီ (လုံးကြီးတင်ဆံခတ်)", isCorrect: true, rationale: "လုံးကြီးတင်ဆံခတ် (ီ) ကို ဗျည်းအပေါ်တွင် ရေးသားပါက အသံရှည် \"အီး\" အသံထွက်ပါသည်။" },
-          { text: "ိ (လုံးကြီးတင်)", isCorrect: false, rationale: "လုံးကြီးတင် (ိ) သည် အသံတို \"အိ\" အသံထွက်ပါသည်။" },
-          { text: "ု (တစ်ချောင်းငင်)", isCorrect: false, rationale: "တစ်ချောင်းငင် (ု) သည် \"အု\" အသံထွက်ပါသည်။" },
-          { text: "ဲ (နောက်ပစ်)", isCorrect: false, rationale: "နောက်ပစ် (ဲ) သည် \"အဲ\" အသံထွက်ပါသည်။" }
-        ],
-        hint: "လုံးကြီးတင်၏ အပေါ်တွင် ဆံခတ်လေး ပါဝင်ပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၄",
-        question: "\"ထီး\" ၏ အင်္ဂလိပ်အဓိပ္ပာယ်မှာ မည်သည့်အရာနည်း။",
-        options: [
-          { text: "Umbrella (ထီး)", isCorrect: true, rationale: "\"ထီး\" ၏ အင်္ဂလိပ်စာအဓိပ္ပာယ်မှာ Umbrella ဖြစ်ပါသည်။" },
-          { text: "Clock (နာရီ)", isCorrect: false, rationale: "Clock သည် \"နာရီ\" ဖြစ်ပါသည်။" },
-          { text: "Parents (မိဘ)", isCorrect: false, rationale: "Parents သည် \"မိဘ\" ဖြစ်ပါသည်။" },
-          { text: "Sister (ညီမ/မမ)", isCorrect: false, rationale: "Sister သည် \"ညီမ/မမ\" ဖြစ်ပါသည်။" }
-        ],
-        hint: "မိုးရွာလျှင် ဆောင်းသည့်အရာ ဖြစ်ပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၅",
-        question: "\"တစ်ချောင်းငင်\" ဟု ခေါ်ပြီး အသံတို \"အု\" အသံထွက်စေသော သင်္ကေတမှာ မည်သည့်အရာနည်း။",
-        options: [
-          { text: "ု", isCorrect: true, rationale: "တစ်ချောင်းငင် (ု) ကို ဗျည်း၏ အောက်တွင် ရေးသားပြီး \"အု\" အသံထွက်စေပါသည်။" },
-          { text: "ူ", isCorrect: false, rationale: "နှစ်ချောင်းငင် (ူ) သည် \"အူး\" အသံထွက်ပါသည်။" },
-          { text: "ဲ", isCorrect: false, rationale: "နောက်ပစ် (ဲ) သည် \"အဲ\" အသံထွက်ပါသည်။" },
-          { text: "့", isCorrect: false, rationale: "အောက်မြစ် (့) သည် အသံကို ပိုမိုတိုတောင်းစေပါသည်။" }
-        ],
-        hint: "အောက်သို့ ဆွဲချထားသော မျဉ်းတစ်ချောင်း ပါဝင်ပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၅",
-        question: "ဗျည်း၏ အောက်တွင် ရေးသားရပြီး အသံထွက်ကို တိုတောင်းဆွဲဆိုင်းစေသော သင်္ကေတမှာ မည်သည့်အရာနည်း။",
-        options: [
-          { text: "့ (အောက်မြစ်)", isCorrect: true, rationale: "အောက်မြစ် (့) သည် စာလုံးအောက်တွင် အစက်ကလေးအဖြစ် တည်ရှိပြီး အသံထွက်ကို မြှင့်/တိုစေပါသည်။" },
-          { text: "း (ဝစ္စနှစ်လုံးပေါက်)", isCorrect: false, rationale: "ဝစ္စနှစ်လုံးပေါက် (း) ကို စာလုံးအနောက်တွင် ဘေးချင်းယှဉ် အစက်နှစ်စက်အဖြစ် ရေးပါသည်။" },
-          { text: "ဲ (နောက်ပစ်)", isCorrect: false, rationale: "နောက်ပစ် (ဲ) ကို ဗျည်း၏ အပေါ်/အနောက်တွင် ရေးပါသည်။" },
-          { text: "ု (တစ်ချောင်းငင်)", isCorrect: false, rationale: "တစ်ချောင်းငင် (ု) သည် \"အု\" သရသံကို ထွက်စေပါသည်။" }
-        ],
-        hint: "စာလုံးအောက်တွင် အစက်တစ်စက်အဖြစ် ရှိနေပါသည်။"
-      },
-      {
-        course: "သင်ခန်းစာ ၅",
-        question: "\"အဲ\" သရသံ ဖြစ်ပေါ်စေရန် ဗျည်း၏ အနောက်/အပေါ်တွင် ရေးရသော သင်္ကေတမှာ မည်သည့်အရာနည်း။",
-        options: [
-          { text: "ဲ (နောက်ပစ်)", isCorrect: true, rationale: "နောက်ပစ် (ဲ) ကို ဗျည်းအနောက်အပေါ်တွင် ရေးသား၍ \"အဲ\" သရသံ ဖြစ်ပေါ်စေပါသည်။" },
-          { text: "ူ (နှစ်ချောင်းငင်)", isCorrect: false, rationale: "နှစ်ချောင်းငင် (ူ) သည် \"အူး\" အသံထွက်ပါသည်။" },
-          { text: "ု (တစ်ချောင်းငင်)", isCorrect: false, rationale: "တစ်ချောင်းငင် (ု) သည် \"အု\" အသံထွက်ပါသည်။" },
-          { text: "ိ (လုံးကြီးတင်)", isCorrect: false, rationale: "လုံးကြီးတင် (ိ) သည် \"အိ\" အသံထွက်ပါသည်။" }
-        ],
-        hint: "ဗျည်း၏ ညာဘက်အပေါ်ထောင့်တွင် ချိတ်ဆွဲထားသော သင်္ကေတဖြစ်ပါသည်။"
-      }
-    ];
-
-    let currentIdx = 0;
-    let score = 0;
-    let answered = false;
-    let shuffledQuiz = [];
-
-    function initQuiz() {
-      createFloatingEmojis();
-      shuffledQuiz = [...quizData].sort(() => Math.random() - 0.5);
-      renderQuestion();
-    }
-
-    function renderQuestion() {
-      answered = false;
-      const q = shuffledQuiz[currentIdx];
-
-      document.getElementById('currentQ').innerText = toBurmeseDigits(currentIdx + 1);
-      document.getElementById('totalQ').innerText = toBurmeseDigits(shuffledQuiz.length);
-      document.getElementById('badgeCategory').innerText = q.course;
-      document.getElementById('questionText').innerText = q.question;
-      
-      const percent = ((currentIdx) / shuffledQuiz.length) * 100;
-      document.getElementById('progressBar').style.width = `${percent}%`;
-
-      document.getElementById('explanationBox').className = "hidden p-4 rounded-2xl mb-6 text-sm leading-relaxed";
-      document.getElementById('hintBtn').classList.remove('hidden');
-      document.getElementById('hintText').classList.add('hidden');
-      document.getElementById('nextBtn').classList.add('hidden');
-
-      const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
-      const grid = document.getElementById('optionsGrid');
-      grid.innerHTML = '';
-
-      shuffledOptions.forEach((opt) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white font-semibold text-slate-700 hover:border-sky-300 shadow-sm flex justify-between items-center';
-        btn.innerHTML = `<span>${opt.text}</span> <span class="status-icon"></span>`;
-        btn.onclick = () => selectOption(btn, opt, q);
-        grid.appendChild(btn);
-      });
-    }
-
-    function selectOption(selectedBtn, option, question) {
-      if (answered) return;
-      answered = true;
-
-      const grid = document.getElementById('optionsGrid');
-      const buttons = grid.querySelectorAll('.option-btn');
-
-      if (option.isCorrect) {
-        score++;
-        selectedBtn.classList.add('correct');
-        selectedBtn.querySelector('.status-icon').innerText = '✅';
-        showExplanation(true, option.rationale);
-      } else {
-        selectedBtn.classList.add('incorrect');
-        selectedBtn.querySelector('.status-icon').innerText = '❌';
-
-        buttons.forEach(btn => {
-          if (btn.innerText.includes(question.options.find(o => o.isCorrect).text)) {
-            btn.classList.add('correct');
-            btn.querySelector('.status-icon').innerText = '✅';
-          }
-        });
-
-        showExplanation(false, option.rationale);
-      }
-
-      buttons.forEach(b => b.style.pointerEvents = 'none');
-      document.getElementById('nextBtn').classList.remove('hidden');
-    }
-
-    function showExplanation(isCorrect, rationale) {
-      const box = document.getElementById('explanationBox');
-      box.classList.remove('hidden');
-      if (isCorrect) {
-        box.className = "p-4 rounded-2xl mb-6 text-sm leading-relaxed bg-green-50 border border-green-200 text-green-900";
-        box.innerHTML = `<strong>🌟 အဖြေမှန်ပါသည်။</strong> ${rationale}`;
-      } else {
-        box.className = "p-4 rounded-2xl mb-6 text-sm leading-relaxed bg-amber-50 border border-amber-200 text-amber-900";
-        box.innerHTML = `<strong>💡 ရှင်းလင်းချက် -</strong> ${rationale}`;
-      }
-    }
-
-    document.getElementById('hintBtn').onclick = () => {
-      const hintText = document.getElementById('hintText');
-      hintText.innerText = shuffledQuiz[currentIdx].hint;
-      hintText.classList.toggle('hidden');
-    };
-
-    document.getElementById('nextBtn').onclick = () => {
-      currentIdx++;
-      if (currentIdx < shuffledQuiz.length) {
-        renderQuestion();
-      } else {
-        showResults();
-      }
-    };
-
-    function showResults() {
-      document.getElementById('questionBox').classList.add('hidden');
-      document.getElementById('resultsBox').classList.remove('hidden');
-      document.getElementById('progressBar').style.width = '100%';
-
-      const scoreDisplay = document.getElementById('scoreDisplay');
-      const scoreMessage = document.getElementById('scoreMessage');
-      const resultEmoji = document.getElementById('resultEmoji');
-
-      scoreDisplay.innerText = `${toBurmeseDigits(score)} / ${toBurmeseDigits(shuffledQuiz.length)}`;
-
-      if (score >= 8) {
-        resultEmoji.innerText = "🌟🏆🎉";
-        scoreMessage.innerText = "ဂုဏ်ယူပါတယ်။ Level 1 ကို ကျွမ်းကျင်စွာ တတ်မြောက်သွားပါပြီ။";
-      } else if (score >= 5) {
-        resultEmoji.innerText = "👍🎈✨";
-        scoreMessage.innerText = "တော်တော်လေး ကောင်းပါတယ်။ ၁၀/၁၀ ရအောင် ဆက်လက် ကြိုးစားကြည့်ပါ။";
-      } else {
-        resultEmoji.innerText = "📚💪🐰";
-        scoreMessage.innerText = "ကြိုးစားမှု ကောင်းပါတယ်။ သင်ခန်းစာ ၁-၅ ကို ပြန်နွှေးပြီး ထပ်မံဖြေဆိုကြည့်ပါ။";
-      }
-    }
-
-    function restartQuiz() {
-      currentIdx = 0;
-      score = 0;
-      shuffledQuiz = [...quizData].sort(() => Math.random() - 0.5);
-      document.getElementById('resultsBox').classList.add('hidden');
-      document.getElementById('questionBox').classList.remove('hidden');
-      renderQuestion();
-    }
-
-    window.onload = initQuiz;
-  </script>
+  <script src="script.js"></script>
+  <script src="js/navbar-profile.js"></script>
 </body>
 </html>
