@@ -1,320 +1,326 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Phoe Wa Lone</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/profile.css">
-    <style>
-        /* Header & Dynamic Logo Group Styling */
-        .brand-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
+package com.example.demo.controller;
+
+import com.example.demo.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+@Controller
+public class AuthController {
+
+    @Autowired
+    private EmailService emailService;
+
+    // Pull connection values directly from application.properties
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+
+    @Value("${spring.datasource.username}")
+    private String dbUser;
+
+    @Value("${spring.datasource.password}")
+    private String dbPass;
+
+    // Temporary in-memory cache to store generated OTP codes mapped to lowercase usernames
+    private final Map<String, String> otpStorageCache = new HashMap<>();
+
+    // DTO Class Structures
+    public static class LoginResponse {
+        public String status;
+        public String message;
+        public String role;
+
+        public LoginResponse(String status, String message, String role) {
+            this.status = status;
+            this.message = message;
+            this.role = role;
         }
+    }
 
-        .logo-badge {
-            width: 42px;
-            height: 42px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(0 4px 6px rgba(110, 72, 196, 0.3));
-        }
+    public static class LoginRequest {
+        private String username;
+        private String email; 
+        private String password;
 
-        .brand {
-            font-size: 28px;
-            font-weight: 800;
-            color: #111111;
-            text-decoration: none;
-            line-height: 1;
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
+        public String getUsername() { return username; }
+        public void setUsername(String username) { this.username = username; }
+        public String getEmail() { return email; } 
+        public void setEmail(String email) { this.email = email; } 
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
+    }
 
-    <header class="navbar">
-        <!-- Dynamic JS Logo + Brand Name Group -->
-        <a href="index1.html" class="brand-group">
-            <div class="logo-badge"></div>
-            <div class="brand">Phoe Wa Lone</div>
-        </a>
+    // 1. Process Database Login
+    @PostMapping("/api/auth/login")
+    @ResponseBody
+    public LoginResponse verifyDatabaseLogin(@RequestBody LoginRequest loginData) {
+        String credentialInput = loginData.getUsername(); 
+        String password = loginData.getPassword();
+        return executeDatabaseQuery(credentialInput, credentialInput, password, false);
+    }
+    
+    // 2. Process Database Signup
+    @PostMapping("/api/auth/signup")
+    @ResponseBody
+    public LoginResponse registerDatabaseUser(@RequestBody LoginRequest signupData) {
+        return executeDatabaseQuery(signupData.getUsername(), signupData.getEmail(), signupData.getPassword(), true);
+    }
 
-        <nav class="nav-links">
-            <a href="index1.html">Home</a>
-            <a href="about1.html">About Us</a>
-            <a href="courses1.html">Courses</a>
-            <a href="curriculum.html">Curriculum</a>
-            <a href="profile.html" class="active">My Profile</a>
-        </nav>
-    </header>
-
-    <main class="main-container" style="display: block;">
-        <div class="profile-container">
-            <div class="profile-layout">
-                
-                <aside class="profile-card">
-                    <div class="avatar-circle" id="user-avatar-initial">...</div>
-                    <h3 class="user-display-name" id="user-display-name">Loading...</h3>
-                    <p class="user-email-text" id="user-email-text">Checking email profile...</p>
-                    <div><span class="profile-badge-tag" id="user-role-badge">Student</span></div>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-                        <a class="btn-edit-trigger" onclick="openEditModal()">⚙️ Change Info</a>
-                        <a class="btn-edit-trigger" style="color:#7d40e7;" onclick="openPasswordModal()">🔒 Change Password</a>
-                    </div>
-                    
-                    <button class="btn-logout-action" style="margin-top:15px;" onclick="handleLogout()">Log Out</button>
-                </aside>
-
-                <section class="profile-content-panel">
-                    <h3 class="panel-section-title">My Learning Dashboard</h3>
-                    <div class="course-progress-card">
-                        <div class="course-info-left">
-                            <h4>Burmese Language Course</h4>
-                            <p>Standard path curriculum timeline</p>
-                        </div>
-                        <div class="progress-meter-box">
-                
-                </section>
-
-            </div>
-        </div>
-    </main>
-
-    <div class="modal-overlay" id="editModal">
-        <div class="modal-card">
-            <h2>Update Profile Info</h2>
-            <div id="modal-status-msg" class="status-msg"></div>
-            <div class="form-group">
-                <label for="edit-username">Username Name</label>
-                <input type="text" id="edit-username">
-            </div>
-            <div class="form-group">
-                <label for="edit-email">Email Address</label>
-                <input type="email" id="edit-email">
-            </div>
-            <div class="modal-actions">
-                <button class="btn-modal-cancel" onclick="closeEditModal()">Cancel</button>
-                <button class="btn-primary" style="flex: 1;" onclick="saveProfileChanges()">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CHANGE PASSWORD MODAL (OTP DRIVEN) -->
-    <div class="modal-overlay" id="passwordModal">
-        <div class="modal-card">
-            <h2>Reset Password</h2>
-            <div id="password-status-msg" class="status-msg" style="padding:10px; margin-bottom:10px; border-radius:8px; display:none;"></div>
-            
-            <!-- Step A: Request Trigger -->
-            <div id="otp-initial-step">
-                <p style="margin-bottom:20px; color:#4a4a4a; font-size:14px;">Click the button below to send a security confirmation token directly to your account's verified email profile.</p>
-                
-                <div class="modal-actions">
-                    <button class="btn-modal-cancel" onclick="closePasswordModal()">Exit</button>
-                    <button class="btn-primary" style="flex: 2;" onclick="requestOtpToken()">Send OTP Code</button>
-                </div>
-            </div>
-
-            <!-- Step B: Verification Context Input Fields -->
-            <div id="otp-verify-step" style="display:none; text-align:left;">
-                <div class="form-group">
-                    <label for="pwd-otp">Enter 6-Digit OTP</label>
-                    <input type="text" id="pwd-otp" placeholder="e.g. 123456" maxlength="6">
-                </div>
-                <div class="form-group" style="margin-top:15px;">
-                    <label for="pwd-new">New Safe Password</label>
-                    <input type="password" id="pwd-new" placeholder="Enter new password value">
-                </div>
-                <div class="form-group" style="margin-top:15px;">
-                    <label for="pwd-confirm">Confirm New Password</label>
-                    <input type="password" id="pwd-confirm" placeholder="Retype new password value">
-                </div>
-                <div class="modal-actions">
-                    <button class="btn-modal-cancel" onclick="closePasswordModal()">Cancel</button>
-                    <button class="btn-primary" style="flex: 1;" onclick="submitPasswordReset()">Update Security Record</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let currentEmailValue = "";
-
-        document.addEventListener("DOMContentLoaded", function() {
-            loadUserProfile();
-        });
-
-        function loadUserProfile() {
-            const loggedInUser = localStorage.getItem("loggedInUser");
-            if (!loggedInUser || loggedInUser === "undefined") {
-                window.location.href = "login.html";
-                return;
-            }
-
-            document.getElementById("user-display-name").innerText = loggedInUser;
-            document.getElementById("user-avatar-initial").innerText = loggedInUser.trim().charAt(0).toUpperCase();
-
-            fetch(`/api/users/profile-details?username=${encodeURIComponent(loggedInUser)}`)
-                .then(res => res.json())
-                .then(user => {
-                    if (user && user.email && user.email !== "No email linked") {
-                        currentEmailValue = user.email;
-                        document.getElementById("user-email-text").innerText = user.email;
+    // 3. Get Account Profile Details
+ // 3. Get Account Profile Details (Supports both username or email lookups)
+    @GetMapping("/api/users/profile-details")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> getUserDetails(@RequestParam String username) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String sql = "SELECT username, email, role FROM users WHERE LOWER(username) = LOWER(?) OR LOWER(email) = LOWER(?)";
+            try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username.trim());
+                stmt.setString(2, username.trim());
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        Map<String, String> userMap = new HashMap<>();
+                        String dbUsername = rs.getString("username");
+                        userMap.put("username", dbUsername);
+                        String dbEmail = rs.getString("email");
+                        userMap.put("email", (dbEmail != null && !dbEmail.trim().isEmpty()) ? dbEmail : "No email linked");
+                        String dbRole = rs.getString("role");
+                        userMap.put("role", (dbRole != null && !dbRole.trim().isEmpty()) ? dbRole : "STUDENT");
+                        return ResponseEntity.ok(userMap);
                     } else {
-                        currentEmailValue = "";
-                        document.getElementById("user-email-text").innerText = "No email linked";
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
                     }
-                    
-                    // Forcefully set role label or check standard display formatting
-                    if (user && user.role) {
-                        const formattedRole = user.role.charAt(0).toUpperCase() + user.role.slice(1).toLowerCase();
-                        document.getElementById("user-role-badge").innerText = formattedRole;
+                }
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // 4. Update Account Profile Data (Username/Email)
+    @PostMapping("/api/users/update-profile")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> updateUserDetails(@RequestBody Map<String, String> updateData) {
+        String currentUsername = updateData.get("currentUsername");
+        String newUsername = updateData.get("newUsername");
+        String newEmail = updateData.get("newEmail");
+        Map<String, String> responseMap = new HashMap<>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)) {
+                if (!currentUsername.equalsIgnoreCase(newUsername)) {
+                    String checkSql = "SELECT id FROM users WHERE LOWER(username) = LOWER(?)";
+                    try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                        checkStmt.setString(1, newUsername.trim());
+                        try (ResultSet rs = checkStmt.executeQuery()) {
+                            if (rs.next()) {
+                                responseMap.put("status", "FAILED");
+                                responseMap.put("message", "This username is already taken.");
+                                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
+                            }
+                        }
+                    }
+                }
+
+                String updateSql = "UPDATE users SET username = ?, email = ? WHERE LOWER(username) = LOWER(?)";
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setString(1, newUsername.trim());
+                    updateStmt.setString(2, newEmail.trim());
+                    updateStmt.setString(3, currentUsername.trim());
+                    if (updateStmt.executeUpdate() > 0) {
+                        responseMap.put("status", "SUCCESS");
+                        responseMap.put("message", "Profile updated successfully!");
+                        return ResponseEntity.ok(responseMap);
                     } else {
-                        document.getElementById("user-role-badge").innerText = "Student";
+                        responseMap.put("status", "FAILED");
+                        responseMap.put("message", "Profile record not found.");
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
                     }
-                }).catch(() => {
-                    document.getElementById("user-email-text").innerText = "No email linked";
-                    document.getElementById("user-role-badge").innerText = "Student";
-                });
+                }
+            }
+        } catch (Exception e) {
+            responseMap.put("status", "ERROR");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMap);
+        }
+    }
 
-            fetch(`/api/transaction/progress?username=${encodeURIComponent(loggedInUser)}&courseId=1`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.status === "SUCCESS") {
-                        document.getElementById("dashboard-progress-fill").style.width = data.progressPercentage + "%";
-                        document.getElementById("dashboard-progress-pct").innerText = data.progressPercentage + "%";
+    // 5. Generate and Dispatch OTP to Link Account Email
+    @PostMapping("/api/auth/send-otp")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> dispatchPasswordOtp(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        Map<String, String> response = new HashMap<>();
+
+        if (username == null || username.trim().isEmpty()) {
+            response.put("status", "FAILED");
+            response.put("message", "Backend Error: Username parsed from context layout is blank.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String sql = "SELECT email FROM users WHERE LOWER(username) = LOWER(?)";
+            try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username.trim());
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        String userEmail = rs.getString("email");
+                        
+                        if (userEmail == null || userEmail.trim().isEmpty() || userEmail.equalsIgnoreCase("No email linked")) {
+                            response.put("status", "FAILED");
+                            response.put("message", "Cannot reset password: No active email profile linked to '" + username + "'.");
+                            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                        }
+
+                        // Generate numeric 6-digit sequence code
+                        String otp = String.format("%06d", new Random().nextInt(999999));
+                        otpStorageCache.put(username.toLowerCase().trim(), otp);
+
+                        // --- 🔑 DEVELOPMENT DEBUG LOG ---
+                        System.out.println("\n========================================================");
+                        System.out.println("🔑 TEST OTP LOG CODE FOR USER [" + username + "]: " + otp);
+                        System.out.println("========================================================\n");
+
+                        try {
+                            emailService.sendOtpEmail(userEmail, otp);
+                        } catch (NullPointerException npe) {
+                            response.put("status", "FAILED");
+                            response.put("message", "Spring Engine Error: MailSender Bean uninitialized inside compilation path.");
+                            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+                        } catch (Exception mailEx) {
+                            response.put("status", "SUCCESS");
+                            response.put("message", "OTP Code generated! (Gmail delivery filtered, fetch code from STS Console terminal output window instead).");
+                            return ResponseEntity.ok(response);
+                        }
+
+                        response.put("status", "SUCCESS");
+                        response.put("message", "OTP sent successfully to " + userEmail);
+                        return ResponseEntity.ok(response);
+                    } else {
+                        response.put("status", "FAILED");
+                        response.put("message", "Database Error: Targeted account handle profile record not found.");
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
                     }
-                }).catch(() => {});
-        }
-
-        // Edit Info Controls
-        function openEditModal() {
-            document.getElementById("modal-status-msg").style.display = "none";
-            document.getElementById("edit-username").value = localStorage.getItem("loggedInUser") || "";
-            document.getElementById("edit-email").value = currentEmailValue || "";
-            document.getElementById("editModal").style.display = "flex";
-        }
-        function closeEditModal() { document.getElementById("editModal").style.display = "none"; }
-
-        function showModalMessage(text, isError) {
-            const msg = document.getElementById("modal-status-msg");
-            msg.innerText = text;
-            msg.className = isError ? "status-msg error" : "status-msg success";
-            msg.style.display = "block";
-        }
-
-        function saveProfileChanges() {
-            const currentUsername = localStorage.getItem("loggedInUser");
-            const newUsername = document.getElementById("edit-username").value.trim();
-            const newEmail = document.getElementById("edit-email").value.trim();
-
-            if (!newUsername || !newEmail) {
-                showModalMessage("Fields cannot be left blank.", true);
-                return;
-            }
-
-            fetch('/api/users/update-profile', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ currentUsername, newUsername, newEmail })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.status === "SUCCESS") {
-                    localStorage.setItem("loggedInUser", newUsername); 
-                    showModalMessage(data.message, false);
-                    setTimeout(() => { closeEditModal(); loadUserProfile(); }, 1000);
-                } else {
-                    showModalMessage(data.message, true);
                 }
-            });
-        }
-
-        // Password Reset Controls
-        function openPasswordModal() {
-            document.getElementById("password-status-msg").style.display = "none";
-            document.getElementById("otp-initial-step").style.display = "block";
-            document.getElementById("otp-verify-step").style.display = "none";
-            document.getElementById("passwordModal").style.display = "flex";
-        }
-        function closePasswordModal() { document.getElementById("passwordModal").style.display = "none"; }
-
-        function showPasswordMessage(text, isError) {
-            const msg = document.getElementById("password-status-msg");
-            msg.innerText = text;
-            msg.style.background = isError ? "#fde8e8" : "#e6fffa";
-            msg.style.color = isError ? "#e53e3e" : "#319795";
-            msg.style.display = "block";
-        }
-
-        function requestOtpToken() {
-            const username = localStorage.getItem("loggedInUser");
-            showPasswordMessage("Sending security token code...", false);
-
-            fetch('/api/auth/send-otp', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.status === "SUCCESS") {
-                    showPasswordMessage(data.message, false);
-                    document.getElementById("otp-initial-step").style.display = "none";
-                    document.getElementById("otp-verify-step").style.display = "block";
-                } else {
-                    showPasswordMessage(data.message || "Failed to dispatch email verification parameters.", true);
-                }
-            }).catch(() => showPasswordMessage("Failed to connect to email system pipeline.", true));
-        }
-
-        function submitPasswordReset() {
-            const username = localStorage.getItem("loggedInUser");
-            const otp = document.getElementById("pwd-otp").value.trim();
-            const newPassword = document.getElementById("pwd-new").value.trim();
-            const confirmPassword = document.getElementById("pwd-confirm").value.trim();
-
-            if (!otp || !newPassword || !confirmPassword) {
-                showPasswordMessage("All fields are required.", true);
-                return;
             }
+        } catch (Exception e) {
+            response.put("status", "ERROR");
+            response.put("message", "System Runtime Exception: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 
-            if (newPassword !== confirmPassword) {
-                showPasswordMessage("Passwords do not match. Please try again.", true);
-                return;
-            }
+    // 6. Validate Checked OTP and Commit Security Upgrades
+    @PostMapping("/api/auth/verify-otp-password")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> processPasswordReset(@RequestBody Map<String, String> request) {
+        String username = request.get("username").toLowerCase().trim();
+        String inputOtp = request.get("otp").trim();
+        String newPassword = request.get("newPassword");
+        Map<String, String> response = new HashMap<>();
 
-            fetch('/api/auth/verify-otp-password', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, otp, newPassword })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.status === "SUCCESS") {
-                    showPasswordMessage(data.message, false);
-                    document.getElementById("pwd-otp").value = "";
-                    document.getElementById("pwd-new").value = "";
-                    document.getElementById("pwd-confirm").value = "";
-                    setTimeout(() => { closePasswordModal(); }, 1500);
-                } else {
-                    showPasswordMessage(data.message, true);
+        String systemOtp = otpStorageCache.get(username);
+        if (systemOtp == null || !systemOtp.equals(inputOtp)) {
+            response.put("status", "FAILED");
+            response.put("message", "Invalid or expired verification OTP code.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String sql = "UPDATE users SET password = ? WHERE LOWER(username) = LOWER(?)";
+            try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, newPassword);
+                stmt.setString(2, username);
+
+                if (stmt.executeUpdate() > 0) {
+                    otpStorageCache.remove(username);
+                    response.put("status", "SUCCESS");
+                    response.put("message", "Password updated successfully!");
+                    return ResponseEntity.ok(response);
                 }
-            }).catch(() => showPasswordMessage("Error validating security updates.", true));
+            }
+        } catch (Exception e) {
+            response.put("status", "ERROR");
+            response.put("message", "Database update execution exception framework crash.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+        response.put("status", "FAILED");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 
-        function handleLogout() {
-            localStorage.clear();
-            window.location.href = "login.html";
+    // --- Core Low Level JDBC Helper Framework Logic ---
+    private LoginResponse executeDatabaseQuery(String username, String email, String password, boolean isSignup) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)) {
+                if (isSignup) {
+                    String checkSql = "SELECT * FROM users WHERE LOWER(username) = LOWER(?) OR LOWER(email) = LOWER(?)";
+                    try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                        checkStmt.setString(1, username.trim());
+                        checkStmt.setString(2, email.trim());
+                        try (ResultSet rs = checkStmt.executeQuery()) {
+                            if (rs.next()) return new LoginResponse("FAILED", "Username or Email is already taken.", null);
+                        }
+                    }
+                    String insertSql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                        insertStmt.setString(1, username.trim());
+                        insertStmt.setString(2, email.trim());
+                        insertStmt.setString(3, password);
+                        insertStmt.setString(4, "STUDENT");
+                        if (insertStmt.executeUpdate() > 0) return new LoginResponse("SUCCESS", "Account created successfully!", "STUDENT");
+                        else return new LoginResponse("FAILED", "Registration failed.", null);
+                    }
+                } else {
+                    String loginSql;
+                    boolean inputIsEmail = username.contains("@");
+
+                    if (inputIsEmail) {
+                        // If input is an email, query strictly by email column
+                        loginSql = "SELECT username, email, role FROM users WHERE LOWER(email) = LOWER(?) AND password = ?";
+                    } else {
+                        // If input is a username, prevent name-collision exploits by explicitly ignoring ADMIN roles
+                        loginSql = "SELECT username, email, role FROM users WHERE LOWER(username) = LOWER(?) AND password = ? AND role != 'ADMIN'";
+                    }
+
+                    try (PreparedStatement stmt = conn.prepareStatement(loginSql)) {
+                        stmt.setString(1, username.trim()); 
+                        stmt.setString(2, password);
+                        try (ResultSet rs = stmt.executeQuery()) {
+                            if (rs.next()) {
+                                String dbUsername = rs.getString("username");
+                                String dbRole = rs.getString("role");
+                                String role = (dbRole != null && !dbRole.trim().isEmpty()) ? dbRole : "STUDENT";
+
+                                return new LoginResponse("SUCCESS", dbUsername, role);
+                            } else {
+                                if (!inputIsEmail) {
+                                    return new LoginResponse("FAILED", "Admin accounts must log in using their email address. Usernames are restricted for admin access.", null);
+                                }
+                                return new LoginResponse("FAILED", "Invalid email or password.", null);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            return new LoginResponse("ERROR", "Database error: " + e.getMessage(), null);
         }
-    </script>
-
-    <script src="/js/logo.js"></script>
-</body>
-</html>
+    }
+}
