@@ -130,6 +130,13 @@
             errorDiv.style.display = "none";
             successDiv.style.display = "none";
 
+            // Check if password length is at least 8 characters
+            if (password.length < 8) {
+                errorDiv.style.display = "block";
+                errorDiv.innerText = "Password must be at least 8 characters long.";
+                return;
+            }
+
             fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
