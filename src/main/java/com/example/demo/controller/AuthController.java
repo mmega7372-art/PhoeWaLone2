@@ -25,7 +25,7 @@ public class AuthController {
     @Autowired
     private EmailService emailService;
 
-    // Pull connection values directly from application.properties
+    // Pull connection values directly from application.properties[cite: 3]
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
@@ -35,10 +35,10 @@ public class AuthController {
     @Value("${spring.datasource.password}")
     private String dbPass;
 
-    // Temporary in-memory cache to store generated OTP codes mapped to lowercase usernames
+    // Temporary in-memory cache to store generated OTP codes mapped to exact case-sensitive usernames[cite: 3]
     private final Map<String, String> otpStorageCache = new HashMap<>();
 
-    // DTO Class Structures
+    // DTO Class Structures[cite: 3]
     public static class LoginResponse {
         public String status;
         public String message;
@@ -64,7 +64,7 @@ public class AuthController {
         public void setPassword(String password) { this.password = password; }
     }
 
-    // 1. Process Database Login
+    // 1. Process Database Login (Exact Case-Sensitive Username Check)[cite: 3]
     @PostMapping("/api/auth/login")
     @ResponseBody
     public LoginResponse verifyDatabaseLogin(@RequestBody LoginRequest loginData) {
@@ -73,20 +73,20 @@ public class AuthController {
         return executeDatabaseQuery(credentialInput, credentialInput, password, false);
     }
     
-    // 2. Process Database Signup
+    // 2. Process Database Signup[cite: 3]
     @PostMapping("/api/auth/signup")
     @ResponseBody
     public LoginResponse registerDatabaseUser(@RequestBody LoginRequest signupData) {
         return executeDatabaseQuery(signupData.getUsername(), signupData.getEmail(), signupData.getPassword(), true);
     }
 
-    // 3. Get Account Profile Details (Supports both username or email lookups)
+    // 3. Get Account Profile Details (Exact case-sensitive username or case-insensitive email lookup)[cite: 3]
     @GetMapping("/api/users/profile-details")
     @ResponseBody
     public ResponseEntity<Map<String, String>> getUserDetails(@RequestParam String username) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String sql = "SELECT username, email, role FROM users WHERE LOWER(username) = LOWER(?) OR LOWER(email) = LOWER(?)";
+            String sql = "SELECT username, email, role FROM users WHERE BINARY username = BINARY ? OR LOWER(email) = LOWER(?)";
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, username.trim());
@@ -111,7 +111,7 @@ public class AuthController {
         }
     }
 
-    // 4. Update Account Profile Data (Username/Email)
+    // 4. Update Account Profile Data (Exact case-sensitive check)[cite: 3]
     @PostMapping("/api/users/update-profile")
     @ResponseBody
     public ResponseEntity<Map<String, String>> updateUserDetails(@RequestBody Map<String, String> updateData) {
@@ -123,8 +123,8 @@ public class AuthController {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)) {
-                if (!currentUsername.equalsIgnoreCase(newUsername)) {
-                    String checkSql = "SELECT id FROM users WHERE LOWER(username) = LOWER(?)";
+                if (!currentUsername.equals(newUsername)) {
+                    String checkSql = "SELECT id FROM users WHERE BINARY username = BINARY ?";
                     try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
                         checkStmt.setString(1, newUsername.trim());
                         try (ResultSet rs = checkStmt.executeQuery()) {
@@ -137,7 +137,7 @@ public class AuthController {
                     }
                 }
 
-                String updateSql = "UPDATE users SET username = ?, email = ? WHERE LOWER(username) = LOWER(?)";
+                String updateSql = "UPDATE users SET username = ?, email = ? WHERE BINARY username = BINARY ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                     updateStmt.setString(1, newUsername.trim());
                     updateStmt.setString(2, newEmail.trim());
@@ -159,7 +159,7 @@ public class AuthController {
         }
     }
 
-    // 5. Generate and Dispatch OTP to Link Account Email
+    // 5. Generate and Dispatch OTP (Exact case-sensitive username lookup)[cite: 3]
     @PostMapping("/api/auth/send-otp")
     @ResponseBody
     public ResponseEntity<Map<String, String>> dispatchPasswordOtp(@RequestBody Map<String, String> request) {
@@ -174,7 +174,7 @@ public class AuthController {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String sql = "SELECT email FROM users WHERE LOWER(username) = LOWER(?)";
+            String sql = "SELECT email FROM users WHERE BINARY username = BINARY ?";
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, username.trim());
@@ -188,9 +188,9 @@ public class AuthController {
                             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
                         }
 
-                        // Generate numeric 6-digit sequence code
+                        // Generate numeric 6-digit sequence code[cite: 3]
                         String otp = String.format("%06d", new Random().nextInt(999999));
-                        otpStorageCache.put(username.toLowerCase().trim(), otp);
+                        otpStorageCache.put(username.trim(), otp);
 
                         // --- 🔑 DEVELOPMENT DEBUG LOG ---
                         System.out.println("\n========================================================");
@@ -226,11 +226,11 @@ public class AuthController {
         }
     }
 
-    // 6. Validate Checked OTP and Commit Security Upgrades
+    // 6. Validate Checked OTP and Commit Security Upgrades (Exact case-sensitive match)[cite: 3]
     @PostMapping("/api/auth/verify-otp-password")
     @ResponseBody
     public ResponseEntity<Map<String, String>> processPasswordReset(@RequestBody Map<String, String> request) {
-        String username = request.get("username").toLowerCase().trim();
+        String username = request.get("username").trim();
         String inputOtp = request.get("otp").trim();
         String newPassword = request.get("newPassword");
         Map<String, String> response = new HashMap<>();
@@ -244,7 +244,7 @@ public class AuthController {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String sql = "UPDATE users SET password = ? WHERE LOWER(username) = LOWER(?)";
+            String sql = "UPDATE users SET password = ? WHERE BINARY username = BINARY ?";
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, newPassword);
@@ -266,7 +266,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    // 7. Direct Username/Email Verification, Password Reset (Blocked for Admins), and Admin Notification Feature
+    // 7. Direct Username/Email Verification, Password Reset (Blocked for Admins), and Admin Notification Feature[cite: 3]
     @PostMapping("/api/auth/reset-password-direct")
     @ResponseBody
     public ResponseEntity<Map<String, String>> processDirectPasswordReset(@RequestBody Map<String, String> request) {
@@ -284,8 +284,8 @@ public class AuthController {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)) {
-                // Step 1: Check if both username and email match, and fetch the user's role
-                String verifySql = "SELECT id, role FROM users WHERE LOWER(username) = LOWER(?) AND LOWER(email) = LOWER(?)";
+                // Step 1: Check if exact case-sensitive username and case-insensitive email match, and fetch user's role
+                String verifySql = "SELECT id, role FROM users WHERE BINARY username = BINARY ? AND LOWER(email) = LOWER(?)";
                 boolean userFound = false;
                 String userRole = "";
                 
@@ -306,22 +306,22 @@ public class AuthController {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
                 }
 
-                // Step 2: Block Admin accounts from changing passwords through this page
+                // Step 2: Block Admin accounts from changing passwords through this page[cite: 3]
                 if (userRole != null && userRole.equalsIgnoreCase("ADMIN")) {
                     responseMap.put("status", "FAILED");
                     responseMap.put("message", "Admin passwords cannot be changed through this forgot password page.");
                     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseMap);
                 }
 
-                // Step 3: Accept and update the new password for regular user accounts
-                String updateSql = "UPDATE users SET password = ? WHERE LOWER(email) = LOWER(?)";
+                // Step 3: Accept and update the new password using exact case-sensitive username match
+                String updateSql = "UPDATE users SET password = ? WHERE BINARY email =  ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                     updateStmt.setString(1, newPassword);
                     updateStmt.setString(2, email.trim());
                     updateStmt.executeUpdate();
                 }
 
-                // Step 4: Fetch all administrator emails dynamically from the database
+                // Step 4: Fetch all administrator emails dynamically from the database[cite: 3]
                 List<String> adminEmails = new ArrayList<>();
                 String adminSql = "SELECT email FROM users WHERE LOWER(role) = 'admin' AND email IS NOT NULL AND email != ''";
                 try (Statement adminStmt = conn.createStatement();
@@ -334,7 +334,7 @@ public class AuthController {
                     }
                 }
 
-                // Step 5: Send notification alerts to each admin email found
+                // Step 5: Send notification alerts to each admin email found[cite: 3]
                 for (String adminEmail : adminEmails) {
                     try {
                         emailService.sendOtpEmail(adminEmail, "Password Reset Alert: Account [" + username.trim() + "] has updated their password.");
@@ -361,7 +361,7 @@ public class AuthController {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)) {
                 if (isSignup) {
-                    String checkSql = "SELECT * FROM users WHERE LOWER(username) = LOWER(?) OR LOWER(email) = LOWER(?)";
+                    String checkSql = "SELECT * FROM users WHERE BINARY username = BINARY ? OR LOWER(email) = LOWER(?)";
                     try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
                         checkStmt.setString(1, username.trim());
                         checkStmt.setString(2, email.trim());
@@ -383,11 +383,11 @@ public class AuthController {
                     boolean inputIsEmail = username.contains("@");
 
                     if (inputIsEmail) {
-                        // If input is an email, query strictly by email column
+                        // If input is an email, query strictly by email column[cite: 3]
                         loginSql = "SELECT username, email, role FROM users WHERE LOWER(email) = LOWER(?) AND password = ?";
                     } else {
-                        // If input is a username, prevent name-collision exploits by explicitly ignoring ADMIN roles
-                        loginSql = "SELECT username, email, role FROM users WHERE LOWER(username) = LOWER(?) AND password = ? AND role != 'ADMIN'";
+                        // If input is a username, query with exact case-sensitive check and explicitly ignore ADMIN roles[cite: 3]
+                        loginSql = "SELECT username, email, role FROM users WHERE BINARY username = BINARY ? AND password = ? AND role != 'ADMIN'";
                     }
 
                     try (PreparedStatement stmt = conn.prepareStatement(loginSql)) {
