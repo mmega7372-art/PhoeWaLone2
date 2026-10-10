@@ -24,13 +24,13 @@ public class AdminController {
     @Value("${spring.datasource.password}")
     private String dbPass;
 
-    // 1. READ: Return all users as JSON for the static dashboard[cite: 2]
+    // 1. READ: Return all users (including password) as JSON for the dashboard
     @GetMapping("/users")
     public ResponseEntity<List<Map<String, Object>>> getAllUsers() {
         List<Map<String, Object>> userList = new ArrayList<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String sql = "SELECT id, username, email, role FROM users";
+            String sql = "SELECT id, username, email, password, role FROM users"; // Added password column here
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery(sql)) {
@@ -40,6 +40,7 @@ public class AdminController {
                     user.put("id", rs.getInt("id"));
                     user.put("username", rs.getString("username"));
                     user.put("email", rs.getString("email"));
+                    user.put("password", rs.getString("password")); // Added password to response map
                     user.put("role", rs.getString("role"));
                     userList.add(user);
                 }
@@ -82,7 +83,7 @@ public class AdminController {
         }
     }
 
-    // 3. UPDATE: Edit existing user details (including optional password change)[cite: 2]
+    // 3. UPDATE: Edit existing user details (with optional password update)[cite: 2]
     @PostMapping("/users/update")
     public ResponseEntity<Map<String, String>> updateUser(
             @RequestParam int id,
