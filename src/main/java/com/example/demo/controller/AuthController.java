@@ -12,10 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -266,7 +263,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    // 7. Direct Username/Email Verification, Password Reset (Blocked for Admins), and Admin Notification Feature[cite: 3]
+    // 7. Direct Username/Email Verification and Password Reset (Blocked for Admins, No Admin Notifications)
     @PostMapping("/api/auth/reset-password-direct")
     @ResponseBody
     public ResponseEntity<Map<String, String>> processDirectPasswordReset(@RequestBody Map<String, String> request) {
@@ -314,37 +311,15 @@ public class AuthController {
                 }
 
                 // Step 3: Accept and update the new password using exact case-sensitive username match
-                String updateSql = "UPDATE users SET password = ? WHERE BINARY email =  ?";
+                String updateSql = "UPDATE users SET password = ? WHERE BINARY email = ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                     updateStmt.setString(1, newPassword);
                     updateStmt.setString(2, email.trim());
                     updateStmt.executeUpdate();
                 }
 
-                // Step 4: Fetch all administrator emails dynamically from the database[cite: 3]
-                List<String> adminEmails = new ArrayList<>();
-                String adminSql = "SELECT email FROM users WHERE LOWER(role) = 'admin' AND email IS NOT NULL AND email != ''";
-                try (Statement adminStmt = conn.createStatement();
-                     ResultSet adminRs = adminStmt.executeQuery(adminSql)) {
-                    while (adminRs.next()) {
-                        String adminEmail = adminRs.getString("email");
-                        if (adminEmail != null && !adminEmail.trim().isEmpty()) {
-                            adminEmails.add(adminEmail.trim());
-                        }
-                    }
-                }
-
-                // Step 5: Send notification alerts to each admin email found[cite: 3]
-                for (String adminEmail : adminEmails) {
-                    try {
-                        emailService.sendOtpEmail(adminEmail, "Password Reset Alert: Account [" + username.trim() + "] has updated their password.");
-                    } catch (Exception mailEx) {
-                        System.out.println("Failed to dispatch admin notification email to: " + adminEmail);
-                    }
-                }
-
                 responseMap.put("status", "SUCCESS");
-                responseMap.put("message", "Password successfully updated and notifications sent to administrators.");
+                responseMap.put("message", "Password successfully updated!");
                 return ResponseEntity.ok(responseMap);
 
             }
