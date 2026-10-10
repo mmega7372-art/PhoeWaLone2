@@ -24,7 +24,7 @@ public class AdminController {
     @Value("${spring.datasource.password}")
     private String dbPass;
 
-    // 1. READ: Return all users as JSON for the static dashboard
+    // 1. READ: Return all users as JSON for the static dashboard[cite: 2]
     @GetMapping("/users")
     public ResponseEntity<List<Map<String, Object>>> getAllUsers() {
         List<Map<String, Object>> userList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class AdminController {
         }
     }
 
-    // 2. CREATE: Add a new user
+    // 2. CREATE: Add a new user[cite: 2]
     @PostMapping("/users/create")
     public ResponseEntity<Map<String, String>> createUser(
             @RequestParam String username,
@@ -82,25 +82,37 @@ public class AdminController {
         }
     }
 
-    // 3. UPDATE: Edit existing user details
+    // 3. UPDATE: Edit existing user details (including optional password change)[cite: 2]
     @PostMapping("/users/update")
     public ResponseEntity<Map<String, String>> updateUser(
             @RequestParam int id,
             @RequestParam String username,
             @RequestParam String email,
-            @RequestParam String role) {
+            @RequestParam String role,
+            @RequestParam(required = false) String password) {
         
         Map<String, String> response = new HashMap<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String sql = "UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?";
+            
+            boolean updatePassword = (password != null && !password.trim().isEmpty());
+            String sql = updatePassword 
+                ? "UPDATE users SET username = ?, email = ?, role = ?, password = ? WHERE id = ?"
+                : "UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?";
+                
             try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                 
                 stmt.setString(1, username.trim());
                 stmt.setString(2, email.trim());
                 stmt.setString(3, role.trim());
-                stmt.setInt(4, id);
+                
+                if (updatePassword) {
+                    stmt.setString(4, password);
+                    stmt.setInt(5, id);
+                } else {
+                    stmt.setInt(4, id);
+                }
                 
                 int rowsUpdated = stmt.executeUpdate();
                 if (rowsUpdated > 0) {
@@ -120,7 +132,7 @@ public class AdminController {
         }
     }
 
-    // 4. DELETE: Remove a user by ID
+    // 4. DELETE: Remove a user by ID[cite: 2]
     @DeleteMapping("/users/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteUser(@PathVariable int id) {
         Map<String, String> response = new HashMap<>();
