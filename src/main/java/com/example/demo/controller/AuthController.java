@@ -12,7 +12,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -77,8 +80,7 @@ public class AuthController {
         return executeDatabaseQuery(signupData.getUsername(), signupData.getEmail(), signupData.getPassword(), true);
     }
 
-    // 3. Get Account Profile Details
- // 3. Get Account Profile Details (Supports both username or email lookups)
+    // 3. Get Account Profile Details (Supports both username or email lookups)
     @GetMapping("/api/users/profile-details")
     @ResponseBody
     public ResponseEntity<Map<String, String>> getUserDetails(@RequestParam String username) {
@@ -262,6 +264,95 @@ public class AuthController {
         }
         response.put("status", "FAILED");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    // 7. Direct Username/Email Verification, Password Reset (Blocked for Admins), and Admin Notification Feature
+    @PostMapping("/api/auth/reset-password-direct")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> processDirectPasswordReset(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+        Map<String, String> responseMap = new HashMap<>();
+
+        if (username == null || username.trim().isEmpty() || email == null || email.trim().isEmpty() || newPassword == null || newPassword.trim().isEmpty()) {
+            responseMap.put("status", "FAILED");
+            responseMap.put("message", "Username, email, and new password must all be provided.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
+        }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)) {
+                // Step 1: Check if both username and email match, and fetch the user's role
+                String verifySql = "SELECT id, role FROM users WHERE LOWER(username) = LOWER(?) AND LOWER(email) = LOWER(?)";
+                boolean userFound = false;
+                String userRole = "";
+                
+                try (PreparedStatement verifyStmt = conn.prepareStatement(verifySql)) {
+                    verifyStmt.setString(1, username.trim());
+                    verifyStmt.setString(2, email.trim());
+                    try (ResultSet rs = verifyStmt.executeQuery()) {
+                        if (rs.next()) {
+                            userFound = true;
+                            userRole = rs.getString("role");
+                        }
+                    }
+                }
+
+                if (!userFound) {
+                    responseMap.put("status", "FAILED");
+                    responseMap.put("message", "The provided username and email do not match any existing record.");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
+                }
+
+                // Step 2: Block Admin accounts from changing passwords through this page
+                if (userRole != null && userRole.equalsIgnoreCase("ADMIN")) {
+                    responseMap.put("status", "FAILED");
+                    responseMap.put("message", "Admin passwords cannot be changed through this forgot password page.");
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseMap);
+                }
+
+                // Step 3: Accept and update the new password for regular user accounts
+                String updateSql = "UPDATE users SET password = ? WHERE LOWER(email) = LOWER(?)";
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setString(1, newPassword);
+                    updateStmt.setString(2, email.trim());
+                    updateStmt.executeUpdate();
+                }
+
+                // Step 4: Fetch all administrator emails dynamically from the database
+                List<String> adminEmails = new ArrayList<>();
+                String adminSql = "SELECT email FROM users WHERE LOWER(role) = 'admin' AND email IS NOT NULL AND email != ''";
+                try (Statement adminStmt = conn.createStatement();
+                     ResultSet adminRs = adminStmt.executeQuery(adminSql)) {
+                    while (adminRs.next()) {
+                        String adminEmail = adminRs.getString("email");
+                        if (adminEmail != null && !adminEmail.trim().isEmpty()) {
+                            adminEmails.add(adminEmail.trim());
+                        }
+                    }
+                }
+
+                // Step 5: Send notification alerts to each admin email found
+                for (String adminEmail : adminEmails) {
+                    try {
+                        emailService.sendOtpEmail(adminEmail, "Password Reset Alert: Account [" + username.trim() + "] has updated their password.");
+                    } catch (Exception mailEx) {
+                        System.out.println("Failed to dispatch admin notification email to: " + adminEmail);
+                    }
+                }
+
+                responseMap.put("status", "SUCCESS");
+                responseMap.put("message", "Password successfully updated and notifications sent to administrators.");
+                return ResponseEntity.ok(responseMap);
+
+            }
+        } catch (Exception e) {
+            responseMap.put("status", "ERROR");
+            responseMap.put("message", "Database error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMap);
+        }
     }
 
     // --- Core Low Level JDBC Helper Framework Logic ---
