@@ -311,7 +311,7 @@ public class AuthController {
                 }
 
                 // Step 3: Accept and update the new password using exact case-sensitive username match
-                String updateSql = "UPDATE users SET password = ? WHERE BINARY email = ?";
+                String updateSql = "UPDATE users SET password = ? WHERE email = ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                     updateStmt.setString(1, newPassword);
                     updateStmt.setString(2, email.trim());
